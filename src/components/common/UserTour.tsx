@@ -69,7 +69,7 @@ export const UserTour = ({ isOpen, onComplete, onSkip }: UserTourProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={() => onSkip()}>
-      <DialogContent className="glass-card max-w-lg">
+      <DialogContent className="max-w-lg rounded-[var(--radius-lg)] bg-white border border-glass-border shadow-lg">
         <DialogHeader>
           <div className="flex items-center space-x-3">
             <Icon className="w-6 h-6 text-primary" />
@@ -80,7 +80,7 @@ export const UserTour = ({ isOpen, onComplete, onSkip }: UserTourProps) => {
           </div>
         </DialogHeader>
 
-        <Card className="glass-card border-glass-border">
+        <Card className="bg-white border border-glass-border">
           <CardContent className="p-6">
             <p className="text-sm text-card-foreground leading-relaxed">
               {currentTourStep.content}
@@ -106,7 +106,7 @@ export const UserTour = ({ isOpen, onComplete, onSkip }: UserTourProps) => {
             variant="ghost"
             onClick={handlePrevious}
             disabled={currentStep === 0}
-            className="glass-button"
+            className="glass-button cta-start-button"
           >
             <ChevronLeft className="w-4 h-4 mr-2" />
             {t("tour.prev")}

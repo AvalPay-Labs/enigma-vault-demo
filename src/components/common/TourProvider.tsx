@@ -17,6 +17,12 @@ export const useAppTour = () => {
 export const TourProvider = ({ children }: { children: React.ReactNode }) => {
   const [run, setRun] = useState(false);
   const navigate = useNavigate();
+  const scrollOffset = useMemo(() => {
+    if (typeof window !== 'undefined' && window.innerHeight) {
+      return Math.round(window.innerHeight / 3); // deja ~1/3 de viewport por encima
+    }
+    return 160;
+  }, []);
 
   const steps: Step[] = useMemo(
     () => [
@@ -30,16 +36,19 @@ export const TourProvider = ({ children }: { children: React.ReactNode }) => {
       {
         target: "#tour-role-user",
         content: "👤 Usuario: usa esta opción si operarás la app como usuario final.",
+        placement: "right",
       },
       // Paso 3: Botón Empresa (rol Empresa en homepage)
       {
         target: "#tour-role-company",
         content: "🏢 Empresa: selecciona esta opción para gestionar tu organización y sus configuraciones.",
+        placement: "right",
       },
       // Paso 4: Botón Auditor (rol Auditor en homepage)
       {
         target: "#tour-role-auditor",
         content: "🕵️ Auditor: realiza revisiones, reportes y validaciones de auditoría.",
+        placement: "right",
       },
       // Paso 5: Opción de idioma
       {
@@ -91,11 +100,38 @@ export const TourProvider = ({ children }: { children: React.ReactNode }) => {
         showSkipButton
         showProgress
         scrollToFirstStep
+        scrollOffset={scrollOffset}
         disableOverlayClose
         spotlightPadding={8}
         styles={{
           options: {
             zIndex: 10000,
+          },
+          tooltip: {
+            borderRadius: "var(--radius)",
+            boxShadow: "var(--shadow-glass)",
+            background: "#ffffff", // sólido, sin blur
+            color: "hsl(var(--card-foreground))",
+            border: "1px solid hsl(var(--glass-border))",
+          },
+          tooltipContainer: {
+            textAlign: "left",
+          },
+          buttonNext: {
+            background: "linear-gradient(135deg, hsl(var(--primary-glow)), hsl(var(--primary)))",
+            color: "hsl(var(--primary-foreground))",
+            border: "1px solid hsl(var(--primary-glow) / 0.5)",
+            borderRadius: "var(--radius-sm)",
+            boxShadow: "0 0 24px hsl(var(--primary-glow) / 0.25)",
+          },
+          buttonBack: {
+            background: "#ffffff",
+            color: "hsl(var(--foreground))",
+            border: "1px solid hsl(var(--glass-border))",
+            borderRadius: "var(--radius-sm)",
+          },
+          buttonClose: {
+            color: "hsl(var(--muted-foreground))",
           },
         }}
         locale={{
