@@ -15,6 +15,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "@/i18n/LanguageContext";
+import { supabase } from "@/lib/supabaseClient";
 
 interface LoginModalProps {
   open: boolean;
@@ -78,44 +79,130 @@ export const LoginModal = ({ open, onOpenChange, preselectedRole }: LoginModalPr
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    try {
+      if (!isLogin) {
+        // Registro
+        if (!selectedRole) {
+          throw new Error("Selecciona un rol para registrarte");
+        }
+        if (formData.password !== formData.confirmPassword) {
+          toast({
+            title: t("auth.error.title"),
+            description: t("auth.error.passwordMismatch"),
+            variant: "destructive"
+          });
+          setLoading(false);
+          return;
+        }
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
+        const { data, error } = await supabase.auth.signUp({
+          email: formData.email,
+          password: formData.password,
+          options: {
+            data: {
+              full_name: formData.name,
+              role: selectedRole,
+            },
+          },
+        });
 
-    if (!isLogin && formData.password !== formData.confirmPassword) {
-      toast({
-        title: t("auth.error.title"),
-        description: t("auth.error.passwordMismatch"),
-        variant: "destructive"
-      });
+        if (error) throw error;
+
+        // Si el proyecto exige confirmación de email, no habrá sesión activa
+        const requiresEmailConfirm = !data.session;
+
+        // Solo intentar upsert de perfil si hay sesión activa (RLS requiere authenticated)
+        if (!requiresEmailConfirm) {
+          const userId = data.user?.id;
+          if (userId) {
+            const { error: profileError } = await supabase
+              .from("profiles")
+              .upsert(
+                {
+                  user_id: userId,
+                  email: formData.email,
+                  full_name: formData.name,
+                  role: selectedRole,
+                },
+                { onConflict: "user_id" }
+              );
+            if (profileError) {
+              console.warn("[Supabase] No se pudo crear/actualizar perfil (registro):", profileError.message);
+            }
+          }
+        }
+
+        toast({
+          title: t("auth.toast.register"),
+          description: requiresEmailConfirm
+            ? "Revisa tu correo para confirmar tu cuenta"
+            : t("auth.toast.welcome").replace("{role}", roles.find(r => r.id === selectedRole)?.title || ""),
+        });
+
+        if (!requiresEmailConfirm) {
+          // Sesión activa inmediata; navegar según rol elegido
+          if (selectedRole === "auditor") {
+            navigate("/app/auditor");
+          } else {
+            navigate("/app/dashboard");
+          }
+          onOpenChange(false);
+        }
+      } else {
+        // Inicio de sesión
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: formData.email,
+          password: formData.password,
+        });
+        if (error) throw error;
+
+        const roleFromMeta = (data.user?.user_metadata as any)?.role as UserRole | undefined;
+        const role = roleFromMeta || selectedRole || "user";
+
+        // Asegurar que el perfil exista tras iniciar sesión
+        try {
+          const userId = data.user?.id;
+          if (userId) {
+            const { data: profRows, error: selError } = await supabase
+              .from("profiles")
+              .select("user_id")
+              .eq("user_id", userId)
+              .limit(1);
+            if (!selError && (!profRows || profRows.length === 0)) {
+              const { error: upsertErr } = await supabase.from("profiles").upsert(
+                {
+                  user_id: userId,
+                  email: data.user.email ?? formData.email,
+                  full_name: (data.user.user_metadata as any)?.full_name || formData.name || "",
+                  role,
+                },
+                { onConflict: "user_id" }
+              );
+              if (upsertErr) console.warn("[Supabase] No se pudo crear/actualizar perfil (login):", upsertErr.message);
+            }
+          }
+        } catch (e: any) {
+          console.warn("[Supabase] Verificación de perfil falló:", e?.message || e);
+        }
+
+        toast({
+          title: t("auth.toast.login"),
+          description: t("auth.toast.welcome").replace("{role}", roles.find(r => r.id === role)?.title || ""),
+        });
+
+        if (role === "auditor") {
+          navigate("/app/auditor");
+        } else {
+          navigate("/app/dashboard");
+        }
+        onOpenChange(false);
+      }
+    } catch (err: any) {
+      console.error("[Auth]", err);
+      toast({ title: t("auth.error.title"), description: err.message || String(err), variant: "destructive" });
+    } finally {
       setLoading(false);
-      return;
     }
-
-    // Simulate success
-    const userData = {
-      email: formData.email,
-      name: formData.name || formData.email.split('@')[0],
-      role: selectedRole
-    };
-
-    localStorage.setItem('enigma_user', JSON.stringify(userData));
-    localStorage.setItem('enigma_session', 'active');
-
-    toast({
-      title: isLogin ? t("auth.toast.login") : t("auth.toast.register"),
-      description: t("auth.toast.welcome").replace("{role}", roles.find(r => r.id === selectedRole)?.title || ""),
-    });
-
-    // Navigate based on role
-    if (selectedRole === 'auditor') {
-      navigate('/app/auditor');
-    } else {
-      navigate('/app/dashboard');
-    }
-
-    onOpenChange(false);
-    setLoading(false);
   };
 
   const resetForm = () => {
