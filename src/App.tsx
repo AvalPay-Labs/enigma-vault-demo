@@ -17,6 +17,7 @@ import Auditor from "./pages/app/Auditor";
 import TokenDetail from "./pages/app/TokenDetail";
 import NotFound from "./pages/NotFound";
 import { LanguageProvider } from "@/i18n/LanguageContext";
+import { TourProvider } from "@/components/common/TourProvider";
 
 const queryClient = new QueryClient();
 
@@ -27,8 +28,9 @@ const App = () => (
       <Sonner />
       <LanguageProvider>
         <BrowserRouter>
-          <Layout>
-            <Routes>
+          <TourProvider>
+            <Layout>
+              <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/pricing/precinct" element={<Pricing />} />
               <Route path="/docs" element={<Docs />} />
@@ -41,8 +43,9 @@ const App = () => (
               <Route path="/app/auditor" element={<Auditor />} />
               <Route path="/app/token/:id" element={<TokenDetail />} />
               <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Layout>
+              </Routes>
+            </Layout>
+          </TourProvider>
         </BrowserRouter>
       </LanguageProvider>
     </TooltipProvider>

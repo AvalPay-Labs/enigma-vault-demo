@@ -55,6 +55,13 @@ const Header = () => {
               <Link
                 key={item.path}
                 to={item.path}
+                id={
+                  item.path === "/help/faq"
+                    ? "tour-help"
+                    : item.path === "/about"
+                    ? "tour-about"
+                    : undefined
+                }
                 className={`text-sm font-medium transition-colors hover:text-primary whitespace-nowrap ${
                   isActive(item.path) ? "text-primary" : "text-muted-foreground"
                 }`}
@@ -69,7 +76,7 @@ const Header = () => {
             {/* Network Selector */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="glass-button h-8 px-3">
+                <Button id="tour-fuji" variant="outline" size="sm" className="glass-button h-8 px-3">
                   <div className="w-2 h-2 bg-accent-success rounded-full mr-1.5" />
                   <span className="text-xs sm:text-sm">{t("header.network.fuji")}</span>
                   <ChevronDown className="w-3 h-3 ml-1.5" />
@@ -93,6 +100,7 @@ const Header = () => {
             {/* Login Button */}
             <Button
               onClick={() => setShowLoginModal(true)}
+              id="tour-login"
               className="glass-button cta-start-button h-8 px-3"
               size="sm"
             >
@@ -150,6 +158,7 @@ const Header = () => {
                         setShowLoginModal(true);
                         setMobileMenuOpen(false);
                       }}
+                      id="tour-login"
                       className="glass-button cta-start-button w-full"
                       size="lg"
                     >

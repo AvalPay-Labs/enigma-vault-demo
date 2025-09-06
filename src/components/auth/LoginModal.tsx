@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { User, Building, Shield, Eye, EyeOff } from "lucide-react";
 import {
@@ -19,12 +19,13 @@ import { useTranslation } from "@/i18n/LanguageContext";
 interface LoginModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  preselectedRole?: UserRole;
 }
 
 type UserRole = "user" | "company" | "auditor";
 
-export const LoginModal = ({ open, onOpenChange }: LoginModalProps) => {
-  const [selectedRole, setSelectedRole] = useState<UserRole | null>(null);
+export const LoginModal = ({ open, onOpenChange, preselectedRole }: LoginModalProps) => {
+  const [selectedRole, setSelectedRole] = useState<UserRole | null>(preselectedRole || null);
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -38,6 +39,13 @@ export const LoginModal = ({ open, onOpenChange }: LoginModalProps) => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { t } = useTranslation();
+
+  // Handle preselected role
+  useEffect(() => {
+    if (preselectedRole && open) {
+      setSelectedRole(preselectedRole);
+    }
+  }, [preselectedRole, open]);
 
   const roles = [
     {

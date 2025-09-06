@@ -1,15 +1,49 @@
 import { useState } from "react";
-import { ArrowRight, Shield, Eye, FileCheck, TestTube, Key, Code, Play } from "lucide-react";
+import { ArrowRight, Shield, Eye, FileCheck, TestTube, Key, Code, Play, User, Building } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { LoginModal } from "@/components/auth/LoginModal";
-import { UserTour } from "@/components/common/UserTour";
+import { useAppTour } from "@/components/common/TourProvider";
 import { useTranslation } from "@/i18n/LanguageContext";
+import { useNavigate } from "react-router-dom";
+
+type UserRole = "user" | "company" | "auditor";
 
 const Index = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showTour, setShowTour] = useState(false);
+  const [selectedRole, setSelectedRole] = useState<UserRole | null>(null);
   const { t } = useTranslation();
+  const { start } = useAppTour();
+  const navigate = useNavigate();
+
+  const roles = [
+    {
+      id: "user" as UserRole,
+      title: t("auth.role.user.title"),
+      description: t("auth.role.user.desc"),
+      icon: User,
+      color: "text-primary"
+    },
+    {
+      id: "company" as UserRole,
+      title: t("auth.role.company.title"),
+      description: t("auth.role.company.desc"),
+      icon: Building,
+      color: "text-accent-avalanche"
+    },
+    {
+      id: "auditor" as UserRole,
+      title: t("auth.role.auditor.title"),
+      description: t("auth.role.auditor.desc"),
+      icon: Shield,
+      color: "text-accent-success"
+    }
+  ];
+
+  const handleRoleSelect = (role: UserRole) => {
+    setSelectedRole(role);
+    setShowLoginModal(true);
+  };
 
   const features = [
     {
@@ -51,7 +85,7 @@ const Index = () => {
   ];
 
   const startTour = () => {
-    setShowTour(true);
+    start();
   };
 
   return (
@@ -72,19 +106,55 @@ const Index = () => {
                 {t("index.hero.subtitle.line2")}
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4 sm:px-0">
-                <Button 
-                  size="lg" 
-                  className="glass-button cta-start-button text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 shadow-glow w-full sm:w-auto"
-                  onClick={() => setShowLoginModal(true)}
-                >
-                  {t("index.hero.cta.start")}
-                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
-                </Button>
+              {/* Role Selection Section */}
+              <div className="mb-8">
+                <h3 className="text-xl sm:text-2xl font-semibold mb-2 gradient-text">
+                  {t("auth.chooseRole")}
+                </h3>
+                <p className="text-sm sm:text-base text-muted-foreground mb-6">
+                  {t("auth.selectHowToUse")}
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
+                  {roles.map((role) => {
+                    const Icon = role.icon;
+                    return (
+                      <Card 
+                        id={
+                          role.id === "user"
+                            ? "tour-role-user"
+                            : role.id === "company"
+                            ? "tour-role-company"
+                            : role.id === "auditor"
+                            ? "tour-role-auditor"
+                            : undefined
+                        }
+                        key={role.id}
+                        className="glass-card cursor-pointer hover:shadow-glow transition-all duration-300 border-glass-border group"
+                        onClick={() => handleRoleSelect(role.id)}
+                      >
+                        <CardHeader className="text-center pb-2">
+                          <div className="mx-auto mb-3 p-3 rounded-full bg-background/50 border border-glass-border group-hover:border-primary/50 transition-colors">
+                            <Icon className={`w-8 h-8 sm:w-10 sm:h-10 ${role.color}`} />
+                          </div>
+                          <CardTitle className="text-base sm:text-lg">{role.title}</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <CardDescription className="text-center text-xs sm:text-sm">
+                            {role.description}
+                          </CardDescription>
+                        </CardContent>
+                      </Card>
+                    );
+                  })}
+                </div>
+              </div>
+              
+              {/* Tour Button */}
+              <div className="flex justify-center">
                 <Button 
                   variant="outline" 
                   size="lg"
-                  className="glass-button text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 w-full sm:w-auto"
+                  className="glass-button text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6"
                   onClick={startTour}
                 >
                   <Play className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
@@ -165,12 +235,15 @@ const Index = () => {
         </section>
       </div>
 
-      <LoginModal open={showLoginModal} onOpenChange={setShowLoginModal} />
-      <UserTour 
-        isOpen={showTour} 
-        onComplete={() => setShowTour(false)}
-        onSkip={() => setShowTour(false)}
+      <LoginModal 
+        open={showLoginModal} 
+        onOpenChange={(open) => {
+          setShowLoginModal(open);
+          if (!open) setSelectedRole(null);
+        }}
+        preselectedRole={selectedRole}
       />
+      {/* Joyride guide is started from the CTA button using useAppTour(). */}
     </>
   );
 };
