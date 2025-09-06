@@ -121,12 +121,12 @@ export const LoginModal = ({ open, onOpenChange }: LoginModalProps) => {
       onOpenChange(open);
       if (!open) resetForm();
     }}>
-      <DialogContent className="glass-card max-w-2xl">
+      <DialogContent className="glass-card max-w-2xl mx-4 sm:mx-0">
         <DialogHeader>
-          <DialogTitle className="text-2xl gradient-text">
+          <DialogTitle className="text-xl sm:text-2xl gradient-text">
             {selectedRole ? (isLogin ? t("auth.login") : t("auth.register")) : t("auth.chooseRole")}
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-sm sm:text-base">
             {selectedRole 
               ? t("auth.accessAs").replace("{role}", roles.find(r => r.id === selectedRole)?.title || "")
               : t("auth.selectHowToUse")
@@ -135,7 +135,7 @@ export const LoginModal = ({ open, onOpenChange }: LoginModalProps) => {
         </DialogHeader>
 
         {!selectedRole ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 py-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 py-4">
             {roles.map((role) => {
               const Icon = role.icon;
               return (
@@ -145,11 +145,11 @@ export const LoginModal = ({ open, onOpenChange }: LoginModalProps) => {
                   onClick={() => handleRoleSelect(role.id)}
                 >
                   <CardHeader className="text-center pb-2">
-                    <Icon className={`w-12 h-12 mx-auto ${role.color}`} />
-                    <CardTitle className="text-lg">{role.title}</CardTitle>
+                    <Icon className={`w-10 h-10 sm:w-12 sm:h-12 mx-auto ${role.color}`} />
+                    <CardTitle className="text-base sm:text-lg">{role.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <CardDescription className="text-center text-sm">
+                    <CardDescription className="text-center text-xs sm:text-sm">
                       {role.description}
                     </CardDescription>
                   </CardContent>

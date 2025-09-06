@@ -6,7 +6,7 @@ export const LanguageSwitcher = () => {
 
   return (
     <Select value={lang} onValueChange={(v) => setLang(v as any)}>
-      <SelectTrigger className="w-[130px] glass-button h-9">
+      <SelectTrigger className="w-[100px] sm:w-[120px] md:w-[130px] glass-button h-8 sm:h-9">
         <SelectValue placeholder="Idioma" />
       </SelectTrigger>
       <SelectContent className="glass-card">

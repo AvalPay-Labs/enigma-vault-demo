@@ -58,36 +58,36 @@ const Index = () => {
     <>
       <div className="min-h-screen">
         {/* Hero Section */}
-        <section className="relative py-20 overflow-hidden">
+        <section className="relative py-12 sm:py-16 md:py-20 overflow-hidden">
           <div className="absolute inset-0 hero-gradient opacity-5" />
           <div className="container mx-auto px-4 relative">
             <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
                 <span className="gradient-text">{t("index.hero.title.line1")}</span>
                 <br />
                 {t("index.hero.title.line2")}
               </h1>
-              <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed">
+              <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground mb-6 sm:mb-8 leading-relaxed px-4 sm:px-0">
                 {t("index.hero.subtitle.line1")} <br />
                 {t("index.hero.subtitle.line2")}
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4 sm:px-0">
                 <Button 
                   size="lg" 
-                  className="glass-button cta-start-button text-lg px-8 py-6 shadow-glow"
+                  className="glass-button cta-start-button text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 shadow-glow w-full sm:w-auto"
                   onClick={() => setShowLoginModal(true)}
                 >
                   {t("index.hero.cta.start")}
-                  <ArrowRight className="w-5 h-5 ml-2" />
+                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
                 </Button>
                 <Button 
                   variant="outline" 
                   size="lg"
-                  className="glass-button text-lg px-8 py-6"
+                  className="glass-button text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 w-full sm:w-auto"
                   onClick={startTour}
                 >
-                  <Play className="w-5 h-5 mr-2" />
+                  <Play className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                   {t("index.hero.cta.tour")}
                 </Button>
               </div>
@@ -96,16 +96,16 @@ const Index = () => {
         </section>
 
         {/* Features Section */}
-        <section className="py-20 bg-gradient-to-b from-transparent to-muted/20">
+        <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-b from-transparent to-muted/20">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 gradient-text">{t("index.features.title")}</h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <div className="text-center mb-12 sm:mb-16">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 gradient-text">{t("index.features.title")}</h2>
+              <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4 sm:px-0">
                 {t("index.features.subtitle")}
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {features.map((feature, index) => {
                 const Icon = feature.icon;
                 return (
@@ -116,9 +116,9 @@ const Index = () => {
                   >
                     <CardHeader className="text-center pb-4">
                       <div className="mx-auto mb-4 p-3 rounded-full bg-background/50 border border-glass-border">
-                        <Icon className={`w-8 h-8 ${feature.color}`} />
+                        <Icon className={`w-6 h-6 sm:w-8 sm:h-8 ${feature.color}`} />
                       </div>
-                      <CardTitle className="text-xl mb-2">{feature.title}</CardTitle>
+                      <CardTitle className="text-lg sm:text-xl mb-2">{feature.title}</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <CardDescription className="text-center text-sm leading-relaxed">
@@ -133,27 +133,27 @@ const Index = () => {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20">
+        <section className="py-12 sm:py-16 md:py-20">
           <div className="container mx-auto px-4">
             <Card className="glass-card max-w-4xl mx-auto text-center border-glass-border">
-              <CardContent className="p-12">
-                <h3 className="text-3xl font-bold mb-4 gradient-text">{t("index.cta.title")}</h3>
-                <p className="text-lg text-muted-foreground mb-8">
+              <CardContent className="p-6 sm:p-8 md:p-12">
+                <h3 className="text-2xl sm:text-3xl font-bold mb-4 gradient-text">{t("index.cta.title")}</h3>
+                <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 px-4 sm:px-0">
                   {t("index.cta.subtitle")}
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 sm:px-0">
                   <Button 
                     size="lg" 
-                    className="glass-button cta-start-button shadow-glow"
+                    className="glass-button cta-start-button shadow-glow w-full sm:w-auto"
                     onClick={() => setShowLoginModal(true)}
                   >
                     {t("index.cta.createAccount")}
-                    <ArrowRight className="w-5 h-5 ml-2" />
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
                   </Button>
                   <Button 
                     variant="outline" 
                     size="lg"
-                    className="glass-button"
+                    className="glass-button w-full sm:w-auto"
                     onClick={startTour}
                   >
                     {t("index.cta.viewTour")}

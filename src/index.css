@@ -61,7 +61,7 @@ All colors MUST be HSL.
     /* Interactive states */
     --hover: 240 20% 96% / 0.8;
     --active: 240 20% 94%;
-    
+
     /* Border and outline */
     --border: 240 10% 88% / 0.4;
     --ring: 243 58% 51% / 0.3;
@@ -70,12 +70,12 @@ All colors MUST be HSL.
     --gradient-glass: linear-gradient(145deg, hsl(var(--glass)), hsl(var(--glass-hover)));
     --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
     --gradient-hero: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary-glow)) 50%, hsl(var(--accent-avalanche)) 100%);
-    
+
     /* Shadows for glassmorphism */
     --shadow-glass: 0 8px 32px 0 hsl(var(--foreground) / 0.05);
     --shadow-glass-lg: 0 20px 40px -12px hsl(var(--foreground) / 0.08);
     --shadow-glow: 0 0 40px hsl(var(--primary-glow) / 0.15);
-    
+
     /* Border radius system */
     --radius: 16px;
     --radius-sm: 8px;
@@ -129,26 +129,27 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground antialiased;
     background-image: radial-gradient(circle at 20% 80%, hsl(var(--primary-glow) / 0.1) 0%, transparent 50%),
-                      radial-gradient(circle at 80% 20%, hsl(var(--accent-avalanche) / 0.1) 0%, transparent 50%);
+      radial-gradient(circle at 80% 20%, hsl(var(--accent-avalanche) / 0.1) 0%, transparent 50%);
   }
 }
 
 @layer components {
+
   /* Glassmorphism utilities */
   .glass-card {
     @apply backdrop-blur-md border border-white/20 shadow-lg;
     background: hsl(var(--glass));
   }
-  
+
   .glass-card-hover {
     @apply hover:bg-white/[0.08] transition-all duration-300;
   }
-  
+
   .glass-button {
     @apply backdrop-blur-md border border-white/30 shadow-md hover:shadow-lg;
     background: linear-gradient(145deg, hsl(var(--glass)), hsl(var(--glass-hover)));
   }
-  
+
   /* Vivid yet elegant CTA for the home hero "Comenzar" button */
   .cta-start-button {
     background: linear-gradient(135deg, hsl(var(--primary-glow)), hsl(var(--primary)));
@@ -156,25 +157,44 @@ All colors MUST be HSL.
     border-color: hsl(var(--primary-glow) / 0.5);
     box-shadow: 0 0 40px hsl(var(--primary-glow) / 0.25);
   }
+
   .cta-start-button:hover {
     filter: saturate(1.05) brightness(1.03);
   }
-  
+
   .gradient-text {
     @apply bg-clip-text text-transparent;
     background-image: var(--gradient-primary);
   }
-  
+
   .hero-gradient {
     background-image: var(--gradient-hero);
   }
-  
+
   /* Loading states */
   .loading-pulse {
     @apply animate-pulse bg-gradient-to-r from-muted via-muted/50 to-muted;
   }
-  
+
   .loading-spinner {
     @apply animate-spin rounded-full border-2 border-primary/20 border-t-primary;
+  }
+
+  /* Mobile optimizations */
+  @media (max-width: 640px) {
+    .glass-card {
+      @apply backdrop-blur-sm;
+    }
+
+    .glass-button {
+      @apply backdrop-blur-sm;
+    }
+  }
+
+  /* Touch-friendly button sizes */
+  @media (max-width: 768px) {
+    .glass-button {
+      @apply min-h-[44px] min-w-[44px];
+    }
   }
 }
