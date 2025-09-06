@@ -12,8 +12,11 @@ const Footer = () => {
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
               <div className="relative">
-                <Shield className="w-6 h-6 text-primary" />
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-0.5 h-3 bg-background rounded-sm" />
+                <img 
+                  src="/logo-enigma.png" 
+                  alt="Enigma Protocol Logo" 
+                  className="w-6 h-6 object-contain"
+                />
               </div>
               <div className="flex flex-col">
                 <span className="font-bold gradient-text">Enigma Protocol</span>

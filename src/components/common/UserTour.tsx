@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronLeft, ChevronRight, X, User, Shield, Plus } from "lucide-react";
+import { ChevronLeft, ChevronRight, User, Shield, Plus } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -71,22 +71,12 @@ export const UserTour = ({ isOpen, onComplete, onSkip }: UserTourProps) => {
     <Dialog open={isOpen} onOpenChange={() => onSkip()}>
       <DialogContent className="glass-card max-w-lg">
         <DialogHeader>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <Icon className="w-6 h-6 text-primary" />
-              <div>
-                <DialogTitle className="text-lg">{currentTourStep.title}</DialogTitle>
-                <DialogDescription>{currentTourStep.description}</DialogDescription>
-              </div>
+          <div className="flex items-center space-x-3">
+            <Icon className="w-6 h-6 text-primary" />
+            <div>
+              <DialogTitle className="text-lg">{currentTourStep.title}</DialogTitle>
+              <DialogDescription>{currentTourStep.description}</DialogDescription>
             </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onSkip}
-              className="text-muted-foreground hover:text-foreground"
-            >
-              <X className="w-4 h-4" />
-            </Button>
           </div>
         </DialogHeader>
 

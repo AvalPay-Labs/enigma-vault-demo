@@ -37,8 +37,11 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity flex-shrink-0">
             <div className="relative">
-              <Shield className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-primary" />
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-0.5 h-2 sm:h-3 md:h-4 bg-background rounded-sm" />
+              <img 
+                src="/logo-enigma.png" 
+                alt="Enigma Protocol Logo" 
+                className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 object-contain"
+              />
             </div>
             <div className="flex flex-col">
               <span className="text-xs sm:text-sm md:text-lg font-bold gradient-text leading-tight">Enigma Protocol</span>
