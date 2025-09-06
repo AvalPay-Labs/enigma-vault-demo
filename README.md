@@ -108,23 +108,21 @@ enigma-vault-demo/
 └── vite.config.ts             # Vite configuration
 ```
 
-## Project info
+## Project Info
 
-**URL**: https://lovable.dev/projects/5697aba4-4acc-40fe-9434-fb2804fcd1e9
+This repository contains the Enigma Vault Demo application.
 
 ## How can I edit this code?
 
 There are several ways of editing your application.
 
-**Use Lovable**
+**Use Enigma**
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/5697aba4-4acc-40fe-9434-fb2804fcd1e9) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
+Work locally or with your preferred tools to iterate on the Enigma Vault Demo.
 
 **Use your preferred IDE**
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+If you want to work locally using your own IDE, you can clone this repo and push changes.
 
 The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
@@ -170,12 +168,13 @@ This project is built with:
 
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/5697aba4-4acc-40fe-9434-fb2804fcd1e9) and click on Share -> Publish.
+Build the production bundle and deploy the `dist/` folder to any static host (Vercel, Netlify, GitHub Pages, S3, etc.).
 
-## Can I connect a custom domain to my Lovable project?
+```sh
+npm run build
+npm run preview # optional local preview
+```
 
-Yes, you can!
+## Custom domains
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+If your hosting provider supports it, point your custom domain to the deployed site following their documentation.
