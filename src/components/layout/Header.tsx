@@ -9,9 +9,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { LoginModal } from "@/components/auth/LoginModal";
+import { useTranslation } from "@/i18n/LanguageContext";
+import LanguageSwitcher from "@/components/common/LanguageSwitcher";
 
 const Header = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const { t } = useTranslation();
   const location = useLocation();
 
   const isActive = (path: string) => location.pathname === path;
@@ -40,7 +43,7 @@ const Header = () => {
                 isActive("/pricing/precinct") ? "text-primary" : "text-muted-foreground"
               }`}
             >
-              Precios
+              {t("header.nav.pricing")}
             </Link>
             <Link
               to="/docs"
@@ -48,7 +51,7 @@ const Header = () => {
                 isActive("/docs") ? "text-primary" : "text-muted-foreground"
               }`}
             >
-              Documentación
+              {t("header.nav.docs")}
             </Link>
             <Link
               to="/help/faq"
@@ -56,7 +59,7 @@ const Header = () => {
                 isActive("/help/faq") ? "text-primary" : "text-muted-foreground"
               }`}
             >
-              Ayuda/FAQ
+              {t("header.nav.help")}
             </Link>
             <Link
               to="/about"
@@ -64,7 +67,7 @@ const Header = () => {
                 isActive("/about") ? "text-primary" : "text-muted-foreground"
               }`}
             >
-              Acerca de
+              {t("header.nav.about")}
             </Link>
           </nav>
 
@@ -75,21 +78,24 @@ const Header = () => {
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="sm" className="glass-button">
                   <div className="w-2 h-2 bg-accent-success rounded-full mr-2" />
-                  Fuji Testnet
+                  {t("header.network.fuji")}
                   <ChevronDown className="w-4 h-4 ml-2" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="glass-card">
                 <DropdownMenuItem className="text-accent-success">
                   <div className="w-2 h-2 bg-accent-success rounded-full mr-2" />
-                  Fuji Testnet
+                  {t("header.network.fuji")}
                 </DropdownMenuItem>
                 <DropdownMenuItem disabled className="opacity-50">
                   <div className="w-2 h-2 bg-muted rounded-full mr-2" />
-                  Avalanche C-Chain
+                  {t("header.network.avalanche")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+
+            {/* Language Switch */}
+            <LanguageSwitcher />
 
             {/* Login Button */}
             <Button
@@ -98,7 +104,7 @@ const Header = () => {
               size="sm"
             >
               <User className="w-4 h-4 mr-2" />
-              Iniciar sesión
+              {t("header.login")}
             </Button>
           </div>
         </div>

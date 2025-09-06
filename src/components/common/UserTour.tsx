@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useTranslation } from "@/i18n/LanguageContext";
 
 interface UserTourProps {
   isOpen: boolean;
@@ -16,35 +17,38 @@ interface UserTourProps {
   onSkip: () => void;
 }
 
-const tourSteps = [
-  {
-    title: "Bienvenido a Enigma Protocol",
-    description: "Tu protocolo de privacidad para transacciones eERC20 en Avalanche",
-    icon: Shield,
-    content: "Enigma Protocol te permite realizar transacciones privadas con auditoría opcional y sin custodia de tus fondos."
-  },
-  {
-    title: "Registro e Inicio de Sesión",
-    description: "Elige tu rol y crea tu cuenta",
-    icon: User,
-    content: "Puedes registrarte como Usuario para transacciones personales, Empresa para soluciones corporativas, o Auditor para revisar transacciones."
-  },
-  {
-    title: "Gestión de Tokens",
-    description: "Crea y convierte tokens con privacidad",
-    icon: Plus,
-    content: "Desde tu dashboard puedes crear nuevos tokens eERC20 privados o convertir tokens existentes para mayor privacidad."
-  },
-  {
-    title: "Sistema de Auditoría",
-    description: "Control y transparencia opcional",
-    icon: Shield,
-    content: "Los auditores pueden solicitar permisos temporales para revisar transacciones específicas, manteniendo la privacidad bajo tu control."
-  }
-];
+const tourIcons = [Shield, User, Plus, Shield];
 
 export const UserTour = ({ isOpen, onComplete, onSkip }: UserTourProps) => {
   const [currentStep, setCurrentStep] = useState(0);
+  const { t } = useTranslation();
+
+  const tourSteps = [
+    {
+      title: t("tour.1.title"),
+      description: t("tour.1.description"),
+      icon: tourIcons[0],
+      content: t("tour.1.content"),
+    },
+    {
+      title: t("tour.2.title"),
+      description: t("tour.2.description"),
+      icon: tourIcons[1],
+      content: t("tour.2.content"),
+    },
+    {
+      title: t("tour.3.title"),
+      description: t("tour.3.description"),
+      icon: tourIcons[2],
+      content: t("tour.3.content"),
+    },
+    {
+      title: t("tour.4.title"),
+      description: t("tour.4.description"),
+      icon: tourIcons[3],
+      content: t("tour.4.content"),
+    },
+  ];
 
   const handleNext = () => {
     if (currentStep < tourSteps.length - 1) {
@@ -115,18 +119,15 @@ export const UserTour = ({ isOpen, onComplete, onSkip }: UserTourProps) => {
             className="glass-button"
           >
             <ChevronLeft className="w-4 h-4 mr-2" />
-            Anterior
+            {t("tour.prev")}
           </Button>
 
           <span className="text-sm text-muted-foreground">
-            {currentStep + 1} de {tourSteps.length}
+            {currentStep + 1} {t("tour.stepOf")} {tourSteps.length}
           </span>
 
-          <Button
-            onClick={handleNext}
-            className="glass-button"
-          >
-            {currentStep === tourSteps.length - 1 ? "Finalizar" : "Siguiente"}
+          <Button onClick={handleNext} className="glass-button">
+            {currentStep === tourSteps.length - 1 ? t("tour.finish") : t("tour.next")}
             {currentStep < tourSteps.length - 1 && <ChevronRight className="w-4 h-4 ml-2" />}
           </Button>
         </div>
@@ -138,7 +139,7 @@ export const UserTour = ({ isOpen, onComplete, onSkip }: UserTourProps) => {
             onClick={onSkip}
             className="text-muted-foreground hover:text-foreground"
           >
-            Saltar guía
+            {t("tour.skip")}
           </Button>
         </div>
       </DialogContent>

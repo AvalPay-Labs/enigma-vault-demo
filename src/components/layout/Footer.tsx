@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import { Github, Shield } from "lucide-react";
+import { useTranslation } from "@/i18n/LanguageContext";
 
 const Footer = () => {
+  const { t } = useTranslation();
   return (
     <footer className="glass-card border-t border-glass-border mt-auto">
       <div className="container mx-auto px-4 py-12">
@@ -25,54 +27,54 @@ const Footer = () => {
 
           {/* Productos */}
           <div className="space-y-4">
-            <h4 className="font-semibold text-card-foreground">Productos</h4>
+            <h4 className="font-semibold text-card-foreground">{t("footer.products")}</h4>
             <div className="space-y-2">
               <Link to="/app/dashboard" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                Dashboard
+                {t("footer.dashboard")}
               </Link>
               <Link to="/pricing/precinct" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                Precinct
+                {t("footer.precinct")}
               </Link>
               <Link to="/docs" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                Documentación
+                {t("footer.docs")}
               </Link>
               <Link to="/help/faq" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                Health
+                {t("footer.health")}
               </Link>
               <Link to="/help/faq" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                FAQ
+                {t("footer.faq")}
               </Link>
             </div>
           </div>
 
           {/* Compañía */}
           <div className="space-y-4">
-            <h4 className="font-semibold text-card-foreground">Compañía</h4>
+            <h4 className="font-semibold text-card-foreground">{t("footer.company")}</h4>
             <div className="space-y-2">
               <Link to="/about" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                Acerca de
+                {t("footer.about")}
               </Link>
               <Link to="/about#become-auditor" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                Conviértete en Auditor
+                {t("footer.becomeAuditor")}
               </Link>
               <Link to="/about#contact" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                Contacto
+                {t("footer.contact")}
               </Link>
             </div>
           </div>
 
           {/* Legal */}
           <div className="space-y-4">
-            <h4 className="font-semibold text-card-foreground">Legal</h4>
+            <h4 className="font-semibold text-card-foreground">{t("footer.legal")}</h4>
             <div className="space-y-2">
               <Link to="/legal/terms" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                Términos de uso
+                {t("footer.terms")}
               </Link>
               <Link to="/legal/privacy" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                Política de privacidad
+                {t("footer.privacy")}
               </Link>
               <Link to="/legal/cookies" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                Política de cookies
+                {t("footer.cookies")}
               </Link>
             </div>
           </div>
@@ -80,9 +82,7 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="border-t border-glass-border mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-sm text-muted-foreground">
-            © AvalPay 2025. Todos los derechos reservados.
-          </p>
+          <p className="text-sm text-muted-foreground">{t("footer.copyright")}</p>
           <div className="flex items-center space-x-4 mt-4 md:mt-0">
             <a
               href="https://github.com/avalpay"

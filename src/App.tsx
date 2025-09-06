@@ -16,6 +16,7 @@ import Dashboard from "./pages/app/Dashboard";
 import Auditor from "./pages/app/Auditor";
 import TokenDetail from "./pages/app/TokenDetail";
 import NotFound from "./pages/NotFound";
+import { LanguageProvider } from "@/i18n/LanguageContext";
 
 const queryClient = new QueryClient();
 
@@ -24,24 +25,26 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/pricing/precinct" element={<Pricing />} />
-            <Route path="/docs" element={<Docs />} />
-            <Route path="/help/faq" element={<HelpFAQ />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/legal/terms" element={<Terms />} />
-            <Route path="/legal/privacy" element={<Privacy />} />
-            <Route path="/legal/cookies" element={<Cookies />} />
-            <Route path="/app/dashboard" element={<Dashboard />} />
-            <Route path="/app/auditor" element={<Auditor />} />
-            <Route path="/app/token/:id" element={<TokenDetail />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Layout>
-      </BrowserRouter>
+      <LanguageProvider>
+        <BrowserRouter>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/pricing/precinct" element={<Pricing />} />
+              <Route path="/docs" element={<Docs />} />
+              <Route path="/help/faq" element={<HelpFAQ />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/legal/terms" element={<Terms />} />
+              <Route path="/legal/privacy" element={<Privacy />} />
+              <Route path="/legal/cookies" element={<Cookies />} />
+              <Route path="/app/dashboard" element={<Dashboard />} />
+              <Route path="/app/auditor" element={<Auditor />} />
+              <Route path="/app/token/:id" element={<TokenDetail />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Layout>
+        </BrowserRouter>
+      </LanguageProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

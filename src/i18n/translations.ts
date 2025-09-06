@@ -1,0 +1,163 @@
+export type Language = "es" | "en" | "pt";
+
+type Dict = Record<string, string>;
+
+export const translations: Record<Language, Dict> = {
+  es: {
+    // Header
+    "header.nav.pricing": "Precios",
+    "header.nav.docs": "Documentación",
+    "header.nav.help": "Ayuda/FAQ",
+    "header.nav.about": "Acerca de",
+    "header.login": "Iniciar sesión",
+    "header.network.fuji": "Fuji Testnet",
+    "header.network.avalanche": "Avalanche C-Chain",
+    "header.lang": "Idioma",
+
+    // Footer
+    "footer.products": "Productos",
+    "footer.company": "Compañía",
+    "footer.legal": "Legal",
+    "footer.dashboard": "Dashboard",
+    "footer.precinct": "Precinct",
+    "footer.docs": "Documentación",
+    "footer.health": "Health",
+    "footer.faq": "FAQ",
+    "footer.about": "Acerca de",
+    "footer.becomeAuditor": "Conviértete en Auditor",
+    "footer.contact": "Contacto",
+    "footer.terms": "Términos de uso",
+    "footer.privacy": "Política de privacidad",
+    "footer.cookies": "Política de cookies",
+    "footer.copyright": "© AvalPay 2025. Todos los derechos reservados.",
+
+    // Cookie banner
+    "cookie.text": "Usamos cookies para mejorar tu experiencia. Al continuar, aceptas nuestra política de cookies.",
+    "cookie.accept": "Aceptar",
+    "cookie.reject": "Rechazar",
+
+    // User tour
+    "tour.1.title": "Bienvenido a Enigma Protocol",
+    "tour.1.description": "Tu protocolo de privacidad para transacciones eERC20 en Avalanche",
+    "tour.1.content": "Enigma Protocol te permite realizar transacciones privadas con auditoría opcional y sin custodia de tus fondos.",
+    "tour.2.title": "Registro e Inicio de Sesión",
+    "tour.2.description": "Elige tu rol y crea tu cuenta",
+    "tour.2.content": "Puedes registrarte como Usuario para transacciones personales, Empresa para soluciones corporativas, o Auditor para revisar transacciones.",
+    "tour.3.title": "Gestión de Tokens",
+    "tour.3.description": "Crea y convierte tokens con privacidad",
+    "tour.3.content": "Desde tu dashboard puedes crear nuevos tokens eERC20 privados o convertir tokens existentes para mayor privacidad.",
+    "tour.4.title": "Sistema de Auditoría",
+    "tour.4.description": "Control y transparencia opcional",
+    "tour.4.content": "Los auditores pueden solicitar permisos temporales para revisar transacciones específicas, manteniendo la privacidad bajo tu control.",
+    "tour.prev": "Anterior",
+    "tour.next": "Siguiente",
+    "tour.finish": "Finalizar",
+    "tour.stepOf": "de",
+    "tour.skip": "Saltar guía",
+  },
+  en: {
+    // Header
+    "header.nav.pricing": "Pricing",
+    "header.nav.docs": "Docs",
+    "header.nav.help": "Help/FAQ",
+    "header.nav.about": "About",
+    "header.login": "Sign In",
+    "header.network.fuji": "Fuji Testnet",
+    "header.network.avalanche": "Avalanche C-Chain",
+    "header.lang": "Language",
+
+    // Footer
+    "footer.products": "Products",
+    "footer.company": "Company",
+    "footer.legal": "Legal",
+    "footer.dashboard": "Dashboard",
+    "footer.precinct": "Precinct",
+    "footer.docs": "Docs",
+    "footer.health": "Health",
+    "footer.faq": "FAQ",
+    "footer.about": "About",
+    "footer.becomeAuditor": "Become an Auditor",
+    "footer.contact": "Contact",
+    "footer.terms": "Terms of Use",
+    "footer.privacy": "Privacy Policy",
+    "footer.cookies": "Cookie Policy",
+    "footer.copyright": "© AvalPay 2025. All rights reserved.",
+
+    // Cookie banner
+    "cookie.text": "We use cookies to improve your experience. By continuing, you accept our cookie policy.",
+    "cookie.accept": "Accept",
+    "cookie.reject": "Reject",
+
+    // User tour
+    "tour.1.title": "Welcome to Enigma Protocol",
+    "tour.1.description": "Your privacy protocol for eERC20 on Avalanche",
+    "tour.1.content": "Enigma Protocol lets you make private transactions with optional auditing and without custody of your funds.",
+    "tour.2.title": "Sign Up & Sign In",
+    "tour.2.description": "Choose your role and create an account",
+    "tour.2.content": "Register as a User for personal transactions, Company for corporate solutions, or Auditor to review transactions.",
+    "tour.3.title": "Token Management",
+    "tour.3.description": "Create and convert tokens privately",
+    "tour.3.content": "From your dashboard you can create new private eERC20 tokens or convert existing tokens for greater privacy.",
+    "tour.4.title": "Auditing System",
+    "tour.4.description": "Optional control and transparency",
+    "tour.4.content": "Auditors can request temporary permissions to review specific transactions while keeping privacy under your control.",
+    "tour.prev": "Previous",
+    "tour.next": "Next",
+    "tour.finish": "Finish",
+    "tour.stepOf": "of",
+    "tour.skip": "Skip tour",
+  },
+  pt: {
+    // Header
+    "header.nav.pricing": "Preços",
+    "header.nav.docs": "Docs",
+    "header.nav.help": "Ajuda/FAQ",
+    "header.nav.about": "Sobre",
+    "header.login": "Entrar",
+    "header.network.fuji": "Fuji Testnet",
+    "header.network.avalanche": "Avalanche C-Chain",
+    "header.lang": "Idioma",
+
+    // Footer
+    "footer.products": "Produtos",
+    "footer.company": "Empresa",
+    "footer.legal": "Legal",
+    "footer.dashboard": "Dashboard",
+    "footer.precinct": "Precinct",
+    "footer.docs": "Docs",
+    "footer.health": "Health",
+    "footer.faq": "FAQ",
+    "footer.about": "Sobre",
+    "footer.becomeAuditor": "Torne-se Auditor",
+    "footer.contact": "Contato",
+    "footer.terms": "Termos de uso",
+    "footer.privacy": "Política de privacidade",
+    "footer.cookies": "Política de cookies",
+    "footer.copyright": "© AvalPay 2025. Todos os direitos reservados.",
+
+    // Cookie banner
+    "cookie.text": "Usamos cookies para melhorar sua experiência. Ao continuar, você aceita nossa política de cookies.",
+    "cookie.accept": "Aceitar",
+    "cookie.reject": "Rejeitar",
+
+    // User tour
+    "tour.1.title": "Bem-vindo ao Enigma Protocol",
+    "tour.1.description": "Seu protocolo de privacidade para eERC20 na Avalanche",
+    "tour.1.content": "O Enigma Protocol permite transações privadas com auditoria opcional e sem custódia dos seus fundos.",
+    "tour.2.title": "Cadastro e Login",
+    "tour.2.description": "Escolha seu papel e crie sua conta",
+    "tour.2.content": "Cadastre-se como Usuário para transações pessoais, Empresa para soluções corporativas, ou Auditor para revisar transações.",
+    "tour.3.title": "Gestão de Tokens",
+    "tour.3.description": "Crie e converta tokens com privacidade",
+    "tour.3.content": "No dashboard você pode criar novos tokens eERC20 privados ou converter tokens existentes para maior privacidade.",
+    "tour.4.title": "Sistema de Auditoria",
+    "tour.4.description": "Controle e transparência opcionais",
+    "tour.4.content": "Auditores podem solicitar permissões temporárias para revisar transações específicas, mantendo a privacidade sob seu controle.",
+    "tour.prev": "Anterior",
+    "tour.next": "Próximo",
+    "tour.finish": "Concluir",
+    "tour.stepOf": "de",
+    "tour.skip": "Pular tour",
+  },
+};
+
