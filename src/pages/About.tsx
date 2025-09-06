@@ -11,44 +11,44 @@ const About = () => {
 
   const team = [
     {
-      name: "Ana García",
+      name: "Juan Quiceno",
       role: "CEO & Co-founder",
-      expertise: "Blockchain Architecture & Strategy",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b6b0c55c?w=400&h=400&fit=crop&crop=face",
-      linkedin: "https://linkedin.com/in/ana-garcia",
-      github: "https://github.com/ana-garcia"
-    },
-    {
-      name: "Carlos Ruiz",
-      role: "CTO & Co-founder", 
-      expertise: "Cryptography & Zero-Knowledge Proofs",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
-      linkedin: "https://linkedin.com/in/carlos-ruiz",
-      github: "https://github.com/carlos-ruiz"
-    },
-    {
-      name: "María López",
-      role: "Lead Developer",
       expertise: "Smart Contracts & Avalanche",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face",
+      image: "https://i.postimg.cc/6pXyQF52/juan.jpg",
       linkedin: "https://linkedin.com/in/maria-lopez",
       github: "https://github.com/maria-lopez"
     },
     {
-      name: "David Chen",
-      role: "Security Auditor",
-      expertise: "Smart Contract Security & Auditing",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
-      linkedin: "https://linkedin.com/in/david-chen",
-      github: "https://github.com/david-chen"
+      name: "Daniel Luque",
+      role: "CFO | CSO | Co-founder", 
+      expertise: "Simplifying web3 for the 99%",
+      image: "https://i.postimg.cc/HLK0Mb3v/dani.jpg",
+      linkedin: "https://www.linkedin.com/in/dani-luque",
+      github: "https://github.com/adn-121"
     },
     {
-      name: "Laura Martín",
-      role: "Product Designer",
-      expertise: "UX/UI Design & User Research",
-      image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop&crop=face",
-      linkedin: "https://linkedin.com/in/laura-martin",
-      github: "https://github.com/laura-martin"
+      name: "Luis Fernando Ushiña",
+      role: "DevRel & Co-founder",
+      expertise: "Blockchain Architecture & Strategy",
+      image: "https://i.postimg.cc/pTwBwKF5/wolf.jpg",
+      linkedin: "https://www.linkedin.com/in/wolfcito",
+      github: "https://github.com/wolfcito"
+    },
+    {
+      name: "Diego Ramirez",
+      role: "Backend Developer & Co-founder",
+      expertise: "Backend Development & Avalanche",
+      image: "https://i.postimg.cc/PJq3V64H/diego.jpg",
+      linkedin: "https://linkedin.com/in/diego-ramirez",
+      github: "https://github.com/diego-ramirez"
+    },
+    {
+      name: "David Correa",
+      role: "Security Auditor & Co-founder",
+      expertise: "Blockchain Dev | Full Stack Dev | Web 3 Dev | Smart Contracts | Etherium | Solidity | React",
+      image: "https://i.postimg.cc/vBh09YrR/david.jpg",
+      linkedin: "https://linkedin.com/in/david-correa",
+      github: "https://github.com/david-correa"
     }
   ];
 
