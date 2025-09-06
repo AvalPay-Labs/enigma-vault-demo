@@ -33,8 +33,12 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
 
   const t = useMemo(() => {
     return (key: string) => {
-      const dict = translations[lang] || translations["es"];
-      return dict[key] ?? translations["en"][key] ?? key;
+      const current = translations[lang];
+      if (current && key in current) return current[key];
+      // Prefer Spanish as default content fallback
+      if (key in translations["es"]) return translations["es"][key];
+      if (key in translations["en"]) return translations["en"][key];
+      return key;
     };
   }, [lang]);
 
@@ -58,4 +62,3 @@ export const useTranslation = () => {
   const { t } = useI18n();
   return { t };
 };
-

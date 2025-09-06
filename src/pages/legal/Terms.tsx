@@ -1,7 +1,9 @@
 import { ScrollText } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useTranslation } from "@/i18n/LanguageContext";
 
 const Terms = () => {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen py-20">
       <div className="container mx-auto px-4">
@@ -11,12 +13,8 @@ const Terms = () => {
             <div className="flex items-center justify-center mb-6">
               <ScrollText className="w-12 h-12 text-primary" />
             </div>
-            <h1 className="text-4xl font-bold mb-4 gradient-text">
-              Términos de Uso
-            </h1>
-            <p className="text-muted-foreground">
-              Última actualización: 7 de enero de 2025
-            </p>
+            <h1 className="text-4xl font-bold mb-4 gradient-text">{t("legal.terms.title")}</h1>
+            <p className="text-muted-foreground">{t("legal.lastUpdated")}: 7/01/2025</p>
           </div>
 
           <Card className="glass-card border-glass-border">

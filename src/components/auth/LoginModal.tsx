@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "@/i18n/LanguageContext";
 
 interface LoginModalProps {
   open: boolean;
@@ -36,26 +37,27 @@ export const LoginModal = ({ open, onOpenChange }: LoginModalProps) => {
   
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   const roles = [
     {
       id: "user" as UserRole,
-      title: "Usuario",
-      description: "Gestiona tus tokens con privacidad",
+      title: t("auth.role.user.title"),
+      description: t("auth.role.user.desc"),
       icon: User,
       color: "text-primary"
     },
     {
       id: "company" as UserRole,
-      title: "Empresa",
-      description: "Soluciones corporativas de privacidad",
+      title: t("auth.role.company.title"),
+      description: t("auth.role.company.desc"),
       icon: Building,
       color: "text-accent-avalanche"
     },
     {
       id: "auditor" as UserRole,
-      title: "Auditor",
-      description: "Audita transacciones con permisos",
+      title: t("auth.role.auditor.title"),
+      description: t("auth.role.auditor.desc"),
       icon: Shield,
       color: "text-accent-success"
     }
@@ -74,8 +76,8 @@ export const LoginModal = ({ open, onOpenChange }: LoginModalProps) => {
 
     if (!isLogin && formData.password !== formData.confirmPassword) {
       toast({
-        title: "Error",
-        description: "Las contraseñas no coinciden",
+        title: t("auth.error.title"),
+        description: t("auth.error.passwordMismatch"),
         variant: "destructive"
       });
       setLoading(false);
@@ -93,8 +95,8 @@ export const LoginModal = ({ open, onOpenChange }: LoginModalProps) => {
     localStorage.setItem('enigma_session', 'active');
 
     toast({
-      title: isLogin ? "Sesión iniciada" : "Cuenta creada",
-      description: `Bienvenido como ${roles.find(r => r.id === selectedRole)?.title}`,
+      title: isLogin ? t("auth.toast.login") : t("auth.toast.register"),
+      description: t("auth.toast.welcome").replace("{role}", roles.find(r => r.id === selectedRole)?.title || ""),
     });
 
     // Navigate based on role
@@ -122,12 +124,12 @@ export const LoginModal = ({ open, onOpenChange }: LoginModalProps) => {
       <DialogContent className="glass-card max-w-2xl">
         <DialogHeader>
           <DialogTitle className="text-2xl gradient-text">
-            {selectedRole ? (isLogin ? "Iniciar Sesión" : "Crear Cuenta") : "Elige tu Rol"}
+            {selectedRole ? (isLogin ? t("auth.login") : t("auth.register")) : t("auth.chooseRole")}
           </DialogTitle>
           <DialogDescription>
             {selectedRole 
-              ? `Accede como ${roles.find(r => r.id === selectedRole)?.title}`
-              : "Selecciona cómo quieres usar Enigma Protocol"
+              ? t("auth.accessAs").replace("{role}", roles.find(r => r.id === selectedRole)?.title || "")
+              : t("auth.selectHowToUse")
             }
           </DialogDescription>
         </DialogHeader>
@@ -158,18 +160,14 @@ export const LoginModal = ({ open, onOpenChange }: LoginModalProps) => {
         ) : (
           <Tabs value={isLogin ? "login" : "register"} className="w-full">
             <TabsList className="grid w-full grid-cols-2 glass-card">
-              <TabsTrigger value="login" onClick={() => setIsLogin(true)}>
-                Iniciar Sesión
-              </TabsTrigger>
-              <TabsTrigger value="register" onClick={() => setIsLogin(false)}>
-                Registrarse
-              </TabsTrigger>
+              <TabsTrigger value="login" onClick={() => setIsLogin(true)}>{t("auth.login")}</TabsTrigger>
+              <TabsTrigger value="register" onClick={() => setIsLogin(false)}>{t("auth.registerShort")}</TabsTrigger>
             </TabsList>
 
             <TabsContent value="login" className="space-y-4">
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="email">Correo electrónico</Label>
+                  <Label htmlFor="email">{t("auth.email")}</Label>
                   <Input
                     id="email"
                     type="email"
@@ -180,7 +178,7 @@ export const LoginModal = ({ open, onOpenChange }: LoginModalProps) => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="password">Contraseña</Label>
+                  <Label htmlFor="password">{t("auth.password")}</Label>
                   <div className="relative">
                     <Input
                       id="password"
@@ -205,7 +203,7 @@ export const LoginModal = ({ open, onOpenChange }: LoginModalProps) => {
                   {loading ? (
                     <div className="loading-spinner w-4 h-4 mr-2" />
                   ) : null}
-                  Iniciar Sesión
+                  {t("auth.login")}
                 </Button>
               </form>
             </TabsContent>
@@ -213,7 +211,7 @@ export const LoginModal = ({ open, onOpenChange }: LoginModalProps) => {
             <TabsContent value="register" className="space-y-4">
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="name">Nombre completo</Label>
+                  <Label htmlFor="name">{t("auth.fullName")}</Label>
                   <Input
                     id="name"
                     type="text"
@@ -224,7 +222,7 @@ export const LoginModal = ({ open, onOpenChange }: LoginModalProps) => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="register-email">Correo electrónico</Label>
+                  <Label htmlFor="register-email">{t("auth.email")}</Label>
                   <Input
                     id="register-email"
                     type="email"
@@ -235,7 +233,7 @@ export const LoginModal = ({ open, onOpenChange }: LoginModalProps) => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="register-password">Contraseña</Label>
+                  <Label htmlFor="register-password">{t("auth.password")}</Label>
                   <div className="relative">
                     <Input
                       id="register-password"
@@ -257,7 +255,7 @@ export const LoginModal = ({ open, onOpenChange }: LoginModalProps) => {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="confirm-password">Confirmar contraseña</Label>
+                  <Label htmlFor="confirm-password">{t("auth.confirmPassword")}</Label>
                   <Input
                     id="confirm-password"
                     type="password"
@@ -271,7 +269,7 @@ export const LoginModal = ({ open, onOpenChange }: LoginModalProps) => {
                   {loading ? (
                     <div className="loading-spinner w-4 h-4 mr-2" />
                   ) : null}
-                  Crear Cuenta
+                  {t("auth.createAccount")}
                 </Button>
               </form>
             </TabsContent>
@@ -284,7 +282,7 @@ export const LoginModal = ({ open, onOpenChange }: LoginModalProps) => {
             onClick={() => setSelectedRole(null)}
             className="w-full"
           >
-            ← Cambiar rol
+            ← {t("auth.changeRole")}
           </Button>
         )}
       </DialogContent>

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "@/i18n/LanguageContext";
 
 const Dashboard = () => {
   const [user, setUser] = useState<any>(null);
@@ -11,6 +12,7 @@ const Dashboard = () => {
   const [auditRequests, setAuditRequests] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const userData = localStorage.getItem('enigma_user');
@@ -39,7 +41,7 @@ const Dashboard = () => {
       auditorExpiry: null
     };
     setTokens([...tokens, newToken]);
-    toast({ title: "Token creado exitosamente", description: `${newToken.name} ha sido creado` });
+    toast({ title: t("dashboard.toast.tokenCreated.title"), description: t("dashboard.toast.tokenCreated.desc").replace("{name}", newToken.name) });
     setLoading(false);
   };
 
@@ -61,10 +63,8 @@ const Dashboard = () => {
     <div className="min-h-screen py-8">
       <div className="container mx-auto px-4">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold gradient-text mb-2">
-            Dashboard {user?.role === 'company' ? 'Empresarial' : 'Personal'}
-          </h1>
-          <p className="text-muted-foreground">Gestiona tus tokens privados y auditorías</p>
+          <h1 className="text-3xl font-bold gradient-text mb-2">{t("dashboard.title")} {user?.role === 'company' ? t("dashboard.business") : t("dashboard.personal")}</h1>
+          <p className="text-muted-foreground">{t("dashboard.subtitle")}</p>
         </div>
 
         {/* KPIs */}
@@ -73,7 +73,7 @@ const Dashboard = () => {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Tokens Creados</p>
+                  <p className="text-sm text-muted-foreground">{t("dashboard.kpi.tokensCreated")}</p>
                   <p className="text-2xl font-bold">{tokens.length}</p>
                 </div>
                 <Plus className="w-8 h-8 text-primary" />
@@ -84,7 +84,7 @@ const Dashboard = () => {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Con Auditor</p>
+                  <p className="text-sm text-muted-foreground">{t("dashboard.kpi.withAuditor")}</p>
                   <p className="text-2xl font-bold">{tokens.filter(t => t.auditor).length}</p>
                 </div>
                 <Shield className="w-8 h-8 text-accent-success" />
@@ -95,7 +95,7 @@ const Dashboard = () => {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Transacciones</p>
+                  <p className="text-sm text-muted-foreground">{t("dashboard.kpi.transactions")}</p>
                   <p className="text-2xl font-bold">45</p>
                 </div>
                 <TrendingUp className="w-8 h-8 text-accent-avalanche" />
@@ -106,7 +106,7 @@ const Dashboard = () => {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Pendientes</p>
+                  <p className="text-sm text-muted-foreground">{t("dashboard.kpi.pending")}</p>
                   <p className="text-2xl font-bold">{auditRequests.length}</p>
                 </div>
                 <Clock className="w-8 h-8 text-warning" />
@@ -119,49 +119,49 @@ const Dashboard = () => {
         <div className="flex flex-wrap gap-4 mb-8">
           <Button onClick={createToken} disabled={loading} className="glass-button">
             {loading ? <div className="loading-spinner w-4 h-4 mr-2" /> : <Plus className="w-4 h-4 mr-2" />}
-            Crear Token
+            {t("dashboard.actions.createToken")}
           </Button>
           <Button variant="outline" className="glass-button">
             <Plus className="w-4 h-4 mr-2" />
-            Convertir/Migrar Token
+            {t("dashboard.actions.convertToken")}
           </Button>
           <Button variant="outline" onClick={() => exportData('csv')} className="glass-button">
             <Download className="w-4 h-4 mr-2" />
-            Exportar CSV
+            {t("dashboard.actions.exportCsv")}
           </Button>
           <Button variant="outline" onClick={() => exportData('json')} className="glass-button">
             <Download className="w-4 h-4 mr-2" />
-            Exportar JSON
+            {t("dashboard.actions.exportJson")}
           </Button>
           <Button variant="outline" className="glass-button">
             <Wallet className="w-4 h-4 mr-2" />
-            Conectar Billetera
+            {t("dashboard.actions.connectWallet")}
           </Button>
         </div>
 
         {/* Tokens Table */}
         <Card className="glass-card border-glass-border mb-8">
-          <CardHeader>
-            <CardTitle>Mis Tokens</CardTitle>
-          </CardHeader>
+            <CardHeader>
+            <CardTitle>{t("dashboard.tokens.title")}</CardTitle>
+            </CardHeader>
           <CardContent>
             <div className="space-y-4">
               {tokens.map((token) => (
                 <div key={token.id} className="flex items-center justify-between p-4 bg-muted/20 rounded-lg">
                   <div>
                     <h3 className="font-semibold">{token.name} ({token.symbol})</h3>
-                    <p className="text-sm text-muted-foreground">Balance: {token.balance}</p>
+                    <p className="text-sm text-muted-foreground">{t("dashboard.tokens.balance")}: {token.balance}</p>
                   </div>
                   <div className="text-right">
                     {token.auditor ? (
                       <Badge className="bg-accent-success text-success-foreground">
-                        Auditor: {token.auditor}
+                        {t("dashboard.tokens.auditor")}: {token.auditor}
                       </Badge>
                     ) : (
-                      <Badge variant="outline">Sin auditor</Badge>
+                      <Badge variant="outline">{t("dashboard.tokens.noAuditor")}</Badge>
                     )}
                     <p className="text-xs text-muted-foreground mt-1">
-                      {token.auditorExpiry ? `Hasta: ${token.auditorExpiry}` : ''}
+                      {token.auditorExpiry ? `${t("dashboard.tokens.until")}: ${token.auditorExpiry}` : ''}
                     </p>
                   </div>
                 </div>
@@ -172,9 +172,9 @@ const Dashboard = () => {
 
         {/* Audit Requests */}
         <Card className="glass-card border-glass-border">
-          <CardHeader>
-            <CardTitle>Solicitudes de Auditoría</CardTitle>
-          </CardHeader>
+            <CardHeader>
+            <CardTitle>{t("dashboard.requests.title")}</CardTitle>
+            </CardHeader>
           <CardContent>
             <div className="space-y-4">
               {auditRequests.map((request) => (
@@ -184,8 +184,8 @@ const Dashboard = () => {
                     <p className="text-sm text-muted-foreground">{request.tokenName} - {request.reason}</p>
                   </div>
                   <div className="flex gap-2">
-                    <Button size="sm" className="glass-button">Aceptar</Button>
-                    <Button size="sm" variant="outline" className="glass-button">Rechazar</Button>
+                    <Button size="sm" className="glass-button">{t("dashboard.requests.accept")}</Button>
+                    <Button size="sm" variant="outline" className="glass-button">{t("dashboard.requests.reject")}</Button>
                   </div>
                 </div>
               ))}

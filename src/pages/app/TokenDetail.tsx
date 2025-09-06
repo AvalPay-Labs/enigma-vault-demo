@@ -3,9 +3,11 @@ import { ArrowUpRight, ArrowDownLeft, Eye, EyeOff, Shield } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "@/i18n/LanguageContext";
 
 const TokenDetail = () => {
   const { id } = useParams();
+  const { t } = useTranslation();
   
   // Mock data
   const token = {
@@ -70,14 +72,14 @@ const TokenDetail = () => {
                   <div>
                     <Badge className="bg-accent-success text-success-foreground mb-2">
                       <Shield className="w-3 h-3 mr-1" />
-                      Auditado por {token.auditor}
+                      {t("tokenDetail.auditedBy")} {token.auditor}
                     </Badge>
                     <p className="text-xs text-muted-foreground">
-                      Vigencia hasta: {token.auditorExpiry}
+                      {t("tokenDetail.validUntil")}: {token.auditorExpiry}
                     </p>
                   </div>
                 ) : (
-                  <Badge variant="outline">Sin auditor activo</Badge>
+                  <Badge variant="outline">{t("tokenDetail.noActiveAuditor")}</Badge>
                 )}
               </div>
             </div>
@@ -87,7 +89,7 @@ const TokenDetail = () => {
         {/* Transactions */}
         <Card className="glass-card border-glass-border">
           <CardHeader>
-            <CardTitle>Transacciones</CardTitle>
+            <CardTitle>{t("tokenDetail.transactions")}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -105,7 +107,7 @@ const TokenDetail = () => {
                     </div>
                     <div>
                       <div className="flex items-center space-x-2">
-                        <span className="font-semibold capitalize">{tx.type}</span>
+                        <span className="font-semibold capitalize">{t(`tokenDetail.type.${tx.type}`)}</span>
                         {!tx.visible && (
                           <EyeOff className="w-4 h-4 text-muted-foreground" />
                         )}
@@ -120,22 +122,16 @@ const TokenDetail = () => {
                     {tx.visible ? (
                       <div>
                         <p className="font-semibold">{tx.amount} {token.symbol}</p>
-                        <p className="text-xs text-muted-foreground">
-                          De: {tx.from}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          Para: {tx.to}
-                        </p>
+                        <p className="text-xs text-muted-foreground">{t("tokenDetail.from")}: {tx.from}</p>
+                        <p className="text-xs text-muted-foreground">{t("tokenDetail.to")}: {tx.to}</p>
                       </div>
                     ) : (
                       <div className="text-center">
                         <div className="bg-muted/50 p-3 rounded-lg mb-2">
                           <EyeOff className="w-5 h-5 mx-auto text-muted-foreground mb-1" />
-                          <p className="text-xs text-muted-foreground">Contenido privado</p>
+                          <p className="text-xs text-muted-foreground">{t("tokenDetail.privateContent")}</p>
                         </div>
-                        <Button size="sm" variant="outline" className="glass-button">
-                          Solicitar auditoría
-                        </Button>
+                        <Button size="sm" variant="outline" className="glass-button">{t("tokenDetail.requestAudit")}</Button>
                       </div>
                     )}
                   </div>
@@ -148,17 +144,13 @@ const TokenDetail = () => {
         {/* Notes section (future feature) */}
         <Card className="glass-card border-glass-border mt-8">
           <CardHeader>
-            <CardTitle>Notas de Transacción</CardTitle>
+            <CardTitle>{t("tokenDetail.notes.title")}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-center py-8">
               <Eye className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-              <p className="text-muted-foreground">
-                Las notas de transacción estarán disponibles próximamente
-              </p>
-              <p className="text-sm text-muted-foreground mt-2">
-                Podrás añadir contexto privado a tus transacciones
-              </p>
+              <p className="text-muted-foreground">{t("tokenDetail.notes.soon")}</p>
+              <p className="text-sm text-muted-foreground mt-2">{t("tokenDetail.notes.context")}</p>
             </div>
           </CardContent>
         </Card>

@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "@/i18n/LanguageContext";
 
 const Pricing = () => {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
@@ -32,62 +33,63 @@ const Pricing = () => {
   });
 
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   const plans = [
     {
       id: "free",
-      name: "Free",
+      name: t("pricing.plan.free.name"),
       price: "€0",
-      period: "/mes",
-      description: "Perfecto para empezar con privacidad básica",
+      period: t("pricing.per.month"),
+      description: t("pricing.plan.free.desc"),
       icon: Star,
       color: "text-accent-success",
       popular: false,
       features: [
-        "Hasta 10 transacciones/mes",
-        "1 token eERC20",
-        "Privacidad básica ZK",
-        "Soporte por email",
-        "Dashboard básico"
+        t("pricing.plan.free.feature.1"),
+        t("pricing.plan.free.feature.2"),
+        t("pricing.plan.free.feature.3"),
+        t("pricing.plan.free.feature.4"),
+        t("pricing.plan.free.feature.5"),
       ]
     },
     {
       id: "pro",
-      name: "Pro",
+      name: t("pricing.plan.pro.name"),
       price: "€29",
-      period: "/mes",
-      description: "Ideal para usuarios activos y empresas pequeñas",
+      period: t("pricing.per.month"),
+      description: t("pricing.plan.pro.desc"),
       icon: Crown,
       color: "text-primary",
       popular: true,
       features: [
-        "Transacciones ilimitadas",
-        "Hasta 50 tokens eERC20",
-        "Privacidad avanzada ZK-SNARK",
-        "Sistema de auditoría completo",
-        "API y webhooks",
-        "Soporte prioritario 24/7",
-        "Análisis avanzado"
+        t("pricing.plan.pro.feature.1"),
+        t("pricing.plan.pro.feature.2"),
+        t("pricing.plan.pro.feature.3"),
+        t("pricing.plan.pro.feature.4"),
+        t("pricing.plan.pro.feature.5"),
+        t("pricing.plan.pro.feature.6"),
+        t("pricing.plan.pro.feature.7"),
       ]
     },
     {
       id: "enterprise",
-      name: "Enterprise",
-      price: "Personalizado",
+      name: t("pricing.plan.enterprise.name"),
+      price: t("pricing.plan.enterprise.price"),
       period: "",
-      description: "Soluciones empresariales con máxima flexibilidad",
+      description: t("pricing.plan.enterprise.desc"),
       icon: Building,
       color: "text-accent-avalanche",
       popular: false,
       features: [
-        "Todo de Pro +",
-        "Tokens ilimitados",
-        "SLA garantizado 99.9%",
-        "Auditorías personalizadas",
-        "Integración personalizada",
-        "Gestor de cuenta dedicado",
-        "Cumplimiento regulatorio",
-        "Despliegue on-premise"
+        t("pricing.plan.enterprise.feature.1"),
+        t("pricing.plan.enterprise.feature.2"),
+        t("pricing.plan.enterprise.feature.3"),
+        t("pricing.plan.enterprise.feature.4"),
+        t("pricing.plan.enterprise.feature.5"),
+        t("pricing.plan.enterprise.feature.6"),
+        t("pricing.plan.enterprise.feature.7"),
+        t("pricing.plan.enterprise.feature.8"),
       ]
     }
   ];
@@ -97,8 +99,8 @@ const Pricing = () => {
     if (planId === "free") {
       // Free plan - just show success
       toast({
-        title: "Plan Free activado",
-        description: "Tu plan gratuito está listo. ¡Comienza a usar Enigma Protocol!",
+        title: t("pricing.toast.free.title"),
+        description: t("pricing.toast.free.desc"),
       });
     } else if (planId === "enterprise") {
       setShowContact(true);
@@ -115,8 +117,8 @@ const Pricing = () => {
     await new Promise(resolve => setTimeout(resolve, 2000));
 
     toast({
-      title: "¡Pago procesado exitosamente!",
-      description: `Plan ${plans.find(p => p.id === selectedPlan)?.name} activado. Te hemos enviado un email de confirmación.`,
+      title: t("pricing.toast.paymentSuccess.title"),
+      description: t("pricing.toast.paymentSuccess.desc").replace("{plan}", plans.find(p => p.id === selectedPlan)?.name || ""),
     });
 
     setShowCheckout(false);
@@ -178,7 +180,7 @@ const Pricing = () => {
                   {plan.popular && (
                     <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                       <span className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-medium">
-                        Más Popular
+                        {t("pricing.mostPopular")}
                       </span>
                     </div>
                   )}
@@ -212,8 +214,8 @@ const Pricing = () => {
                       variant={plan.popular ? "default" : "outline"}
                       onClick={() => handleSelectPlan(plan.id)}
                     >
-                      {plan.id === "free" ? "Comenzar Gratis" : 
-                       plan.id === "enterprise" ? "Contactar Ventas" : "Seleccionar Plan"}
+                      {plan.id === "free" ? t("pricing.cta.startFree") : 
+                       plan.id === "enterprise" ? t("pricing.cta.contactSales") : t("pricing.cta.selectPlan")}
                     </Button>
                   </CardContent>
                 </Card>
@@ -223,24 +225,18 @@ const Pricing = () => {
 
           {/* FAQ Section */}
           <div className="mt-20 max-w-4xl mx-auto">
-            <h3 className="text-2xl font-bold text-center mb-8 gradient-text">
-              Preguntas Frecuentes
-            </h3>
+            <h3 className="text-2xl font-bold text-center mb-8 gradient-text">{t("pricing.faq.title")}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Card className="glass-card border-glass-border">
                 <CardContent className="p-6">
-                  <h4 className="font-semibold mb-2">¿Puedo cambiar de plan?</h4>
-                  <p className="text-sm text-muted-foreground">
-                    Sí, puedes actualizar o degradar tu plan en cualquier momento desde tu dashboard.
-                  </p>
+                  <h4 className="font-semibold mb-2">{t("pricing.faq.q1.title")}</h4>
+                  <p className="text-sm text-muted-foreground">{t("pricing.faq.q1.answer")}</p>
                 </CardContent>
               </Card>
               <Card className="glass-card border-glass-border">
                 <CardContent className="p-6">
-                  <h4 className="font-semibold mb-2">¿Hay límites de red?</h4>
-                  <p className="text-sm text-muted-foreground">
-                    Actualmente soportamos Avalanche Fuji Testnet. C-Chain llegará pronto.
-                  </p>
+                  <h4 className="font-semibold mb-2">{t("pricing.faq.q2.title")}</h4>
+                  <p className="text-sm text-muted-foreground">{t("pricing.faq.q2.answer")}</p>
                 </CardContent>
               </Card>
             </div>
@@ -253,10 +249,10 @@ const Pricing = () => {
         <DialogContent className="glass-card max-w-2xl">
           <DialogHeader>
             <DialogTitle className="text-2xl gradient-text">
-              Finalizar Compra - Plan {plans.find(p => p.id === selectedPlan)?.name}
+              {t("pricing.checkout.title")} - {t("pricing.checkout.plan")} {plans.find(p => p.id === selectedPlan)?.name}
             </DialogTitle>
             <DialogDescription>
-              Completa tu información de pago para activar tu plan
+              {t("pricing.checkout.subtitle")}
             </DialogDescription>
           </DialogHeader>
 
@@ -265,11 +261,11 @@ const Pricing = () => {
             <div className="space-y-4">
               <h4 className="font-semibold flex items-center">
                 <CreditCard className="w-5 h-5 mr-2" />
-                Información de Pago
+                {t("pricing.checkout.paymentInfo")}
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="cardNumber">Número de tarjeta</Label>
+                  <Label htmlFor="cardNumber">{t("pricing.checkout.cardNumber")}</Label>
                   <Input
                     id="cardNumber"
                     placeholder="1234 5678 9012 3456"
@@ -280,10 +276,10 @@ const Pricing = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="name">Nombre en la tarjeta</Label>
+                  <Label htmlFor="name">{t("pricing.checkout.cardName")}</Label>
                   <Input
                     id="name"
-                    placeholder="Juan Pérez"
+                    placeholder={t("pricing.placeholder.fullName")}
                     value={checkoutData.name}
                     onChange={(e) => setCheckoutData(prev => ({ ...prev, name: e.target.value }))}
                     className="glass-card"
@@ -291,7 +287,7 @@ const Pricing = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="expiryDate">Fecha de vencimiento</Label>
+                  <Label htmlFor="expiryDate">{t("pricing.checkout.expiry")}</Label>
                   <Input
                     id="expiryDate"
                     placeholder="MM/AA"
@@ -317,7 +313,7 @@ const Pricing = () => {
 
             {/* Billing Address */}
             <div className="space-y-4">
-              <h4 className="font-semibold">Dirección de Facturación</h4>
+              <h4 className="font-semibold">{t("pricing.checkout.billing")}</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
@@ -332,7 +328,7 @@ const Pricing = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="address">Dirección</Label>
+                  <Label htmlFor="address">{t("pricing.checkout.address")}</Label>
                   <Input
                     id="address"
                     placeholder="Calle Principal 123"
@@ -343,7 +339,7 @@ const Pricing = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="city">Ciudad</Label>
+                  <Label htmlFor="city">{t("pricing.checkout.city")}</Label>
                   <Input
                     id="city"
                     placeholder="Madrid"
@@ -354,22 +350,22 @@ const Pricing = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="country">País</Label>
+                  <Label htmlFor="country">{t("pricing.checkout.country")}</Label>
                   <Select onValueChange={(value) => setCheckoutData(prev => ({ ...prev, country: value }))}>
                     <SelectTrigger className="glass-card">
-                      <SelectValue placeholder="Seleccionar país" />
+                      <SelectValue placeholder={t("pricing.checkout.selectCountry")} />
                     </SelectTrigger>
                     <SelectContent className="glass-card">
-                      <SelectItem value="ES">España</SelectItem>
-                      <SelectItem value="MX">México</SelectItem>
-                      <SelectItem value="AR">Argentina</SelectItem>
-                      <SelectItem value="CO">Colombia</SelectItem>
-                      <SelectItem value="CL">Chile</SelectItem>
+                      <SelectItem value="ES">{t("pricing.countries.es")}</SelectItem>
+                      <SelectItem value="MX">{t("pricing.countries.mx")}</SelectItem>
+                      <SelectItem value="AR">{t("pricing.countries.ar")}</SelectItem>
+                      <SelectItem value="CO">{t("pricing.countries.co")}</SelectItem>
+                      <SelectItem value="CL">{t("pricing.countries.cl")}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="postalCode">Código postal</Label>
+                  <Label htmlFor="postalCode">{t("pricing.checkout.postalCode")}</Label>
                   <Input
                     id="postalCode"
                     placeholder="28001"
@@ -386,7 +382,7 @@ const Pricing = () => {
               {loading ? (
                 <div className="loading-spinner w-4 h-4 mr-2" />
               ) : null}
-              Completar Pago - {plans.find(p => p.id === selectedPlan)?.price}{plans.find(p => p.id === selectedPlan)?.period}
+              {t("pricing.checkout.completePayment")} - {plans.find(p => p.id === selectedPlan)?.price}{plans.find(p => p.id === selectedPlan)?.period}
             </Button>
           </form>
         </DialogContent>
@@ -398,25 +394,25 @@ const Pricing = () => {
           <DialogHeader>
             <DialogTitle className="text-2xl gradient-text flex items-center">
               <Mail className="w-6 h-6 mr-2" />
-              Contactar Ventas Enterprise
+              {t("pricing.contact.title")}
             </DialogTitle>
             <DialogDescription>
-              Nuestro equipo se pondrá en contacto contigo para una propuesta personalizada
+              {t("pricing.contact.subtitle")}
             </DialogDescription>
           </DialogHeader>
 
           <form onSubmit={handleContactSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="contact-name">Nombre completo</Label>
+              <Label htmlFor="contact-name">{t("pricing.contact.fullName")}</Label>
               <Input
                 id="contact-name"
-                placeholder="Juan Pérez"
+                placeholder={t("pricing.placeholder.fullName")}
                 className="glass-card"
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="contact-email">Email corporativo</Label>
+              <Label htmlFor="contact-email">{t("pricing.contact.email")}</Label>
               <Input
                 id="contact-email"
                 type="email"
@@ -426,19 +422,19 @@ const Pricing = () => {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="contact-company">Empresa</Label>
+              <Label htmlFor="contact-company">{t("pricing.contact.company")}</Label>
               <Input
                 id="contact-company"
-                placeholder="Mi Empresa S.L."
+                placeholder={t("pricing.placeholder.company")}
                 className="glass-card"
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="contact-message">Mensaje (opcional)</Label>
+              <Label htmlFor="contact-message">{t("pricing.contact.message")}</Label>
               <textarea
                 id="contact-message"
-                placeholder="Cuéntanos sobre tus necesidades específicas..."
+                placeholder={t("pricing.placeholder.message")}
                 className="w-full p-3 rounded-lg glass-card border-glass-border resize-none h-24"
               />
             </div>
@@ -447,7 +443,7 @@ const Pricing = () => {
               {loading ? (
                 <div className="loading-spinner w-4 h-4 mr-2" />
               ) : null}
-              Enviar Solicitud
+              {t("pricing.contact.submit")}
             </Button>
           </form>
         </DialogContent>

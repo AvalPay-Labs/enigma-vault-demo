@@ -2,13 +2,15 @@ import { Code, Key, Shield, Zap, FileText, ExternalLink } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useTranslation } from "@/i18n/LanguageContext";
 
 const Docs = () => {
+  const { t } = useTranslation();
   const endpoints = [
     {
       method: "POST",
       path: "/api/tokens",
-      description: "Crear un nuevo token eERC20 privado",
+      description: t("docs.endpoints.createPrivateToken"),
       request: `{
   "name": "PrivateToken",
   "symbol": "PRVT",
@@ -28,7 +30,7 @@ const Docs = () => {
     {
       method: "POST",
       path: "/api/tokens/convert",
-      description: "Convertir token ERC20 existente a eERC20 privado",
+      description: t("docs.endpoints.convertToken"),
       request: `{
   "contractAddress": "0x742d35Cc6...",
   "amount": "100.5",
@@ -49,7 +51,7 @@ const Docs = () => {
     {
       method: "POST",
       path: "/api/audits/request",
-      description: "Solicitar permisos de auditoría para un token",
+      description: t("docs.endpoints.requestAudit"),
       request: `{
   "tokenId": "tkn_abc123",
   "auditorAddress": "0x1a2b3c4d...",
@@ -69,7 +71,7 @@ const Docs = () => {
     {
       method: "GET",
       path: "/api/tokens/:id/transactions",
-      description: "Obtener transacciones visibles de un token",
+      description: t("docs.endpoints.getTransactions"),
       request: "// Sin body - parámetros en URL",
       response: `{
   "success": true,
@@ -106,22 +108,17 @@ const Docs = () => {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 gradient-text">
-            Documentación API
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Guía completa para integrar Enigma Protocol en tus aplicaciones. 
-            Aprende a gestionar tokens privados y configurar auditorías.
-          </p>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 gradient-text">{t("docs.title")}</h1>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">{t("docs.subtitle")}</p>
         </div>
 
         <div className="max-w-6xl mx-auto">
           <Tabs defaultValue="overview" className="space-y-8">
             <TabsList className="grid w-full grid-cols-4 glass-card">
-              <TabsTrigger value="overview">Visión General</TabsTrigger>
-              <TabsTrigger value="endpoints">Endpoints</TabsTrigger>
-              <TabsTrigger value="authentication">Autenticación</TabsTrigger>
-              <TabsTrigger value="examples">Ejemplos</TabsTrigger>
+              <TabsTrigger value="overview">{t("docs.tabs.overview")}</TabsTrigger>
+              <TabsTrigger value="endpoints">{t("docs.tabs.endpoints")}</TabsTrigger>
+              <TabsTrigger value="authentication">{t("docs.tabs.authentication")}</TabsTrigger>
+              <TabsTrigger value="examples">{t("docs.tabs.examples")}</TabsTrigger>
             </TabsList>
 
             <TabsContent value="overview" className="space-y-8">

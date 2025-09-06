@@ -1,13 +1,15 @@
 import { Cookie } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "@/i18n/LanguageContext";
 
 const Cookies = () => {
   const manageCookies = () => {
     // This would open a cookie preference center in a real implementation
-    alert("Centro de preferencias de cookies - Próximamente");
+    alert(t("legal.cookies.centerSoon"));
   };
 
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen py-20">
       <div className="container mx-auto px-4">
@@ -17,12 +19,8 @@ const Cookies = () => {
             <div className="flex items-center justify-center mb-6">
               <Cookie className="w-12 h-12 text-primary" />
             </div>
-            <h1 className="text-4xl font-bold mb-4 gradient-text">
-              Política de Cookies
-            </h1>
-            <p className="text-muted-foreground">
-              Última actualización: 7 de enero de 2025
-            </p>
+            <h1 className="text-4xl font-bold mb-4 gradient-text">{t("legal.cookies.title")}</h1>
+            <p className="text-muted-foreground">{t("legal.lastUpdated")}: 7/01/2025</p>
           </div>
 
           <Card className="glass-card border-glass-border">
@@ -146,9 +144,7 @@ const Cookies = () => {
                     <p className="text-muted-foreground text-sm mb-4">
                       Use nuestro centro de preferencias para controlar qué tipos de cookies acepta.
                     </p>
-                    <Button onClick={manageCookies} className="glass-button">
-                      Gestionar Preferencias de Cookies
-                    </Button>
+                    <Button onClick={manageCookies} className="glass-button">{t("legal.cookies.managePrefs")}</Button>
                   </div>
 
                   <div className="space-y-3">

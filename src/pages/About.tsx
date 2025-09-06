@@ -3,9 +3,11 @@ import { Play, Linkedin, Github, Mail, MapPin, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useTranslation } from "@/i18n/LanguageContext";
 
 const About = () => {
   const [hoveredMember, setHoveredMember] = useState<number | null>(null);
+  const { t } = useTranslation();
 
   const team = [
     {
@@ -113,34 +115,27 @@ const About = () => {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 gradient-text">
-            Acerca de Enigma Protocol
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Pioneros en privacidad blockchain. Construimos el futuro de las transacciones privadas 
-            con tecnología de vanguardia y enfoque en la usabilidad.
-          </p>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 gradient-text">{t("about.title")}</h1>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">{t("about.subtitle")}</p>
         </div>
 
         {/* Video/Pitch Section */}
         <div className="mb-20">
           <Card className="glass-card max-w-4xl mx-auto border-glass-border">
             <CardContent className="p-8 text-center">
-              <h2 className="text-2xl font-bold mb-4 gradient-text">Video Pitch</h2>
+              <h2 className="text-2xl font-bold mb-4 gradient-text">{t("about.videoPitch")}</h2>
               <div className="aspect-video bg-muted/20 rounded-lg flex items-center justify-center mb-6">
                 <div className="text-center">
                   <Play className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
                   <p className="text-muted-foreground">
                     Video pitch coming soon
                   </p>
-                  <p className="text-sm text-muted-foreground mt-2">
-                    Conoce nuestra visión para el futuro de la privacidad en blockchain
-                  </p>
+                  <p className="text-sm text-muted-foreground mt-2">{t("about.videoSubtitle")}</p>
                 </div>
               </div>
               <Button className="glass-button">
                 <Play className="w-4 h-4 mr-2" />
-                Ver Pitch Completo
+                {t("about.viewPitch")}
               </Button>
             </CardContent>
           </Card>
@@ -149,10 +144,8 @@ const About = () => {
         {/* Team Section */}
         <div className="mb-20">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4 gradient-text">Nuestro Equipo</h2>
-            <p className="text-lg text-muted-foreground">
-              Expertos apasionados por la privacidad y la innovación blockchain
-            </p>
+            <h2 className="text-3xl font-bold mb-4 gradient-text">{t("about.team.title")}</h2>
+            <p className="text-lg text-muted-foreground">{t("about.team.subtitle")}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -205,10 +198,8 @@ const About = () => {
         {/* Roadmap Section */}
         <div className="mb-20">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4 gradient-text">Roadmap</h2>
-            <p className="text-lg text-muted-foreground">
-              Nuestro camino hacia la revolución de la privacidad blockchain
-            </p>
+            <h2 className="text-3xl font-bold mb-4 gradient-text">{t("about.roadmap.title")}</h2>
+            <p className="text-lg text-muted-foreground">{t("about.roadmap.subtitle")}</p>
           </div>
 
           <div className="max-w-4xl mx-auto space-y-8">
@@ -261,9 +252,9 @@ const About = () => {
             <CardHeader>
               <CardTitle className="flex items-center">
                 <Mail className="w-6 h-6 mr-2 text-primary" />
-                Contacto
+                {t("about.contact.title")}
               </CardTitle>
-              <CardDescription>¿Tienes preguntas? Nos encantaría escucharte</CardDescription>
+              <CardDescription>{t("about.contact.subtitle")}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center space-x-3">
@@ -274,9 +265,7 @@ const About = () => {
                 <MapPin className="w-5 h-5 text-muted-foreground" />
                 <span>Barcelona, España</span>
               </div>
-              <Button className="w-full glass-button mt-4">
-                Enviar Mensaje
-              </Button>
+              <Button className="w-full glass-button mt-4">{t("about.contact.cta")}</Button>
             </CardContent>
           </Card>
 
@@ -284,25 +273,17 @@ const About = () => {
             <CardHeader>
               <CardTitle className="flex items-center">
                 <Github className="w-6 h-6 mr-2 text-accent-success" />
-                Conviértete en Auditor
+                {t("about.auditor.title")}
               </CardTitle>
-              <CardDescription>Únete a nuestra red de auditores certificados</CardDescription>
+              <CardDescription>{t("about.auditor.subtitle")}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <p className="text-sm text-muted-foreground">
-                  • Experiencia en smart contracts
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  • Conocimientos de seguridad blockchain
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  • Certificaciones reconocidas (opcional)
-                </p>
+                <p className="text-sm text-muted-foreground">• {t("about.auditor.req1")}</p>
+                <p className="text-sm text-muted-foreground">• {t("about.auditor.req2")}</p>
+                <p className="text-sm text-muted-foreground">• {t("about.auditor.req3")}</p>
               </div>
-              <Button className="w-full glass-button mt-4">
-                Aplicar como Auditor
-              </Button>
+              <Button className="w-full glass-button mt-4">{t("about.auditor.apply")}</Button>
             </CardContent>
           </Card>
         </div>

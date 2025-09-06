@@ -8,45 +8,47 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { UserTour } from "@/components/common/UserTour";
+import { useTranslation } from "@/i18n/LanguageContext";
 
 const HelpFAQ = () => {
   const [openFAQ, setOpenFAQ] = useState<number | null>(0);
   const [showTour, setShowTour] = useState(false);
+  const { t } = useTranslation();
 
   const faqs = [
     {
-      question: "¿Qué es eERC20?",
-      answer: "eERC20 es una extensión mejorada del estándar ERC20 que incorpora capacidades de privacidad avanzadas mediante pruebas de conocimiento cero (ZK-SNARK). Permite crear tokens que mantienen la funcionalidad estándar de ERC20 pero con la capacidad de ocultar detalles de transacciones como montos, remitentes y destinatarios según tus preferencias de privacidad.",
+      question: t("help.faq.1.q"),
+      answer: t("help.faq.1.a"),
       icon: Shield,
       color: "text-primary"
     },
     {
-      question: "¿Cómo protege la privacidad?",
-      answer: "Enigma Protocol utiliza tecnología ZK-SNARK de última generación para crear pruebas criptográficas que verifican la validez de las transacciones sin revelar información sensible. Puedes elegir qué datos mantener privados: montos, direcciones, o ambos. La información se cifra en el momento de la transacción y solo puede ser descifrada por ti o por auditores autorizados temporalmente.",
+      question: t("help.faq.2.q"),
+      answer: t("help.faq.2.a"),
       icon: Eye,
       color: "text-accent-avalanche"
     },
     {
-      question: "¿Qué redes soporta?",
-      answer: "Actualmente Enigma Protocol está disponible en Avalanche Fuji Testnet para pruebas y desarrollo. Esta red te permite experimentar con todas las funcionalidades sin usar fondos reales. Avalanche C-Chain (mainnet) estará disponible próximamente una vez completemos las auditorías de seguridad y optimizaciones finales.",
+      question: t("help.faq.3.q"),
+      answer: t("help.faq.3.a"),
       icon: Network,
       color: "text-accent-success"
     },
     {
-      question: "¿Cómo funcionan los auditores?",
-      answer: "El sistema de auditoría es completamente opcional y controlado por ti. Los auditores pueden solicitar permisos temporales para revisar transacciones específicas de tus tokens. Tú decides si aprobar estas solicitudes, definiendo fechas de inicio y fin para el acceso. Durante este período, el auditor puede ver las transacciones permitidas. Una vez expirado el permiso, vuelven a ser completamente privadas.",
+      question: t("help.faq.4.q"),
+      answer: t("help.faq.4.a"),
       icon: Users,
       color: "text-warning"
     },
     {
-      question: "¿Mi billetera es segura?",
-      answer: "Enigma Protocol es completamente sin custodia, lo que significa que nunca tenemos acceso a tus fondos o claves privadas. Todas las transacciones requieren tu firma directa desde tu wallet (MetaMask, WalletConnect, etc.). Nosotros solo facilitamos la creación de las pruebas ZK y la gestión de permisos de auditoría. Tus fondos permanecen siempre bajo tu control total.",
+      question: t("help.faq.5.q"),
+      answer: t("help.faq.5.a"),
       icon: Lock,
       color: "text-primary-glow"
     },
     {
-      question: "¿Puedo migrar tokens existentes?",
-      answer: "Sí, puedes convertir tokens ERC20 existentes a eERC20 privados mediante nuestro sistema de migración. El proceso implica bloquear tus tokens ERC20 originales en un contrato seguro y emitir la cantidad equivalente en tokens eERC20 privados. Esta conversión es reversible cuando lo desees, manteniendo siempre la paridad 1:1 con tus tokens originales.",
+      question: t("help.faq.6.q"),
+      answer: t("help.faq.6.a"),
       icon: Zap,
       color: "text-accent-avalanche-light"
     }
@@ -62,13 +64,8 @@ const HelpFAQ = () => {
         <div className="container mx-auto px-4">
           {/* Header */}
           <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 gradient-text">
-              Ayuda y Preguntas Frecuentes
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-              Encuentra respuestas a las preguntas más comunes sobre Enigma Protocol. 
-              Si no encuentras lo que buscas, no dudes en contactarnos.
-            </p>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 gradient-text">{t("help.title")}</h1>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">{t("help.subtitle")}</p>
             
             <Button 
               onClick={() => setShowTour(true)}
@@ -76,7 +73,7 @@ const HelpFAQ = () => {
               size="lg"
             >
               <Play className="w-5 h-5 mr-2" />
-              Iniciar Guía Interactiva
+              {t("help.startTour")}
             </Button>
           </div>
 
@@ -127,22 +124,16 @@ const HelpFAQ = () => {
           <div className="mt-16 text-center">
             <Card className="glass-card max-w-2xl mx-auto border-glass-border">
               <CardContent className="p-8">
-                <h3 className="text-2xl font-bold mb-4 gradient-text">
-                  ¿Necesitas más ayuda?
-                </h3>
-                <p className="text-muted-foreground mb-6">
-                  Nuestro equipo de soporte está disponible para ayudarte con cualquier duda específica.
-                </p>
+                <h3 className="text-2xl font-bold mb-4 gradient-text">{t("help.moreHelp.title")}</h3>
+                <p className="text-muted-foreground mb-6">{t("help.moreHelp.subtitle")}</p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button className="glass-button">
-                    Contactar Soporte
-                  </Button>
+                  <Button className="glass-button">{t("help.moreHelp.contactSupport")}</Button>
                   <Button 
                     variant="outline" 
                     className="glass-button"
                     onClick={() => setShowTour(true)}
                   >
-                    Ver Guía Completa
+                    {t("help.moreHelp.viewTour")}
                   </Button>
                 </div>
               </CardContent>

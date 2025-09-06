@@ -4,45 +4,47 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { LoginModal } from "@/components/auth/LoginModal";
 import { UserTour } from "@/components/common/UserTour";
+import { useTranslation } from "@/i18n/LanguageContext";
 
 const Index = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showTour, setShowTour] = useState(false);
+  const { t } = useTranslation();
 
   const features = [
     {
-      title: "¿Qué es eERC20?",
-      description: "Tokens ERC20 mejorados con capacidades de privacidad avanzadas mediante pruebas de conocimiento cero.",
+      title: t("index.feature.1.title"),
+      description: t("index.feature.1.desc"),
       icon: Shield,
       color: "text-primary"
     },
     {
-      title: "Privacidad",
-      description: "Tecnología ZK-SNARK de alto nivel que protege los detalles de tus transacciones manteniendo la verificabilidad.",
+      title: t("index.feature.2.title"),
+      description: t("index.feature.2.desc"),
       icon: Eye,
       color: "text-accent-avalanche"
     },
     {
-      title: "Cumplimiento/Auditoría Opcional",
-      description: "Sistema de auditoría granular que permite transparencia selectiva cuando sea necesario para el cumplimiento.",
+      title: t("index.feature.3.title"),
+      description: t("index.feature.3.desc"),
       icon: FileCheck,
       color: "text-accent-success"
     },
     {
-      title: "Demo & Testing",
-      description: "Entorno de pruebas completo en Fuji Testnet para explorar todas las funcionalidades sin riesgo.",
+      title: t("index.feature.4.title"),
+      description: t("index.feature.4.desc"),
       icon: TestTube,
       color: "text-warning"
     },
     {
-      title: "Sin Custodia",
-      description: "Todas las firmas se realizan en tu wallet. Tus fondos permanecen siempre bajo tu control absoluto.",
+      title: t("index.feature.5.title"),
+      description: t("index.feature.5.desc"),
       icon: Key,
       color: "text-primary-glow"
     },
     {
-      title: "Interfaz Sin Código",
-      description: "Dashboard intuitivo que elimina la complejidad técnica. No necesitas conocimientos de programación.",
+      title: t("index.feature.6.title"),
+      description: t("index.feature.6.desc"),
       icon: Code,
       color: "text-accent-avalanche-light"
     }
@@ -61,13 +63,13 @@ const Index = () => {
           <div className="container mx-auto px-4 relative">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-                <span className="gradient-text">Privacidad de transacciones</span>
+                <span className="gradient-text">{t("index.hero.title.line1")}</span>
                 <br />
-                con eERC20 en Avalanche
+                {t("index.hero.title.line2")}
               </h1>
               <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed">
-                Auditoría opcional y sin custodia en Fuji Testnet. <br />
-                Tu privacidad, tu control, tu libertad financiera.
+                {t("index.hero.subtitle.line1")} <br />
+                {t("index.hero.subtitle.line2")}
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -76,7 +78,7 @@ const Index = () => {
                   className="glass-button text-lg px-8 py-6 shadow-glow"
                   onClick={() => setShowLoginModal(true)}
                 >
-                  Comenzar
+                  {t("index.hero.cta.start")}
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
                 <Button 
@@ -86,7 +88,7 @@ const Index = () => {
                   onClick={startTour}
                 >
                   <Play className="w-5 h-5 mr-2" />
-                  Guía de usuario
+                  {t("index.hero.cta.tour")}
                 </Button>
               </div>
             </div>
@@ -97,11 +99,9 @@ const Index = () => {
         <section className="py-20 bg-gradient-to-b from-transparent to-muted/20">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 gradient-text">
-                Funcionalidades Principales
-              </h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 gradient-text">{t("index.features.title")}</h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Descubre cómo Enigma Protocol revoluciona la privacidad en blockchain
+                {t("index.features.subtitle")}
               </p>
             </div>
 
@@ -137,11 +137,9 @@ const Index = () => {
           <div className="container mx-auto px-4">
             <Card className="glass-card max-w-4xl mx-auto text-center border-glass-border">
               <CardContent className="p-12">
-                <h3 className="text-3xl font-bold mb-4 gradient-text">
-                  ¿Listo para comenzar?
-                </h3>
+                <h3 className="text-3xl font-bold mb-4 gradient-text">{t("index.cta.title")}</h3>
                 <p className="text-lg text-muted-foreground mb-8">
-                  Únete a la revolución de la privacidad en blockchain. Comienza tu viaje con Enigma Protocol hoy mismo.
+                  {t("index.cta.subtitle")}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button 
@@ -149,7 +147,7 @@ const Index = () => {
                     className="glass-button shadow-glow"
                     onClick={() => setShowLoginModal(true)}
                   >
-                    Crear cuenta gratuita
+                    {t("index.cta.createAccount")}
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Button>
                   <Button 
@@ -158,7 +156,7 @@ const Index = () => {
                     className="glass-button"
                     onClick={startTour}
                   >
-                    Ver guía completa
+                    {t("index.cta.viewTour")}
                   </Button>
                 </div>
               </CardContent>
