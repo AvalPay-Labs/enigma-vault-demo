@@ -199,7 +199,7 @@ export const LoginModal = ({ open, onOpenChange }: LoginModalProps) => {
                     </Button>
                   </div>
                 </div>
-                <Button type="submit" className="w-full glass-button" disabled={loading}>
+                <Button type="submit" className="w-full glass-button cta-start-button" disabled={loading}>
                   {loading ? (
                     <div className="loading-spinner w-4 h-4 mr-2" />
                   ) : null}
@@ -265,7 +265,7 @@ export const LoginModal = ({ open, onOpenChange }: LoginModalProps) => {
                     required
                   />
                 </div>
-                <Button type="submit" className="w-full glass-button" disabled={loading}>
+                <Button type="submit" className="w-full glass-button cta-start-button" disabled={loading}>
                   {loading ? (
                     <div className="loading-spinner w-4 h-4 mr-2" />
                   ) : null}

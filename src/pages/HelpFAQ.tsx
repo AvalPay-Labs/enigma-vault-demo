@@ -69,7 +69,7 @@ const HelpFAQ = () => {
             
             <Button 
               onClick={() => setShowTour(true)}
-              className="glass-button shadow-glow"
+              className="glass-button cta-start-button shadow-glow"
               size="lg"
             >
               <Play className="w-5 h-5 mr-2" />
@@ -127,7 +127,7 @@ const HelpFAQ = () => {
                 <h3 className="text-2xl font-bold mb-4 gradient-text">{t("help.moreHelp.title")}</h3>
                 <p className="text-muted-foreground mb-6">{t("help.moreHelp.subtitle")}</p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button className="glass-button">{t("help.moreHelp.contactSupport")}</Button>
+                  <Button className="glass-button cta-start-button">{t("help.moreHelp.contactSupport")}</Button>
                   <Button 
                     variant="outline" 
                     className="glass-button"

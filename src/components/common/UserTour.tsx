@@ -126,7 +126,7 @@ export const UserTour = ({ isOpen, onComplete, onSkip }: UserTourProps) => {
             {currentStep + 1} {t("tour.stepOf")} {tourSteps.length}
           </span>
 
-          <Button onClick={handleNext} className="glass-button">
+          <Button onClick={handleNext} className="glass-button cta-start-button">
             {currentStep === tourSteps.length - 1 ? t("tour.finish") : t("tour.next")}
             {currentStep < tourSteps.length - 1 && <ChevronRight className="w-4 h-4 ml-2" />}
           </Button>

@@ -100,7 +100,7 @@ const Header = () => {
             {/* Login Button */}
             <Button
               onClick={() => setShowLoginModal(true)}
-              className="glass-button"
+              className="glass-button cta-start-button"
               size="sm"
             >
               <User className="w-4 h-4 mr-2" />

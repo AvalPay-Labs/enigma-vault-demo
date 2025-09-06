@@ -110,7 +110,7 @@ const Auditor = () => {
                     />
                   </div>
                 </div>
-                <Button type="submit" className="w-full glass-button" disabled={loading}>
+                <Button type="submit" className="w-full glass-button cta-start-button" disabled={loading}>
                   {loading ? (
                     <div className="loading-spinner w-4 h-4 mr-2" />
                   ) : (
@@ -160,7 +160,7 @@ const Auditor = () => {
                     <h3 className="font-semibold">CompanyToken (CMPY)</h3>
                     <p className="text-sm text-muted-foreground">Acceso válido hasta: 2025-02-06</p>
                   </div>
-                  <Button size="sm" className="glass-button">{t("auditor.activeAudits.viewTx")}</Button>
+                  <Button size="sm" className="glass-button cta-start-button">{t("auditor.activeAudits.viewTx")}</Button>
                 </div>
               </div>
             </div>

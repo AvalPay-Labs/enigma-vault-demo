@@ -144,7 +144,7 @@ const Cookies = () => {
                     <p className="text-muted-foreground text-sm mb-4">
                       Use nuestro centro de preferencias para controlar qué tipos de cookies acepta.
                     </p>
-                    <Button onClick={manageCookies} className="glass-button">{t("legal.cookies.managePrefs")}</Button>
+                    <Button onClick={manageCookies} className="glass-button cta-start-button">{t("legal.cookies.managePrefs")}</Button>
                   </div>
 
                   <div className="space-y-3">

@@ -210,7 +210,7 @@ const Pricing = () => {
                     </ul>
 
                     <Button 
-                      className={`w-full glass-button ${plan.popular ? "shadow-glow" : ""}`}
+                      className={`w-full glass-button ${plan.popular ? "cta-start-button shadow-glow" : ""}`}
                       variant={plan.popular ? "default" : "outline"}
                       onClick={() => handleSelectPlan(plan.id)}
                     >
@@ -378,7 +378,7 @@ const Pricing = () => {
               </div>
             </div>
 
-            <Button type="submit" className="w-full glass-button shadow-glow" disabled={loading}>
+            <Button type="submit" className="w-full glass-button cta-start-button shadow-glow" disabled={loading}>
               {loading ? (
                 <div className="loading-spinner w-4 h-4 mr-2" />
               ) : null}
@@ -439,7 +439,7 @@ const Pricing = () => {
               />
             </div>
 
-            <Button type="submit" className="w-full glass-button" disabled={loading}>
+            <Button type="submit" className="w-full glass-button cta-start-button" disabled={loading}>
               {loading ? (
                 <div className="loading-spinner w-4 h-4 mr-2" />
               ) : null}

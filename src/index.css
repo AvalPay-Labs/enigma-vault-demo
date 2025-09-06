@@ -149,6 +149,17 @@ All colors MUST be HSL.
     background: linear-gradient(145deg, hsl(var(--glass)), hsl(var(--glass-hover)));
   }
   
+  /* Vivid yet elegant CTA for the home hero "Comenzar" button */
+  .cta-start-button {
+    background: linear-gradient(135deg, hsl(var(--primary-glow)), hsl(var(--primary)));
+    color: hsl(var(--primary-foreground));
+    border-color: hsl(var(--primary-glow) / 0.5);
+    box-shadow: 0 0 40px hsl(var(--primary-glow) / 0.25);
+  }
+  .cta-start-button:hover {
+    filter: saturate(1.05) brightness(1.03);
+  }
+  
   .gradient-text {
     @apply bg-clip-text text-transparent;
     background-image: var(--gradient-primary);

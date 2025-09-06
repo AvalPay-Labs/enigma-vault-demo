@@ -117,7 +117,7 @@ const Dashboard = () => {
 
         {/* Actions */}
         <div className="flex flex-wrap gap-4 mb-8">
-          <Button onClick={createToken} disabled={loading} className="glass-button">
+          <Button onClick={createToken} disabled={loading} className="glass-button cta-start-button">
             {loading ? <div className="loading-spinner w-4 h-4 mr-2" /> : <Plus className="w-4 h-4 mr-2" />}
             {t("dashboard.actions.createToken")}
           </Button>
@@ -184,7 +184,7 @@ const Dashboard = () => {
                     <p className="text-sm text-muted-foreground">{request.tokenName} - {request.reason}</p>
                   </div>
                   <div className="flex gap-2">
-                    <Button size="sm" className="glass-button">{t("dashboard.requests.accept")}</Button>
+                    <Button size="sm" className="glass-button cta-start-button">{t("dashboard.requests.accept")}</Button>
                     <Button size="sm" variant="outline" className="glass-button">{t("dashboard.requests.reject")}</Button>
                   </div>
                 </div>

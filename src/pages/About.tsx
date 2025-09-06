@@ -133,7 +133,7 @@ const About = () => {
                   <p className="text-sm text-muted-foreground mt-2">{t("about.videoSubtitle")}</p>
                 </div>
               </div>
-              <Button className="glass-button">
+              <Button className="glass-button cta-start-button">
                 <Play className="w-4 h-4 mr-2" />
                 {t("about.viewPitch")}
               </Button>
@@ -265,7 +265,7 @@ const About = () => {
                 <MapPin className="w-5 h-5 text-muted-foreground" />
                 <span>Barcelona, España</span>
               </div>
-              <Button className="w-full glass-button mt-4">{t("about.contact.cta")}</Button>
+              <Button className="w-full glass-button cta-start-button mt-4">{t("about.contact.cta")}</Button>
             </CardContent>
           </Card>
 
@@ -283,7 +283,7 @@ const About = () => {
                 <p className="text-sm text-muted-foreground">• {t("about.auditor.req2")}</p>
                 <p className="text-sm text-muted-foreground">• {t("about.auditor.req3")}</p>
               </div>
-              <Button className="w-full glass-button mt-4">{t("about.auditor.apply")}</Button>
+              <Button className="w-full glass-button cta-start-button mt-4">{t("about.auditor.apply")}</Button>
             </CardContent>
           </Card>
         </div>

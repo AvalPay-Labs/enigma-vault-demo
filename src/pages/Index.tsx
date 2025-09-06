@@ -75,7 +75,7 @@ const Index = () => {
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Button 
                   size="lg" 
-                  className="glass-button text-lg px-8 py-6 shadow-glow"
+                  className="glass-button cta-start-button text-lg px-8 py-6 shadow-glow"
                   onClick={() => setShowLoginModal(true)}
                 >
                   {t("index.hero.cta.start")}
@@ -144,7 +144,7 @@ const Index = () => {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button 
                     size="lg" 
-                    className="glass-button shadow-glow"
+                    className="glass-button cta-start-button shadow-glow"
                     onClick={() => setShowLoginModal(true)}
                   >
                     {t("index.cta.createAccount")}

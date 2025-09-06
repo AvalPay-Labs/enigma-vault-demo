@@ -22,7 +22,7 @@ export const CookieBanner = ({ onAccept, onReject }: CookieBannerProps) => {
                 <Button
                   onClick={onAccept}
                   size="sm"
-                  className="glass-button flex-1"
+                  className="glass-button cta-start-button flex-1"
                 >
                   {t("cookie.accept")}
                 </Button>
