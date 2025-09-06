@@ -175,6 +175,21 @@ npm run build
 npm run preview # optional local preview
 ```
 
+## Supabase Setup
+
+Configure environment variables in a local `.env.local` file (not committed):
+
+```
+VITE_SUPABASE_URL=https://YOUR_PROJECT_REF.supabase.co
+VITE_SUPABASE_ANON_KEY=YOUR_ANON_PUBLIC_KEY
+```
+
+The Supabase client is initialized in `src/lib/supabaseClient.ts`.
+
+Notes:
+- Never use `SERVICE_ROLE` in the frontend. Keep it only in secure backend environments.
+- After setting env vars, restart `npm run dev` to reload Vite.
+
 ## Custom domains
 
 If your hosting provider supports it, point your custom domain to the deployed site following their documentation.
