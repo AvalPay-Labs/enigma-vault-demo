@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "@/i18n/LanguageContext";
+import ConverterFlow from "@/components/converter/ConverterFlow";
 
 const Dashboard = () => {
   const [user, setUser] = useState<any>(null);
@@ -13,6 +14,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
   const { t } = useTranslation();
+  const [openConverter, setOpenConverter] = useState(false);
 
   useEffect(() => {
     const userData = localStorage.getItem('enigma_user');
@@ -121,7 +123,7 @@ const Dashboard = () => {
             {loading ? <div className="loading-spinner w-4 h-4 mr-2" /> : <Plus className="w-4 h-4 mr-2" />}
             {t("dashboard.actions.createToken")}
           </Button>
-          <Button variant="outline" className="glass-button">
+          <Button variant="outline" className="glass-button" onClick={() => setOpenConverter(true)}>
             <Plus className="w-4 h-4 mr-2" />
             {t("dashboard.actions.convertToken")}
           </Button>
@@ -193,6 +195,7 @@ const Dashboard = () => {
           </CardContent>
         </Card>
       </div>
+      <ConverterFlow open={openConverter} onOpenChange={setOpenConverter} />
     </div>
   );
 };

@@ -227,6 +227,25 @@ export const translations: Record<Language, Dict> = {
     "dashboard.requests.accept": "Aceptar",
     "dashboard.requests.reject": "Rechazar",
 
+    // Converter Flow
+    "converter.title": "Convertir / Migrar Token",
+    "converter.description": "Sigue los pasos para configurar el sistema de conversión y migrar tokens.",
+    "converter.step1.title": "Desplegar componentes básicos",
+    "converter.step1.desc": "Despliega verificadores ZK, BabyJubJub y el token puente ERC20.",
+    "converter.step1.cta": "Desplegar básicos",
+    "converter.step2.title": "Desplegar convertidor completo",
+    "converter.step2.desc": "Despliega todos los contratos del sistema de conversión.",
+    "converter.step3.title": "Registrar usuario",
+    "converter.step3.desc": "Registra al usuario actual en el sistema de conversión.",
+    "converter.step4.title": "Depositar ERC20 → encriptado",
+    "converter.step4.desc": "Bloquea ERC20 y acuña tokens encriptados.",
+    "converter.step5.title": "Retirar encriptado → ERC20",
+    "converter.step5.desc": "Quema encriptados y libera ERC20.",
+    "converter.active": "Activo",
+    "converter.goToStep": "Ir al paso",
+    "converter.done": "Hecho",
+    "converter.comingSoon": "Próximamente. Este paso se habilitará tras completar los anteriores.",
+
     // Auditor
     "auditor.toast.sent.title": "Solicitud enviada",
     "auditor.toast.sent.desc": "El propietario del token revisará tu solicitud",
@@ -535,6 +554,25 @@ export const translations: Record<Language, Dict> = {
     "dashboard.requests.accept": "Accept",
     "dashboard.requests.reject": "Reject",
 
+    // Converter Flow
+    "converter.title": "Convert / Migrate Token",
+    "converter.description": "Follow the steps to set up the converter system and migrate tokens.",
+    "converter.step1.title": "Deploy basic components",
+    "converter.step1.desc": "Deploy ZK verifiers, BabyJubJub and an ERC20 bridge token.",
+    "converter.step1.cta": "Deploy basics",
+    "converter.step2.title": "Deploy complete converter",
+    "converter.step2.desc": "Deploy the full converter system contracts.",
+    "converter.step3.title": "Register user",
+    "converter.step3.desc": "Register the current user in the converter system.",
+    "converter.step4.title": "Deposit ERC20 → encrypted",
+    "converter.step4.desc": "Lock ERC20 and mint encrypted tokens.",
+    "converter.step5.title": "Withdraw encrypted → ERC20",
+    "converter.step5.desc": "Burn encrypted tokens and release ERC20.",
+    "converter.active": "Active",
+    "converter.goToStep": "Go to step",
+    "converter.done": "Done",
+    "converter.comingSoon": "Coming soon. This step will be enabled after completing previous steps.",
+
     // Auditor
     "auditor.toast.sent.title": "Request sent",
     "auditor.toast.sent.desc": "The token owner will review your request",
@@ -842,6 +880,25 @@ export const translations: Record<Language, Dict> = {
     "dashboard.requests.title": "Solicitações de Auditoria",
     "dashboard.requests.accept": "Aceitar",
     "dashboard.requests.reject": "Rejeitar",
+
+    // Converter Flow
+    "converter.title": "Converter / Migrar Token",
+    "converter.description": "Siga os passos para configurar o sistema de conversão e migrar tokens.",
+    "converter.step1.title": "Fazer deploy dos componentes básicos",
+    "converter.step1.desc": "Faz o deploy dos verificadores ZK, BabyJubJub e do token ponte ERC20.",
+    "converter.step1.cta": "Deploy básicos",
+    "converter.step2.title": "Fazer deploy do conversor completo",
+    "converter.step2.desc": "Faz o deploy de todos os contratos do sistema de conversão.",
+    "converter.step3.title": "Registrar usuário",
+    "converter.step3.desc": "Registra o usuário atual no sistema de conversão.",
+    "converter.step4.title": "Depositar ERC20 → criptografado",
+    "converter.step4.desc": "Bloqueia ERC20 e cunha tokens criptografados.",
+    "converter.step5.title": "Sacar criptografado → ERC20",
+    "converter.step5.desc": "Queima criptografados e libera ERC20.",
+    "converter.active": "Ativo",
+    "converter.goToStep": "Ir para o passo",
+    "converter.done": "Concluído",
+    "converter.comingSoon": "Em breve. Este passo será habilitado após concluir os anteriores.",
 
     // Auditor
     "auditor.toast.sent.title": "Solicitação enviada",
