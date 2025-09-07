@@ -246,6 +246,11 @@ export const translations: Record<Language, Dict> = {
     "converter.goToStep": "Ir al paso",
     "converter.done": "Hecho",
     "converter.comingSoon": "Próximamente. Este paso se habilitará tras completar los anteriores.",
+    "converter.card.title": "Despliegue del Convertidor",
+    "converter.card.subtitle": "Últimos componentes básicos desplegados",
+    "converter.card.none": "Aún no has realizado el despliegue. Ejecuta el Paso 1 para desplegar los componentes básicos.",
+    "converter.card.viewFlow": "Abrir flujo de conversión",
+    "converter.card.lastUpdated": "Última actualización",
 
     // Auditor
     "auditor.toast.sent.title": "Solicitud enviada",
@@ -574,6 +579,11 @@ export const translations: Record<Language, Dict> = {
     "converter.goToStep": "Go to step",
     "converter.done": "Done",
     "converter.comingSoon": "Coming soon. This step will be enabled after completing previous steps.",
+    "converter.card.title": "Converter Deployment",
+    "converter.card.subtitle": "Latest deployed basic components",
+    "converter.card.none": "No deployment found yet. Run Step 1 to deploy basic components.",
+    "converter.card.viewFlow": "Open converter flow",
+    "converter.card.lastUpdated": "Last updated",
 
     // Auditor
     "auditor.toast.sent.title": "Request sent",
@@ -902,6 +912,11 @@ export const translations: Record<Language, Dict> = {
     "converter.goToStep": "Ir para o passo",
     "converter.done": "Concluído",
     "converter.comingSoon": "Em breve. Este passo será habilitado após concluir os anteriores.",
+    "converter.card.title": "Deploy do Conversor",
+    "converter.card.subtitle": "Últimos componentes básicos em produção",
+    "converter.card.none": "Ainda não há deploy. Execute o Passo 1 para fazer o deploy dos componentes básicos.",
+    "converter.card.viewFlow": "Abrir fluxo do conversor",
+    "converter.card.lastUpdated": "Última atualização",
 
     // Auditor
     "auditor.toast.sent.title": "Solicitação enviada",
