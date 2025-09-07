@@ -15,9 +15,8 @@ const buildMockData = (): DeploymentBasics => {
     mintVerifier: genHex(),
     withdrawVerifier: genHex(),
     transferVerifier: genHex(),
-    burnVerifier: genHex(),
     babyJubJub: genHex(),
-    deploymentFile: `deployments/standalone/standalone-${now}.json`,
+    deploymentFile: `deployments/converter/converter-${now}.json`,
     erc20Token: genHex(),
   }
 }

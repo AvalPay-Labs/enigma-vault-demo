@@ -32,14 +32,13 @@ export const deployBasicsService = async (payload = {}) => {
 
   // Mocked local implementation: generate deterministic-looking addresses
   const now = Date.now()
-  const deploymentFile = `deployments/standalone/standalone-${now}.json`
+  const deploymentFile = `deployments/converter/converter-${now}.json`
 
   const data = {
     registrationVerifier: randomHexAddress(),
     mintVerifier: randomHexAddress(),
     withdrawVerifier: randomHexAddress(),
     transferVerifier: randomHexAddress(),
-    burnVerifier: randomHexAddress(),
     babyJubJub: randomHexAddress(),
     deploymentFile,
     erc20Token: randomHexAddress(),
@@ -53,4 +52,3 @@ export const deployBasicsService = async (payload = {}) => {
 
   return data
 }
-

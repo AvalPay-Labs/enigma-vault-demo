@@ -5,7 +5,6 @@ export const DeploymentBasicsSchema = z.object({
   mintVerifier: z.string().regex(/^0x[a-fA-F0-9]{40}$/),
   withdrawVerifier: z.string().regex(/^0x[a-fA-F0-9]{40}$/),
   transferVerifier: z.string().regex(/^0x[a-fA-F0-9]{40}$/),
-  burnVerifier: z.string().regex(/^0x[a-fA-F0-9]{40}$/),
   babyJubJub: z.string().regex(/^0x[a-fA-F0-9]{40}$/),
   deploymentFile: z.string(),
   erc20Token: z.string().regex(/^0x[a-fA-F0-9]{40}$/),
@@ -18,7 +17,7 @@ export const DeployBasicsResponseSchema = z.object({
   message: z.string(),
   data: DeploymentBasicsSchema,
   timestamp: z.string(),
-  executionTime: z.number(),
+  executionTime: z.number().optional(),
 })
 
 export type DeployBasicsResponse = z.infer<typeof DeployBasicsResponseSchema>
@@ -33,4 +32,3 @@ export const DeployBasicsErrorSchema = z.object({
 })
 
 export type DeployBasicsError = z.infer<typeof DeployBasicsErrorSchema>
-
