@@ -96,3 +96,21 @@ export const DepositResponseSchema = z.object({
 })
 
 export type DepositResponse = z.infer<typeof DepositResponseSchema>
+
+// Withdraw types
+export const WithdrawDataSchema = z.object({
+  transactionHash: z.string().regex(/^0x[a-fA-F0-9]+$/),
+  walletNumber: z.number(),
+})
+
+export type WithdrawData = z.infer<typeof WithdrawDataSchema>
+
+export const WithdrawResponseSchema = z.object({
+  success: z.literal(true),
+  message: z.string(),
+  data: WithdrawDataSchema,
+  timestamp: z.string(),
+  executionTime: z.number().optional(),
+})
+
+export type WithdrawResponse = z.infer<typeof WithdrawResponseSchema>

@@ -95,3 +95,20 @@ export const saveDeposit = (response: DepositResponse) => {
 export const getLastDeposit = (): DepositResponse | null => {
   return readJSON<DepositResponse | null>(KEY_LAST_DEPOSIT, null)
 }
+
+// Withdraw storage
+import type { WithdrawResponse } from '@/types/deploy'
+
+const KEY_LAST_WITHDRAW = 'converter:withdraw:last'
+const KEY_LIST_WITHDRAW = 'converter:withdraw:list'
+
+export const saveWithdraw = (response: WithdrawResponse) => {
+  writeJSON(KEY_LAST_WITHDRAW, response)
+  const list = readJSON<WithdrawResponse[]>(KEY_LIST_WITHDRAW, [])
+  list.unshift(response)
+  writeJSON(KEY_LIST_WITHDRAW, list.slice(0, 20))
+}
+
+export const getLastWithdraw = (): WithdrawResponse | null => {
+  return readJSON<WithdrawResponse | null>(KEY_LAST_WITHDRAW, null)
+}

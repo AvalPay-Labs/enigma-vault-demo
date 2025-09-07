@@ -10,6 +10,8 @@ import {
   RegisterUserResponseSchema,
   DepositResponse,
   DepositResponseSchema,
+  WithdrawResponse,
+  WithdrawResponseSchema,
 } from '@/types/deploy'
 
 const genHex = () =>
@@ -226,6 +228,57 @@ export const deposit = async (
           executionTime: Math.max(1, Math.round(performance.now() - start)),
         }
     return DepositResponseSchema.parse(shaped)
+  } catch (err) {
+    throw toHttpError(err)
+  }
+}
+
+export const withdraw = async (
+  payload?: { walletNumber?: number; walletAddress?: string },
+): Promise<WithdrawResponse> => {
+  const start = performance.now()
+  const envWallet = (import.meta.env.VITE_CONVERTER_WALLET_ADDRESS as string | undefined)?.trim()
+  const walletNumber = payload?.walletNumber ?? 1
+  const walletAddress = (payload?.walletAddress || envWallet || '').trim()
+
+  if (http.defaults.baseURL && !walletAddress) {
+    throw new Error('Missing walletAddress: configure VITE_CONVERTER_WALLET_ADDRESS')
+  }
+
+  if (!http.defaults.baseURL) {
+    const data = {
+      transactionHash: '0x' + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join(''),
+      walletNumber,
+    }
+    const res: WithdrawResponse = {
+      success: true,
+      message: 'Tokens retirados exitosamente',
+      data,
+      timestamp: new Date().toISOString(),
+      executionTime: Math.max(1, Math.round(performance.now() - start)),
+    }
+    return WithdrawResponseSchema.parse(res)
+  }
+
+  try {
+    const timeout = Number(
+      (import.meta.env.VITE_WITHDRAW_TIMEOUT_MS as string | undefined) ||
+      (import.meta.env.VITE_HTTP_TIMEOUT_MS as string | undefined) ||
+      120_000,
+    )
+    const { data } = await http.post('/api/converter/withdraw', { walletNumber, walletAddress }, {
+      timeout: Number.isFinite(timeout) ? timeout : 120_000,
+    })
+    const shaped: WithdrawResponse = data?.success !== undefined
+      ? data
+      : {
+          success: true,
+          message: 'Tokens retirados exitosamente',
+          data,
+          timestamp: new Date().toISOString(),
+          executionTime: Math.max(1, Math.round(performance.now() - start)),
+        }
+    return WithdrawResponseSchema.parse(shaped)
   } catch (err) {
     throw toHttpError(err)
   }

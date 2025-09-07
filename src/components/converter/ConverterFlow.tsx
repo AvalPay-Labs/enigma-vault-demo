@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
 import { useDeployBasics } from '@/hooks/useDeployBasics'
-import { getLastDeploymentData, getLastSystemData, getLastRegisteredUser, getLastDeposit } from '@/store/deployments'
+import { getLastDeploymentData, getLastSystemData, getLastRegisteredUser, getLastDeposit, getLastWithdraw } from '@/store/deployments'
 import type { DeploymentBasics } from '@/types/deploy'
 import { useTranslation } from '@/i18n/LanguageContext'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
@@ -19,6 +19,7 @@ import { useDeploySystem } from '@/hooks/useDeploySystem'
 import type { DeploymentSystem } from '@/types/deploy'
 import { useRegisterUser } from '@/hooks/useRegisterUser'
 import { useDeposit } from '@/hooks/useDeposit'
+import { useWithdraw } from '@/hooks/useWithdraw'
 
 type Props = {
   open: boolean
@@ -45,6 +46,7 @@ export const ConverterFlow = ({ open, onOpenChange }: Props) => {
   const { mutate: runDeploySystem, isPending: isPendingSys, isSuccess: isSuccessSys, data: dataSys, error: errorSys } = useDeploySystem()
   const { mutate: runRegisterUser, isPending: isPendingReg, isSuccess: isSuccessReg, data: dataReg, error: errorReg } = useRegisterUser()
   const { mutate: runDeposit, isPending: isPendingDep, isSuccess: isSuccessDep, data: dataDep, error: errorDep } = useDeposit()
+  const { mutate: runWithdraw, isPending: isPendingWit, isSuccess: isSuccessWit, data: dataWit, error: errorWit } = useWithdraw()
   const { t } = useTranslation()
 
   const [persisted, setPersisted] = useState<DeploymentBasics | null>(null)
@@ -62,8 +64,9 @@ export const ConverterFlow = ({ open, onOpenChange }: Props) => {
     if (isSuccessSys || persistedSys) done.add(2)
     if (isSuccessReg || getLastRegisteredUser()) done.add(3)
     if (isSuccessDep || getLastDeposit()) done.add(4)
+    if (isSuccessWit || getLastWithdraw()) done.add(5)
     return done
-  }, [isSuccess, persisted, isSuccessSys, persistedSys, isSuccessReg, isSuccessDep])
+  }, [isSuccess, persisted, isSuccessSys, persistedSys, isSuccessReg, isSuccessDep, isSuccessWit])
 
   const _steps = steps(t)
   const progress = Math.round((completed.size / _steps.length) * 100)
@@ -233,8 +236,43 @@ export const ConverterFlow = ({ open, onOpenChange }: Props) => {
                   </div>
                 )}
 
-                {s.id > 4 && active === s.id && (
-                  <div className="mt-4 text-sm text-muted-foreground">{t('converter.comingSoon')}</div>
+                {s.id === 5 && active === 5 && (
+                  <div className="mt-4 space-y-3">
+                    {!((isSuccessDep || getLastDeposit()) && (isSuccessSys || persistedSys)) ? (
+                      <div className="flex items-center justify-between bg-muted/20 border border-glass-border rounded-md p-3">
+                        <span className="text-sm text-muted-foreground">{t('converter.needStep4')}</span>
+                        <Button variant="outline" size="sm" onClick={() => setActive(4)}>
+                          {t('converter.goToStep4')}
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="flex flex-col gap-3">
+                        <Alert>
+                          <AlertTitle>{t('converter.step5.cta')}</AlertTitle>
+                          <AlertDescription>
+                            {t('converter.step5.longRunning')}
+                          </AlertDescription>
+                        </Alert>
+                        <div className="flex items-center gap-2">
+                          <Button onClick={() => runWithdraw()} disabled={isPendingWit} className="glass-button cta-start-button">
+                            {isPendingWit ? '...' : t('converter.step5.cta')}
+                          </Button>
+                          {errorWit && <span className="text-sm text-red-600">{errorWit.message}</span>}
+                        </div>
+                      </div>
+                    )}
+
+                    {(isSuccessWit || getLastWithdraw()) && (
+                      <div className="text-xs grid grid-cols-1 md:grid-cols-2 gap-2 bg-white border border-glass-border rounded-md p-3">
+                        {Object.entries((dataWit?.data || getLastWithdraw()?.data || {}) as any).map(([k, v]) => (
+                          <div key={k} className="flex justify-between gap-2">
+                            <span className="font-medium capitalize">{k}</span>
+                            <span className="font-mono text-muted-foreground break-all">{String(v)}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 )}
               </div>
             ))}
