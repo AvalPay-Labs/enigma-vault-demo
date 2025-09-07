@@ -6,8 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "@/i18n/LanguageContext";
 import ConverterFlow from "@/components/converter/ConverterFlow";
-import { getLastDeployment } from "@/store/deployments";
-import type { DeployBasicsResponse } from "@/types/deploy";
+import { getLastDeployment, getLastSystemDeployment } from "@/store/deployments";
+import type { DeployBasicsResponse, DeploySystemResponse } from "@/types/deploy";
 
 const Dashboard = () => {
   const [user, setUser] = useState<any>(null);
@@ -18,6 +18,7 @@ const Dashboard = () => {
   const { t } = useTranslation();
   const [openConverter, setOpenConverter] = useState(false);
   const [lastDeployment, setLastDeployment] = useState<DeployBasicsResponse | null>(null);
+  const [lastSystem, setLastSystem] = useState<DeploySystemResponse | null>(null);
 
   useEffect(() => {
     const userData = localStorage.getItem('enigma_user');
@@ -37,10 +38,12 @@ const Dashboard = () => {
   // Load last deployment on mount and whenever the dialog closes
   useEffect(() => {
     setLastDeployment(getLastDeployment());
+    setLastSystem(getLastSystemDeployment());
   }, []);
   useEffect(() => {
     if (!openConverter) {
       setLastDeployment(getLastDeployment());
+      setLastSystem(getLastSystemDeployment());
     }
   }, [openConverter]);
 
@@ -180,6 +183,40 @@ const Dashboard = () => {
             ) : (
               <div className="flex items-center justify-between">
                 <p className="text-sm text-muted-foreground">{t("converter.card.none")}</p>
+                <Button variant="outline" className="glass-button" onClick={() => setOpenConverter(true)}>
+                  {t("converter.card.viewFlow")}
+                </Button>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Converter System Summary */}
+        <Card className="glass-card border-glass-border mb-8">
+          <CardHeader>
+            <CardTitle>{t("converter.card.system.title")}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {lastSystem ? (
+              <div className="space-y-3">
+                <p className="text-sm text-muted-foreground">{t("converter.card.system.subtitle")} · {t("converter.card.lastUpdated")}: {new Date(lastSystem.timestamp).toLocaleString()}</p>
+                <div className="text-xs grid grid-cols-1 md:grid-cols-2 gap-2 bg-white border border-glass-border rounded-md p-3">
+                  {Object.entries(lastSystem.data).map(([k, v]) => (
+                    <div key={k} className="flex justify-between gap-2">
+                      <span className="font-medium capitalize">{k}</span>
+                      <span className="font-mono text-muted-foreground break-all">{String(v)}</span>
+                    </div>
+                  ))}
+                </div>
+                <div>
+                  <Button variant="outline" className="glass-button" onClick={() => setOpenConverter(true)}>
+                    {t("converter.card.viewFlow")}
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-center justify-between">
+                <p className="text-sm text-muted-foreground">{t("converter.card.system.none")}</p>
                 <Button variant="outline" className="glass-button" onClick={() => setOpenConverter(true)}>
                   {t("converter.card.viewFlow")}
                 </Button>

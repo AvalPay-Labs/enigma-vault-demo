@@ -3,6 +3,9 @@ import {
   DeployBasicsResponse,
   DeployBasicsResponseSchema,
   DeploymentBasics,
+  DeploySystemResponse,
+  DeploySystemResponseSchema,
+  DeploymentSystem,
 } from '@/types/deploy'
 
 const genHex = () =>
@@ -11,6 +14,21 @@ const genHex = () =>
 const buildMockData = (): DeploymentBasics => {
   const now = Date.now()
   return {
+    registrationVerifier: genHex(),
+    mintVerifier: genHex(),
+    withdrawVerifier: genHex(),
+    transferVerifier: genHex(),
+    babyJubJub: genHex(),
+    deploymentFile: `deployments/converter/converter-${now}.json`,
+    erc20Token: genHex(),
+  }
+}
+
+const buildMockSystem = (): DeploymentSystem => {
+  const now = Date.now()
+  return {
+    registrar: genHex(),
+    encryptedERC: genHex(),
     registrationVerifier: genHex(),
     mintVerifier: genHex(),
     withdrawVerifier: genHex(),
@@ -60,6 +78,45 @@ export const deployBasics = async (payload?: Record<string, unknown>): Promise<D
           executionTime: Math.max(1, Math.round(performance.now() - start)),
         }
     return DeployBasicsResponseSchema.parse(shaped)
+  } catch (err) {
+    throw toHttpError(err)
+  }
+}
+
+export const deploySystem = async (payload?: Record<string, unknown>): Promise<DeploySystemResponse> => {
+  const start = performance.now()
+
+  if (!http.defaults.baseURL) {
+    const data = buildMockSystem()
+    const res: DeploySystemResponse = {
+      success: true,
+      message: 'Sistema desplegado exitosamente',
+      data,
+      timestamp: new Date().toISOString(),
+      executionTime: Math.max(1, Math.round(performance.now() - start)),
+    }
+    return DeploySystemResponseSchema.parse(res)
+  }
+
+  try {
+    const timeout = Number(
+      (import.meta.env.VITE_DEPLOY_SYSTEM_TIMEOUT_MS as string | undefined) ||
+      (import.meta.env.VITE_HTTP_TIMEOUT_MS as string | undefined) ||
+      180_000,
+    )
+    const { data } = await http.post('/api/converter/deploy-system', payload ?? {}, {
+      timeout: Number.isFinite(timeout) ? timeout : 180_000,
+    })
+    const shaped: DeploySystemResponse = data?.success !== undefined
+      ? data
+      : {
+          success: true,
+          message: 'Sistema desplegado exitosamente',
+          data,
+          timestamp: new Date().toISOString(),
+          executionTime: Math.max(1, Math.round(performance.now() - start)),
+        }
+    return DeploySystemResponseSchema.parse(shaped)
   } catch (err) {
     throw toHttpError(err)
   }

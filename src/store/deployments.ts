@@ -2,6 +2,8 @@ import type { DeployBasicsResponse, DeploymentBasics } from '@/types/deploy'
 
 const KEY_LAST = 'deployments:last'
 const KEY_LIST = 'deployments:list'
+const KEY_LAST_SYSTEM = 'deployments:system:last'
+const KEY_LIST_SYSTEM = 'deployments:system:list'
 
 const readJSON = <T>(key: string, fallback: T): T => {
   try {
@@ -41,3 +43,21 @@ export const getLastDeploymentData = (): DeploymentBasics | null => {
   return last?.data ?? null
 }
 
+// System deployment storage
+import type { DeploySystemResponse, DeploymentSystem } from '@/types/deploy'
+
+export const saveSystemDeployment = (response: DeploySystemResponse) => {
+  writeJSON(KEY_LAST_SYSTEM, response)
+  const list = readJSON<DeploySystemResponse[]>(KEY_LIST_SYSTEM, [])
+  list.unshift(response)
+  writeJSON(KEY_LIST_SYSTEM, list.slice(0, 10))
+}
+
+export const getLastSystemDeployment = (): DeploySystemResponse | null => {
+  return readJSON<DeploySystemResponse | null>(KEY_LAST_SYSTEM, null)
+}
+
+export const getLastSystemData = (): DeploymentSystem | null => {
+  const last = getLastSystemDeployment()
+  return last?.data ?? null
+}

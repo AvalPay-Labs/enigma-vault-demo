@@ -11,10 +11,12 @@ import {
 } from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
 import { useDeployBasics } from '@/hooks/useDeployBasics'
-import { getLastDeploymentData } from '@/store/deployments'
+import { getLastDeploymentData, getLastSystemData } from '@/store/deployments'
 import type { DeploymentBasics } from '@/types/deploy'
 import { useTranslation } from '@/i18n/LanguageContext'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { useDeploySystem } from '@/hooks/useDeploySystem'
+import type { DeploymentSystem } from '@/types/deploy'
 
 type Props = {
   open: boolean
@@ -38,18 +40,22 @@ const steps = (t: (k: string) => string): Step[] => ([
 export const ConverterFlow = ({ open, onOpenChange }: Props) => {
   const [active, setActive] = useState<number>(1)
   const { mutate: runDeployBasics, isPending, isSuccess, data, error } = useDeployBasics()
+  const { mutate: runDeploySystem, isPending: isPendingSys, isSuccess: isSuccessSys, data: dataSys, error: errorSys } = useDeploySystem()
   const { t } = useTranslation()
 
   const [persisted, setPersisted] = useState<DeploymentBasics | null>(null)
+  const [persistedSys, setPersistedSys] = useState<DeploymentSystem | null>(null)
   useEffect(() => {
     setPersisted(getLastDeploymentData())
-  }, [isSuccess, data, open])
+    setPersistedSys(getLastSystemData())
+  }, [isSuccess, data, isSuccessSys, dataSys, open])
 
   const completed = useMemo(() => {
     const done = new Set<number>()
     if (isSuccess || persisted) done.add(1)
+    if (isSuccessSys || persistedSys) done.add(2)
     return done
-  }, [isSuccess, persisted])
+  }, [isSuccess, persisted, isSuccessSys, persistedSys])
 
   const _steps = steps(t)
   const progress = Math.round((completed.size / _steps.length) * 100)
@@ -119,7 +125,41 @@ export const ConverterFlow = ({ open, onOpenChange }: Props) => {
                   </div>
                 )}
 
-                {s.id !== 1 && active === s.id && (
+                {s.id === 2 && active === 2 && (
+                  <div className="mt-4 space-y-3">
+                    {!(isSuccess || persisted) ? (
+                      <div className="text-sm text-muted-foreground">{t('converter.needStep1')}</div>
+                    ) : (
+                      <div className="flex flex-col gap-3">
+                        <Alert>
+                          <AlertTitle>{t('converter.step2.cta')}</AlertTitle>
+                          <AlertDescription>
+                            {t('converter.step2.longRunning')}
+                          </AlertDescription>
+                        </Alert>
+                        <div className="flex items-center gap-2">
+                          <Button onClick={() => runDeploySystem()} disabled={isPendingSys} className="glass-button cta-start-button">
+                            {isPendingSys ? '...' : t('converter.step2.cta')}
+                          </Button>
+                          {errorSys && <span className="text-sm text-red-600">{errorSys.message}</span>}
+                        </div>
+                      </div>
+                    )}
+
+                    {(isSuccessSys || persistedSys) && (
+                      <div className="text-xs grid grid-cols-1 md:grid-cols-2 gap-2 bg-white border border-glass-border rounded-md p-3">
+                        {Object.entries((dataSys?.data || persistedSys) as DeploymentSystem).map(([k, v]) => (
+                          <div key={k} className="flex justify-between gap-2">
+                            <span className="font-medium capitalize">{k}</span>
+                            <span className="font-mono text-muted-foreground break-all">{String(v)}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {s.id > 2 && active === s.id && (
                   <div className="mt-4 text-sm text-muted-foreground">{t('converter.comingSoon')}</div>
                 )}
               </div>
