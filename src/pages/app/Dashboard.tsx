@@ -6,8 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "@/i18n/LanguageContext";
 import ConverterFlow from "@/components/converter/ConverterFlow";
-import { getLastDeployment, getLastSystemDeployment } from "@/store/deployments";
-import type { DeployBasicsResponse, DeploySystemResponse } from "@/types/deploy";
+import { getLastDeployment, getLastSystemDeployment, getLastDeposit } from "@/store/deployments";
+import type { DeployBasicsResponse, DeploySystemResponse, DepositResponse } from "@/types/deploy";
 
 const Dashboard = () => {
   const [user, setUser] = useState<any>(null);
@@ -19,6 +19,7 @@ const Dashboard = () => {
   const [openConverter, setOpenConverter] = useState(false);
   const [lastDeployment, setLastDeployment] = useState<DeployBasicsResponse | null>(null);
   const [lastSystem, setLastSystem] = useState<DeploySystemResponse | null>(null);
+  const [lastDeposit, setLastDeposit] = useState<DepositResponse | null>(null);
 
   useEffect(() => {
     const userData = localStorage.getItem('enigma_user');
@@ -39,11 +40,13 @@ const Dashboard = () => {
   useEffect(() => {
     setLastDeployment(getLastDeployment());
     setLastSystem(getLastSystemDeployment());
+    setLastDeposit(getLastDeposit());
   }, []);
   useEffect(() => {
     if (!openConverter) {
       setLastDeployment(getLastDeployment());
       setLastSystem(getLastSystemDeployment());
+      setLastDeposit(getLastDeposit());
     }
   }, [openConverter]);
 
@@ -183,6 +186,42 @@ const Dashboard = () => {
             ) : (
               <div className="flex items-center justify-between">
                 <p className="text-sm text-muted-foreground">{t("converter.card.none")}</p>
+                <Button variant="outline" className="glass-button" onClick={() => setOpenConverter(true)}>
+                  {t("converter.card.viewFlow")}
+                </Button>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Last Deposit Summary */}
+        <Card className="glass-card border-glass-border mb-8">
+          <CardHeader>
+            <CardTitle>{t("converter.card.deposit.title")}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {lastDeposit ? (
+              <div className="space-y-3">
+                <p className="text-sm text-muted-foreground">{t("converter.card.deposit.subtitle")} · {t("converter.card.lastUpdated")}: {new Date(lastDeposit.timestamp).toLocaleString()}</p>
+                <div className="text-xs grid grid-cols-1 md:grid-cols-2 gap-2 bg-white border border-glass-border rounded-md p-3">
+                  <div className="flex justify-between gap-2">
+                    <span className="font-medium">transactionHash</span>
+                    <span className="font-mono text-muted-foreground break-all">{lastDeposit.data.transactionHash}</span>
+                  </div>
+                  <div className="flex justify-between gap-2">
+                    <span className="font-medium">walletNumber</span>
+                    <span className="font-mono text-muted-foreground">{lastDeposit.data.walletNumber}</span>
+                  </div>
+                </div>
+                <div>
+                  <Button variant="outline" className="glass-button" onClick={() => setOpenConverter(true)}>
+                    {t("converter.card.viewFlow")}
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-center justify-between">
+                <p className="text-sm text-muted-foreground">{t("converter.card.deposit.none")}</p>
                 <Button variant="outline" className="glass-button" onClick={() => setOpenConverter(true)}>
                   {t("converter.card.viewFlow")}
                 </Button>

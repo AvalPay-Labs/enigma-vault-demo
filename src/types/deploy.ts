@@ -78,3 +78,21 @@ export const RegisterUserResponseSchema = z.object({
 })
 
 export type RegisterUserResponse = z.infer<typeof RegisterUserResponseSchema>
+
+// Deposit types
+export const DepositDataSchema = z.object({
+  transactionHash: z.string().regex(/^0x[a-fA-F0-9]+$/),
+  walletNumber: z.number(),
+})
+
+export type DepositData = z.infer<typeof DepositDataSchema>
+
+export const DepositResponseSchema = z.object({
+  success: z.literal(true),
+  message: z.string(),
+  data: DepositDataSchema,
+  timestamp: z.string(),
+  executionTime: z.number().optional(),
+})
+
+export type DepositResponse = z.infer<typeof DepositResponseSchema>

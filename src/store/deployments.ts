@@ -78,3 +78,20 @@ export const saveRegisteredUser = (response: RegisterUserResponse) => {
 export const getLastRegisteredUser = (): RegisterUserResponse | null => {
   return readJSON<RegisterUserResponse | null>(KEY_LAST_REGISTER, null)
 }
+
+// Deposit storage
+import type { DepositResponse } from '@/types/deploy'
+
+const KEY_LAST_DEPOSIT = 'converter:deposit:last'
+const KEY_LIST_DEPOSIT = 'converter:deposit:list'
+
+export const saveDeposit = (response: DepositResponse) => {
+  writeJSON(KEY_LAST_DEPOSIT, response)
+  const list = readJSON<DepositResponse[]>(KEY_LIST_DEPOSIT, [])
+  list.unshift(response)
+  writeJSON(KEY_LIST_DEPOSIT, list.slice(0, 20))
+}
+
+export const getLastDeposit = (): DepositResponse | null => {
+  return readJSON<DepositResponse | null>(KEY_LAST_DEPOSIT, null)
+}

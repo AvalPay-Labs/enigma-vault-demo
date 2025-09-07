@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { deployBasics, deploySystem, registerUser } from '../../controllers/converterController.js'
+import { deployBasics, deploySystem, registerUser, deposit } from '../../controllers/converterController.js'
 
 const router = Router()
 
@@ -7,5 +7,6 @@ const router = Router()
 router.post('/deploy-basics', deployBasics)
 router.post('/deploy-system', deploySystem)
 router.post('/register-user', registerUser)
+router.post('/deposit', deposit)
 
 export default router
