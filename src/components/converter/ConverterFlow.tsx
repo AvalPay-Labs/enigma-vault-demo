@@ -11,12 +11,13 @@ import {
 } from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
 import { useDeployBasics } from '@/hooks/useDeployBasics'
-import { getLastDeploymentData, getLastSystemData } from '@/store/deployments'
+import { getLastDeploymentData, getLastSystemData, getLastRegisteredUser } from '@/store/deployments'
 import type { DeploymentBasics } from '@/types/deploy'
 import { useTranslation } from '@/i18n/LanguageContext'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { useDeploySystem } from '@/hooks/useDeploySystem'
 import type { DeploymentSystem } from '@/types/deploy'
+import { useRegisterUser } from '@/hooks/useRegisterUser'
 
 type Props = {
   open: boolean
@@ -41,21 +42,25 @@ export const ConverterFlow = ({ open, onOpenChange }: Props) => {
   const [active, setActive] = useState<number>(1)
   const { mutate: runDeployBasics, isPending, isSuccess, data, error } = useDeployBasics()
   const { mutate: runDeploySystem, isPending: isPendingSys, isSuccess: isSuccessSys, data: dataSys, error: errorSys } = useDeploySystem()
+  const { mutate: runRegisterUser, isPending: isPendingReg, isSuccess: isSuccessReg, data: dataReg, error: errorReg } = useRegisterUser()
   const { t } = useTranslation()
 
   const [persisted, setPersisted] = useState<DeploymentBasics | null>(null)
   const [persistedSys, setPersistedSys] = useState<DeploymentSystem | null>(null)
+  // Wallet config is now taken from env in the service; no inputs here
   useEffect(() => {
     setPersisted(getLastDeploymentData())
     setPersistedSys(getLastSystemData())
+    // no-op; values loaded inside service from env
   }, [isSuccess, data, isSuccessSys, dataSys, open])
 
   const completed = useMemo(() => {
     const done = new Set<number>()
     if (isSuccess || persisted) done.add(1)
     if (isSuccessSys || persistedSys) done.add(2)
+    if (isSuccessReg || getLastRegisteredUser()) done.add(3)
     return done
-  }, [isSuccess, persisted, isSuccessSys, persistedSys])
+  }, [isSuccess, persisted, isSuccessSys, persistedSys, isSuccessReg])
 
   const _steps = steps(t)
   const progress = Math.round((completed.size / _steps.length) * 100)
@@ -159,7 +164,34 @@ export const ConverterFlow = ({ open, onOpenChange }: Props) => {
                   </div>
                 )}
 
-                {s.id > 2 && active === s.id && (
+                {s.id === 3 && active === 3 && (
+                  <div className="mt-4 space-y-3">
+                    {!(isSuccessSys || persistedSys) ? (
+                      <div className="text-sm text-muted-foreground">{t('converter.needStep2')}</div>
+                    ) : (
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2">
+                          <Button onClick={() => runRegisterUser()} disabled={isPendingReg} className="glass-button cta-start-button">
+                            {isPendingReg ? '...' : t('converter.step3.cta')}
+                          </Button>
+                          {errorReg && <span className="text-sm text-red-600">{errorReg.message}</span>}
+                        </div>
+                        {(isSuccessReg || getLastRegisteredUser()) && (
+                          <div className="text-xs grid grid-cols-1 md:grid-cols-2 gap-2 bg-white border border-glass-border rounded-md p-3">
+                            {Object.entries((dataReg?.data || getLastRegisteredUser()?.data || {}) as any).map(([k, v]) => (
+                              <div key={k} className="flex justify-between gap-2">
+                                <span className="font-medium capitalize">{k}</span>
+                                <span className="font-mono text-muted-foreground break-all">{String(v)}</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {s.id > 3 && active === s.id && (
                   <div className="mt-4 text-sm text-muted-foreground">{t('converter.comingSoon')}</div>
                 )}
               </div>

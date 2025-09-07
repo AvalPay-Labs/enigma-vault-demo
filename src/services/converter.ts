@@ -6,6 +6,8 @@ import {
   DeploySystemResponse,
   DeploySystemResponseSchema,
   DeploymentSystem,
+  RegisterUserResponse,
+  RegisterUserResponseSchema,
 } from '@/types/deploy'
 
 const genHex = () =>
@@ -117,6 +119,60 @@ export const deploySystem = async (payload?: Record<string, unknown>): Promise<D
           executionTime: Math.max(1, Math.round(performance.now() - start)),
         }
     return DeploySystemResponseSchema.parse(shaped)
+  } catch (err) {
+    throw toHttpError(err)
+  }
+}
+
+export const registerUser = async (
+  payload?: { walletNumber?: number; walletAddress?: string },
+): Promise<RegisterUserResponse> => {
+  const start = performance.now()
+  const envWallet = (import.meta.env.VITE_CONVERTER_WALLET_ADDRESS as string | undefined)?.trim()
+  const walletNumber = payload?.walletNumber ?? 1
+  const walletAddress = (payload?.walletAddress || envWallet || '').trim()
+
+  if (http.defaults.baseURL && !walletAddress) {
+    throw new Error('Missing walletAddress: configure VITE_CONVERTER_WALLET_ADDRESS')
+  }
+
+  if (!http.defaults.baseURL) {
+    const data = {
+      userAddress: walletAddress || genHex(),
+      balance: 1.5,
+      walletNumber,
+      role: 'auditor',
+      module: 'converter',
+    }
+    const res: RegisterUserResponse = {
+      success: true,
+      message: 'Usuario registrado exitosamente',
+      data,
+      timestamp: new Date().toISOString(),
+      executionTime: Math.max(1, Math.round(performance.now() - start)),
+    }
+    return RegisterUserResponseSchema.parse(res)
+  }
+
+  try {
+    const timeout = Number(
+      (import.meta.env.VITE_REGISTER_USER_TIMEOUT_MS as string | undefined) ||
+      (import.meta.env.VITE_HTTP_TIMEOUT_MS as string | undefined) ||
+      60_000,
+    )
+    const { data } = await http.post('/api/converter/register-user', { walletNumber, walletAddress }, {
+      timeout: Number.isFinite(timeout) ? timeout : 60_000,
+    })
+    const shaped: RegisterUserResponse = data?.success !== undefined
+      ? data
+      : {
+          success: true,
+          message: 'Usuario registrado exitosamente',
+          data,
+          timestamp: new Date().toISOString(),
+          executionTime: Math.max(1, Math.round(performance.now() - start)),
+        }
+    return RegisterUserResponseSchema.parse(shaped)
   } catch (err) {
     throw toHttpError(err)
   }

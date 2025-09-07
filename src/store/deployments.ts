@@ -61,3 +61,20 @@ export const getLastSystemData = (): DeploymentSystem | null => {
   const last = getLastSystemDeployment()
   return last?.data ?? null
 }
+
+// Registered users storage
+import type { RegisterUserResponse } from '@/types/deploy'
+
+const KEY_LAST_REGISTER = 'converter:register:last'
+const KEY_LIST_REGISTER = 'converter:register:list'
+
+export const saveRegisteredUser = (response: RegisterUserResponse) => {
+  writeJSON(KEY_LAST_REGISTER, response)
+  const list = readJSON<RegisterUserResponse[]>(KEY_LIST_REGISTER, [])
+  list.unshift(response)
+  writeJSON(KEY_LIST_REGISTER, list.slice(0, 20))
+}
+
+export const getLastRegisteredUser = (): RegisterUserResponse | null => {
+  return readJSON<RegisterUserResponse | null>(KEY_LAST_REGISTER, null)
+}

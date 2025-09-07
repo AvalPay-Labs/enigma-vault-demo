@@ -57,3 +57,24 @@ export const DeploySystemResponseSchema = z.object({
 })
 
 export type DeploySystemResponse = z.infer<typeof DeploySystemResponseSchema>
+
+// Register user types
+export const RegisterUserSchema = z.object({
+  userAddress: z.string().regex(/^0x[a-fA-F0-9]{40}$/),
+  balance: z.number(),
+  walletNumber: z.number(),
+  role: z.string(),
+  module: z.string(),
+})
+
+export type RegisterUserData = z.infer<typeof RegisterUserSchema>
+
+export const RegisterUserResponseSchema = z.object({
+  success: z.literal(true),
+  message: z.string(),
+  data: RegisterUserSchema,
+  timestamp: z.string(),
+  executionTime: z.number().optional(),
+})
+
+export type RegisterUserResponse = z.infer<typeof RegisterUserResponseSchema>
