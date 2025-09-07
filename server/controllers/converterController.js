@@ -9,7 +9,7 @@ export const deployBasics = async (req, res) => {
     const executionTime = end()
     return res.status(200).json(
       successResponse(
-        'Basic components deployed successfully',
+        'Converter basic components deployed successfully',
         result,
         executionTime,
       ),
@@ -29,4 +29,3 @@ export const deployBasics = async (req, res) => {
       )
   }
 }
-

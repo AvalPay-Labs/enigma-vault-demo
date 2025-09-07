@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
@@ -14,6 +14,7 @@ import { useDeployBasics } from '@/hooks/useDeployBasics'
 import { getLastDeploymentData } from '@/store/deployments'
 import type { DeploymentBasics } from '@/types/deploy'
 import { useTranslation } from '@/i18n/LanguageContext'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
 type Props = {
   open: boolean
@@ -39,13 +40,16 @@ export const ConverterFlow = ({ open, onOpenChange }: Props) => {
   const { mutate: runDeployBasics, isPending, isSuccess, data, error } = useDeployBasics()
   const { t } = useTranslation()
 
-  const stored: DeploymentBasics | null = useMemo(() => getLastDeploymentData(), [isSuccess, data])
+  const [persisted, setPersisted] = useState<DeploymentBasics | null>(null)
+  useEffect(() => {
+    setPersisted(getLastDeploymentData())
+  }, [isSuccess, data, open])
 
   const completed = useMemo(() => {
     const done = new Set<number>()
-    if (isSuccess || stored) done.add(1)
+    if (isSuccess || persisted) done.add(1)
     return done
-  }, [isSuccess, stored])
+  }, [isSuccess, persisted])
 
   const _steps = steps(t)
   const progress = Math.round((completed.size / _steps.length) * 100)
@@ -88,15 +92,23 @@ export const ConverterFlow = ({ open, onOpenChange }: Props) => {
 
                 {s.id === 1 && active === 1 && (
                   <div className="mt-4 space-y-3">
-                    <div className="flex items-center gap-2">
-                      <Button onClick={() => runDeployBasics()} disabled={isPending} className="glass-button cta-start-button">
-                        {isPending ? '...' : t('converter.step1.cta')}
-                      </Button>
-                      {error && <span className="text-sm text-red-600">{error.message}</span>}
+                    <div className="flex flex-col gap-3">
+                      <Alert>
+                        <AlertTitle>{t('converter.step1.cta')}</AlertTitle>
+                        <AlertDescription>
+                          {t('converter.step1.longRunning')}
+                        </AlertDescription>
+                      </Alert>
+                      <div className="flex items-center gap-2">
+                        <Button onClick={() => runDeployBasics()} disabled={isPending} className="glass-button cta-start-button">
+                          {isPending ? '...' : t('converter.step1.cta')}
+                        </Button>
+                        {error && <span className="text-sm text-red-600">{error.message}</span>}
+                      </div>
                     </div>
-                    {(isSuccess || stored) && (
+                    {(isSuccess || persisted) && (
                       <div className="text-xs grid grid-cols-1 md:grid-cols-2 gap-2 bg-white border border-glass-border rounded-md p-3">
-                        {Object.entries((data?.data || stored) as DeploymentBasics).map(([k, v]) => (
+                        {Object.entries((data?.data || persisted) as DeploymentBasics).map(([k, v]) => (
                           <div key={k} className="flex justify-between gap-2">
                             <span className="font-medium capitalize">{k}</span>
                             <span className="font-mono text-muted-foreground break-all">{String(v)}</span>
