@@ -1,12 +1,10 @@
 import axios from 'axios'
+import { BACKEND_CONFIG } from '@/config/backend'
 
-// Optional base URL for a backend. If not set, service can mock.
-const baseURL = import.meta.env.VITE_DEPLOY_SERVICE_URL || ''
-const defaultTimeout = Number(import.meta.env.VITE_HTTP_TIMEOUT_MS || 120_000)
-
+// Configure axios with backend settings
 export const http = axios.create({
-  baseURL,
-  timeout: Number.isFinite(defaultTimeout) ? defaultTimeout : 120_000,
+  baseURL: BACKEND_CONFIG.baseURL,
+  timeout: BACKEND_CONFIG.timeouts.default,
 })
 
 export type HttpError = Error & { status?: number; code?: string; details?: unknown }
