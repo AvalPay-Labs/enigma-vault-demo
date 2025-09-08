@@ -6,7 +6,10 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "@/i18n/LanguageContext";
 import ConverterFlow from "@/components/converter/ConverterFlow";
+import { StandaloneFlow } from "@/components/standalone/StandaloneFlow";
+import { StandaloneOperationsPanel } from "@/components/standalone/StandaloneOperationsPanel";
 import { getLastDeployment, getLastSystemDeployment, getLastDeposit } from "@/store/deployments";
+import { StandaloneDeploySystemResponse } from "@/types/standalone";
 import type { DeployBasicsResponse, DeploySystemResponse, DepositResponse } from "@/types/deploy";
 
 const Dashboard = () => {
@@ -17,6 +20,9 @@ const Dashboard = () => {
   const { toast } = useToast();
   const { t } = useTranslation();
   const [openConverter, setOpenConverter] = useState(false);
+  const [openStandalone, setOpenStandalone] = useState(false);
+  const [standaloneSystemData, setStandaloneSystemData] = useState<StandaloneDeploySystemResponse | null>(null);
+  const [showStandaloneOperations, setShowStandaloneOperations] = useState(false);
   const [lastDeployment, setLastDeployment] = useState<DeployBasicsResponse | null>(null);
   const [lastSystem, setLastSystem] = useState<DeploySystemResponse | null>(null);
   const [lastDeposit, setLastDeposit] = useState<DepositResponse | null>(null);
@@ -51,19 +57,24 @@ const Dashboard = () => {
   }, [openConverter]);
 
   const createToken = async () => {
-    setLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    const newToken = {
-      id: Date.now().toString(),
-      name: `Token${tokens.length + 1}`,
-      symbol: `TKN${tokens.length + 1}`,
-      balance: '100000',
-      auditor: null,
-      auditorExpiry: null
-    };
-    setTokens([...tokens, newToken]);
-    toast({ title: t("dashboard.toast.tokenCreated.title"), description: t("dashboard.toast.tokenCreated.desc").replace("{name}", newToken.name) });
-    setLoading(false);
+    setOpenStandalone(true);
+  };
+
+  const handleStandaloneDeploymentComplete = (systemData: StandaloneDeploySystemResponse) => {
+    console.log('Deployment completed, systemData:', systemData);
+    setStandaloneSystemData(systemData);
+    setShowStandaloneOperations(true);
+    setOpenStandalone(false);
+    console.log('Standalone operations panel should be visible now');
+    toast({
+      title: t("standalone.deploymentComplete"),
+      description: t("standalone.deploymentCompleteDesc"),
+    });
+  };
+
+  const handleCloseStandaloneOperations = () => {
+    setShowStandaloneOperations(false);
+    setStandaloneSystemData(null);
   };
 
   const exportData = (format: 'csv' | 'json') => {
@@ -317,8 +328,56 @@ const Dashboard = () => {
             </div>
           </CardContent>
         </Card>
+
+        {/* Standalone Operations Panel - Always visible */}
+        <Card className="glass-card border-glass-border">
+          <CardHeader>
+            <CardTitle className="flex items-center justify-between">
+              <span>{t("standalone.title")}</span>
+              {standaloneSystemData && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleCloseStandaloneOperations}
+                >
+                  {t("standalone.close")}
+                </Button>
+              )}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {standaloneSystemData ? (
+              <StandaloneOperationsPanel
+                systemData={standaloneSystemData}
+                onClose={handleCloseStandaloneOperations}
+              />
+            ) : (
+              <div className="text-center py-8">
+                <div className="text-muted-foreground mb-4">
+                  <div className="text-lg font-semibold mb-2">
+                    {t("standalone.panelLocked")}
+                  </div>
+                  <div className="text-sm">
+                    {t("standalone.panelLockedDesc")}
+                  </div>
+                </div>
+                <Button 
+                  onClick={createToken}
+                  className="bg-primary hover:bg-primary/90"
+                >
+                  {t("standalone.startDeployment")}
+                </Button>
+              </div>
+            )}
+          </CardContent>
+        </Card>
       </div>
       <ConverterFlow open={openConverter} onOpenChange={setOpenConverter} />
+      <StandaloneFlow 
+        open={openStandalone} 
+        onOpenChange={setOpenStandalone}
+        onDeploymentComplete={handleStandaloneDeploymentComplete}
+      />
     </div>
   );
 };
