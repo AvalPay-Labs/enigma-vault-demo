@@ -18,6 +18,13 @@ const Index = () => {
 
   const roles = [
     {
+      id: "auditor" as UserRole,
+      title: t("auth.role.auditor.title"),
+      description: t("auth.role.auditor.desc"),
+      icon: Shield,
+      color: "text-accent-success"
+    },
+    {
       id: "user" as UserRole,
       title: t("auth.role.user.title"),
       description: t("auth.role.user.desc"),
@@ -30,13 +37,6 @@ const Index = () => {
       description: t("auth.role.company.desc"),
       icon: Building,
       color: "text-accent-avalanche"
-    },
-    {
-      id: "auditor" as UserRole,
-      title: t("auth.role.auditor.title"),
-      description: t("auth.role.auditor.desc"),
-      icon: Shield,
-      color: "text-accent-success"
     }
   ];
 
