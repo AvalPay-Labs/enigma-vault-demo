@@ -50,6 +50,13 @@ export const LoginModal = ({ open, onOpenChange, preselectedRole }: LoginModalPr
 
   const roles = [
     {
+      id: "auditor" as UserRole,
+      title: t("auth.role.auditor.title"),
+      description: t("auth.role.auditor.desc"),
+      icon: Shield,
+      color: "text-accent-success"
+    },
+    {
       id: "user" as UserRole,
       title: t("auth.role.user.title"),
       description: t("auth.role.user.desc"),
@@ -62,13 +69,6 @@ export const LoginModal = ({ open, onOpenChange, preselectedRole }: LoginModalPr
       description: t("auth.role.company.desc"),
       icon: Building,
       color: "text-accent-avalanche"
-    },
-    {
-      id: "auditor" as UserRole,
-      title: t("auth.role.auditor.title"),
-      description: t("auth.role.auditor.desc"),
-      icon: Shield,
-      color: "text-accent-success"
     }
   ];
 
@@ -115,6 +115,7 @@ export const LoginModal = ({ open, onOpenChange, preselectedRole }: LoginModalPr
         if (!requiresEmailConfirm) {
           const userId = data.user?.id;
           if (userId) {
+            console.log("[Auth] Register - creating profile with role:", selectedRole);
             const { error: profileError } = await supabase
               .from("profiles")
               .upsert(
@@ -128,6 +129,8 @@ export const LoginModal = ({ open, onOpenChange, preselectedRole }: LoginModalPr
               );
             if (profileError) {
               console.warn("[Supabase] No se pudo crear/actualizar perfil (registro):", profileError.message);
+            } else {
+              console.log("[Auth] Register - profile created successfully with role:", selectedRole);
             }
           }
         }
@@ -141,9 +144,13 @@ export const LoginModal = ({ open, onOpenChange, preselectedRole }: LoginModalPr
 
         if (!requiresEmailConfirm) {
           // Sesión activa inmediata; navegar según rol elegido
+          console.log("[Auth] Register - redirecting based on selectedRole:", selectedRole);
+          
           if (selectedRole === "auditor") {
+            console.log("[Auth] Register - navigating to /app/auditor");
             navigate("/app/auditor");
           } else {
+            console.log("[Auth] Register - navigating to /app/dashboard");
             navigate("/app/dashboard");
           }
           onOpenChange(false);
@@ -157,7 +164,34 @@ export const LoginModal = ({ open, onOpenChange, preselectedRole }: LoginModalPr
         if (error) throw error;
 
         const roleFromMeta = (data.user?.user_metadata as any)?.role as UserRole | undefined;
-        const role = roleFromMeta || selectedRole || "user";
+        
+        // Try to get role from profiles table first
+        let roleFromProfile: UserRole | undefined;
+        try {
+          const userId = data.user?.id;
+          if (userId) {
+            const { data: profileData, error: profileError } = await supabase
+              .from("profiles")
+              .select("role")
+              .eq("user_id", userId)
+              .single();
+            
+            if (!profileError && profileData?.role) {
+              roleFromProfile = profileData.role as UserRole;
+            }
+          }
+        } catch (e) {
+          console.warn("[Auth] Could not fetch role from profiles:", e);
+        }
+        
+        // Priority: profile table > user metadata > selected role > default
+        const role = roleFromProfile || roleFromMeta || selectedRole || "user";
+        
+        // Debug logging
+        console.log("[Auth] Login - roleFromProfile:", roleFromProfile);
+        console.log("[Auth] Login - roleFromMeta:", roleFromMeta);
+        console.log("[Auth] Login - selectedRole:", selectedRole);
+        console.log("[Auth] Login - final role:", role);
 
         // Asegurar que el perfil exista tras iniciar sesión
         try {
@@ -165,10 +199,22 @@ export const LoginModal = ({ open, onOpenChange, preselectedRole }: LoginModalPr
           if (userId) {
             const { data: profRows, error: selError } = await supabase
               .from("profiles")
-              .select("user_id")
+              .select("user_id, role")
               .eq("user_id", userId)
               .limit(1);
-            if (!selError && (!profRows || profRows.length === 0)) {
+            
+            if (!selError && profRows && profRows.length > 0) {
+              // Profile exists, update role if it's different
+              const existingRole = profRows[0].role;
+              if (existingRole !== role) {
+                const { error: updateErr } = await supabase
+                  .from("profiles")
+                  .update({ role })
+                  .eq("user_id", userId);
+                if (updateErr) console.warn("[Supabase] No se pudo actualizar rol:", updateErr.message);
+              }
+            } else {
+              // Profile doesn't exist, create it
               const { error: upsertErr } = await supabase.from("profiles").upsert(
                 {
                   user_id: userId,
@@ -190,9 +236,14 @@ export const LoginModal = ({ open, onOpenChange, preselectedRole }: LoginModalPr
           description: t("auth.toast.welcome").replace("{role}", roles.find(r => r.id === role)?.title || ""),
         });
 
+        // Debug logging for redirection
+        console.log("[Auth] Login - redirecting based on role:", role);
+        
         if (role === "auditor") {
+          console.log("[Auth] Login - navigating to /app/auditor");
           navigate("/app/auditor");
         } else {
+          console.log("[Auth] Login - navigating to /app/dashboard");
           navigate("/app/dashboard");
         }
         onOpenChange(false);
