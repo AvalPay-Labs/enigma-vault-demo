@@ -7,9 +7,7 @@ const Docs = () => {
   const { t } = useTranslation();
   // Endpoints estáticos removidos: dejamos solo el embed de Swagger UI
 
-  const apiBase = (import.meta as any).env?.VITE_DEPLOY_SERVICE_URL?.replace(/\/$/, '') || '';
   const docsUrl = (import.meta as any).env?.VITE_DOCS_URL || 'https://enigma-backend.aiforworld.xyz/docs';
-  const embeddedDocsSrc = `${apiBase}/api/docs-embed?docs=${encodeURIComponent(docsUrl)}`;
 
   return (
     <div className="min-h-screen py-20">
@@ -108,32 +106,26 @@ const Docs = () => {
                     <Code className="w-5 h-5 mr-2" />
                     API Reference
                   </CardTitle>
-                  <CardDescription>
-                    Swagger UI embebido
-                    {' '}(<a
-                      href="https://enigma-backend.aiforworld.xyz/docs"
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      className="inline-flex items-center gap-1 underline hover:text-primary"
-                    >
-                      abrir externo
-                      <ExternalLink className="w-3 h-3" />
-                    </a>)
-                  </CardDescription>
+                  {/* Sin leyenda adicional; dejamos solo enlace e imagen */}
                 </CardHeader>
                 <CardContent>
+                  <a
+                    href={docsUrl}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="inline-flex items-center gap-2 text-primary underline mb-3"
+                  >
+                    Abrir documentación completa
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
                   <div className="rounded-lg overflow-hidden border border-glass-border bg-background">
-                    <iframe
-                      src={embeddedDocsSrc}
-                      title="Enigma Backend API Docs"
-                      className="w-full h-[80vh] bg-white"
+                    <img
+                      src="https://i.postimg.cc/yYBSv3Bx/Google-Chrome-2025-09-07-23-14-57.png"
+                      alt="API Docs Preview"
+                      className="w-full object-cover"
+                      loading="lazy"
                     />
                   </div>
-                  <p className="text-xs text-muted-foreground mt-2">
-                    Si no ves el contenido, asegúrate de tener el backend local corriendo y
-                    configura `VITE_DEPLOY_SERVICE_URL` (ej. http://localhost:3000). De lo contrario,
-                    usa el enlace para abrir la documentación en una nueva pestaña.
-                  </p>
                 </CardContent>
               </Card>
             </TabsContent>
