@@ -1,107 +1,15 @@
 import { Code, Key, Shield, Zap, FileText, ExternalLink } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTranslation } from "@/i18n/LanguageContext";
 
 const Docs = () => {
   const { t } = useTranslation();
-  const endpoints = [
-    {
-      method: "POST",
-      path: "/api/tokens",
-      description: t("docs.endpoints.createPrivateToken"),
-      request: `{
-  "name": "PrivateToken",
-  "symbol": "PRVT",
-  "initialSupply": "1000000",
-  "decimals": 18,
-  "privacyLevel": "high"
-}`,
-      response: `{
-  "success": true,
-  "data": {
-    "tokenId": "tkn_abc123",
-    "contractAddress": "0x742d35Cc6...",
-    "transactionHash": "0x9f9e7a2b..."
-  }
-}`
-    },
-    {
-      method: "POST",
-      path: "/api/tokens/convert",
-      description: t("docs.endpoints.convertToken"),
-      request: `{
-  "contractAddress": "0x742d35Cc6...",
-  "amount": "100.5",
-  "privacySettings": {
-    "hideAmount": true,
-    "hideRecipient": false
-  }
-}`,
-      response: `{
-  "success": true,
-  "data": {
-    "conversionId": "conv_xyz789",
-    "privateTokenAddress": "0x8a4b1c9d...",
-    "status": "pending"
-  }
-}`
-    },
-    {
-      method: "POST",
-      path: "/api/audits/request",
-      description: t("docs.endpoints.requestAudit"),
-      request: `{
-  "tokenId": "tkn_abc123",
-  "auditorAddress": "0x1a2b3c4d...",
-  "reason": "Compliance review required",
-  "validFrom": "2025-01-15T00:00:00Z",
-  "validUntil": "2025-02-15T23:59:59Z"
-}`,
-      response: `{
-  "success": true,
-  "data": {
-    "auditRequestId": "aud_req_456",
-    "status": "pending",
-    "expiresAt": "2025-01-08T00:00:00Z"
-  }
-}`
-    },
-    {
-      method: "GET",
-      path: "/api/tokens/:id/transactions",
-      description: t("docs.endpoints.getTransactions"),
-      request: "// Sin body - parámetros en URL",
-      response: `{
-  "success": true,
-  "data": {
-    "transactions": [
-      {
-        "id": "tx_789abc",
-        "type": "transfer",
-        "amount": "hidden",
-        "from": "0x1a2b3c4d...",
-        "to": "hidden",
-        "timestamp": "2025-01-07T10:30:00Z",
-        "visible": false
-      }
-    ],
-    "hasAuditAccess": false
-  }
-}`
-    }
-  ];
+  // Endpoints estáticos removidos: dejamos solo el embed de Swagger UI
 
-  const getMethodBadge = (method: string) => {
-    const colors = {
-      GET: "bg-accent-success text-success-foreground",
-      POST: "bg-primary text-primary-foreground",
-      PUT: "bg-warning text-warning-foreground",
-      DELETE: "bg-destructive text-destructive-foreground"
-    };
-    return colors[method as keyof typeof colors] || colors.GET;
-  };
+  const apiBase = (import.meta as any).env?.VITE_DEPLOY_SERVICE_URL?.replace(/\/$/, '') || '';
+  const docsUrl = (import.meta as any).env?.VITE_DOCS_URL || 'https://enigma-backend.aiforworld.xyz/docs';
+  const embeddedDocsSrc = `${apiBase}/api/docs-embed?docs=${encodeURIComponent(docsUrl)}`;
 
   return (
     <div className="min-h-screen py-20">
@@ -194,38 +102,40 @@ const Docs = () => {
             </TabsContent>
 
             <TabsContent value="endpoints" className="space-y-6">
-              {endpoints.map((endpoint, index) => (
-                <Card key={index} className="glass-card border-glass-border">
-                  <CardHeader>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <Badge className={getMethodBadge(endpoint.method)}>
-                          {endpoint.method}
-                        </Badge>
-                        <code className="text-sm font-mono">{endpoint.path}</code>
-                      </div>
-                      <ExternalLink className="w-4 h-4 text-muted-foreground" />
-                    </div>
-                    <CardDescription>{endpoint.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <h4 className="font-semibold mb-2 text-sm">Request</h4>
-                        <pre className="bg-muted/20 p-3 rounded-lg text-xs overflow-x-auto">
-                          <code>{endpoint.request}</code>
-                        </pre>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold mb-2 text-sm">Response</h4>
-                        <pre className="bg-muted/20 p-3 rounded-lg text-xs overflow-x-auto">
-                          <code>{endpoint.response}</code>
-                        </pre>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+              <Card className="glass-card border-glass-border">
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Code className="w-5 h-5 mr-2" />
+                    API Reference
+                  </CardTitle>
+                  <CardDescription>
+                    Swagger UI embebido
+                    {' '}(<a
+                      href="https://enigma-backend.aiforworld.xyz/docs"
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="inline-flex items-center gap-1 underline hover:text-primary"
+                    >
+                      abrir externo
+                      <ExternalLink className="w-3 h-3" />
+                    </a>)
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="rounded-lg overflow-hidden border border-glass-border bg-background">
+                    <iframe
+                      src={embeddedDocsSrc}
+                      title="Enigma Backend API Docs"
+                      className="w-full h-[80vh] bg-white"
+                    />
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-2">
+                    Si no ves el contenido, asegúrate de tener el backend local corriendo y
+                    configura `VITE_DEPLOY_SERVICE_URL` (ej. http://localhost:3000). De lo contrario,
+                    usa el enlace para abrir la documentación en una nueva pestaña.
+                  </p>
+                </CardContent>
+              </Card>
             </TabsContent>
 
             <TabsContent value="authentication" className="space-y-6">

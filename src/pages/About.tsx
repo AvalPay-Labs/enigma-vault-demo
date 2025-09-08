@@ -14,9 +14,9 @@ const About = () => {
       name: "Juan Quiceno",
       role: "CEO & Co-founder",
       expertise: "Smart Contracts & Avalanche",
-      image: "https://i.postimg.cc/6pXyQF52/juan.jpg",
-      linkedin: "https://linkedin.com/in/maria-lopez",
-      github: "https://github.com/maria-lopez"
+      image: "https://i.postimg.cc/FFpyLx5G/Whats-App-2025-09-07-22-54-02.png",
+      linkedin: "https://linkedin.com/in/juan-quiceno",
+      github: "https://github.com/Cyberpaisa"
     },
     {
       name: "Daniel Luque",
@@ -38,15 +38,15 @@ const About = () => {
       name: "Diego Ramirez",
       role: "Backend Developer & Co-founder",
       expertise: "Backend Development & Avalanche",
-      image: "https://i.postimg.cc/PJq3V64H/diego.jpg",
+      image: "https://i.postimg.cc/Fz0s0p1p/192159079.jpg",
       linkedin: "https://linkedin.com/in/diego-ramirez",
-      github: "https://github.com/diego-ramirez"
+      github: "https://github.com/diego-rm-dev"
     },
     {
       name: "David Correa",
       role: "Security Auditor & Co-founder",
       expertise: "Blockchain Dev | Full Stack Dev | Web 3 Dev | Smart Contracts | Etherium | Solidity | React",
-      image: "https://i.postimg.cc/vBh09YrR/david.jpg",
+      image: "https://i.postimg.cc/BvyqykKN/87782050.jpg",
       linkedin: "https://linkedin.com/in/david-correa",
       github: "https://github.com/david-correa"
     }
