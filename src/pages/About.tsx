@@ -119,28 +119,6 @@ const About = () => {
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">{t("about.subtitle")}</p>
         </div>
 
-        {/* Video/Pitch Section */}
-        <div className="mb-20">
-          <Card className="glass-card max-w-4xl mx-auto border-glass-border">
-            <CardContent className="p-8 text-center">
-              <h2 className="text-2xl font-bold mb-4 gradient-text">{t("about.videoPitch")}</h2>
-              <div className="aspect-video bg-muted/20 rounded-lg flex items-center justify-center mb-6">
-                <div className="text-center">
-                  <Play className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
-                  <p className="text-muted-foreground">
-                    Video pitch coming soon
-                  </p>
-                  <p className="text-sm text-muted-foreground mt-2">{t("about.videoSubtitle")}</p>
-                </div>
-              </div>
-              <Button className="glass-button cta-start-button">
-                <Play className="w-4 h-4 mr-2" />
-                {t("about.viewPitch")}
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
-
         {/* Team Section */}
         <div className="mb-20">
           <div className="text-center mb-12">

@@ -2,6 +2,9 @@
 export const BACKEND_CONFIG = {
   // Base URL for the backend API
   baseURL: import.meta.env.VITE_DEPLOY_SERVICE_URL || 'https://enigma-backend.aiforworld.xyz',
+  // API versioning
+  apiVersion: (import.meta.env.VITE_API_VERSION as string) || 'v1',
+  versionMode: (import.meta.env.VITE_API_VERSION_MODE as 'legacy' | 'versioned') || 'legacy',
   
   // Timeout configurations (in milliseconds)
   timeouts: {
@@ -25,6 +28,14 @@ export const BACKEND_CONFIG = {
   
   // API endpoints
   endpoints: {
+    info: {
+      root: '/api',
+      health: '/api/health',
+    },
+    auth: {
+      login: '/api/auth/login',
+      profile: '/api/auth/profile',
+    },
     standalone: {
       deployBasics: '/api/standalone/deploy-basics',
       deploySystem: '/api/standalone/deploy-system',
@@ -40,7 +51,11 @@ export const BACKEND_CONFIG = {
       deployBasics: '/api/converter/deploy-basics',
       deploySystem: '/api/converter/deploy-system',
       registerUser: '/api/converter/register-user',
+      setAuditor: '/api/converter/set-auditor',
+      getFaucet: '/api/converter/get-faucet',
       deposit: '/api/converter/deposit',
+      transfer: '/api/converter/transfer',
+      balance: '/api/converter/balance',
       withdraw: '/api/converter/withdraw',
     },
     health: '/api/health',
@@ -49,10 +64,24 @@ export const BACKEND_CONFIG = {
 
 // Helper function to get full URL
 export const getApiUrl = (endpoint: string): string => {
-  return `${BACKEND_CONFIG.baseURL}${endpoint}`
+  return `${BACKEND_CONFIG.baseURL}${withApiVersion(endpoint)}`
 }
 
 // Helper function to get timeout for specific operation
 export const getTimeout = (operation: keyof typeof BACKEND_CONFIG.timeouts): number => {
   return BACKEND_CONFIG.timeouts[operation]
 }
+
+// Build path honoring versioning mode
+export const withApiVersion = (path: string): string => {
+  if (BACKEND_CONFIG.versionMode !== 'versioned') return path
+  // Only version if path starts with /api and not already versioned
+  if (!path.startsWith('/api')) return path
+  const rest = path.replace(/^\/api/, '')
+  // Avoid double versioning
+  if (/^\/v\d+\//.test(rest)) return path
+  return `/api/${BACKEND_CONFIG.apiVersion}${rest}`
+}
+
+// Resolve endpoint from config with versioning
+export const resolveEndpoint = (path: string): string => withApiVersion(path)

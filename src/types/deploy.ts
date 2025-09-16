@@ -114,3 +114,82 @@ export const WithdrawResponseSchema = z.object({
 })
 
 export type WithdrawResponse = z.infer<typeof WithdrawResponseSchema>
+
+// Converter: Set Auditor types
+export const SetAuditorDataSchema = z.object({
+  status: z.string().optional(),
+  walletNumber: z.number().optional(),
+  auditorAddress: z.string().regex(/^0x[a-fA-F0-9]{40}$/).optional(),
+})
+
+export type SetAuditorData = z.infer<typeof SetAuditorDataSchema>
+
+export const SetAuditorResponseSchema = z.object({
+  success: z.literal(true),
+  message: z.string(),
+  data: SetAuditorDataSchema.or(z.object({})),
+  timestamp: z.string(),
+  executionTime: z.number().optional(),
+})
+
+export type SetAuditorResponse = z.infer<typeof SetAuditorResponseSchema>
+
+// Converter: Get Faucet types
+export const GetFaucetDataSchema = z.object({
+  transactionHash: z.string().regex(/^0x[a-fA-F0-9]+$/),
+  walletNumber: z.number(),
+})
+
+export type GetFaucetData = z.infer<typeof GetFaucetDataSchema>
+
+export const GetFaucetResponseSchema = z.object({
+  success: z.literal(true),
+  message: z.string(),
+  data: GetFaucetDataSchema,
+  timestamp: z.string(),
+  executionTime: z.number().optional(),
+})
+
+export type GetFaucetResponse = z.infer<typeof GetFaucetResponseSchema>
+
+// Converter Transfer types
+export const ConverterTransferDataSchema = z.object({
+  transactionHash: z.string().regex(/^0x[a-fA-F0-9]+$/).optional(),
+  senderWallet: z.number().optional(),
+  receiverWallet: z.number().optional(),
+  senderWalletAddress: z.string().regex(/^0x[a-fA-F0-9]{40}$/).optional(),
+  receiverWalletAddress: z.string().regex(/^0x[a-fA-F0-9]{40}$/).optional(),
+  amount: z.number(),
+})
+
+export type ConverterTransferData = z.infer<typeof ConverterTransferDataSchema>
+
+export const ConverterTransferResponseSchema = z.object({
+  success: z.literal(true),
+  message: z.string(),
+  data: ConverterTransferDataSchema,
+  timestamp: z.string(),
+  executionTime: z.number().optional(),
+})
+
+export type ConverterTransferResponse = z.infer<typeof ConverterTransferResponseSchema>
+
+// Converter Balance types
+export const ConverterBalanceDataSchema = z.object({
+  walletNumber: z.number().nullable().optional(),
+  walletAddress: z.string().regex(/^0x[a-fA-F0-9]{40}$/).nullable().optional(),
+  walletIdentifier: z.string(),
+  encryptedBalance: z.number(),
+}).refine(d => d.walletNumber !== null || d.walletAddress !== null, { message: 'Either walletNumber or walletAddress must be provided' })
+
+export type ConverterBalanceData = z.infer<typeof ConverterBalanceDataSchema>
+
+export const ConverterBalanceResponseSchema = z.object({
+  success: z.literal(true),
+  message: z.string(),
+  data: ConverterBalanceDataSchema,
+  timestamp: z.string(),
+  executionTime: z.number().optional(),
+})
+
+export type ConverterBalanceResponse = z.infer<typeof ConverterBalanceResponseSchema>
