@@ -1,6 +1,7 @@
 import { useMemo, useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { Card, CardHeader, CardTitle } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
 import {
   Dialog,
@@ -164,6 +165,31 @@ export const ConverterFlow = ({ open, onOpenChange }: Props) => {
     }
   }
 
+  const executeStep = async (id: number) => {
+    try {
+      switch (id) {
+        case 1:
+          await runDeployBasicsAsync()
+          break
+        case 2:
+          await runDeploySystemAsync()
+          break
+        case 3:
+          await runRegisterUserAsync()
+          break
+        case 4:
+          await runDepositAsync()
+          break
+        case 5:
+          await runWithdrawAsync()
+          break
+      }
+      if (id < 5) setActive(id + 1)
+    } catch {
+      // errors ya se muestran en la UI por step
+    }
+  }
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl rounded-[var(--radius-lg)] bg-white border border-glass-border shadow-lg">
@@ -182,25 +208,29 @@ export const ConverterFlow = ({ open, onOpenChange }: Props) => {
 
           <Separator />
 
-          <div className="space-y-3">
+          <div className="grid gap-4">
             {_steps.map((s) => (
-              <div key={s.id} className={`p-4 rounded-lg border ${active === s.id ? 'border-primary' : 'border-glass-border'} bg-muted/20`}>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="flex items-center gap-2">
+              <Card key={s.id} className={`transition-all duration-200 ${s.id === active ? 'ring-2 ring-blue-500' : ''}`}>
+                <CardHeader className="pb-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
                       {getStepIcon(s.id)}
-                      <h3 className="font-semibold">{s.id}. {s.title}</h3>
-                      {getStepBadge(s.id)}
+                      <div>
+                        <CardTitle className="text-lg">{s.id}. {s.title}</CardTitle>
+                        <p className="text-sm text-muted-foreground">{s.description}</p>
+                        <p className="text-xs text-muted-foreground font-mono mt-1">{s.endpoint}</p>
+                      </div>
                     </div>
-                    <p className="text-sm text-muted-foreground">{s.description}</p>
-                    <p className="text-xs text-muted-foreground font-mono mt-1">{s.endpoint}</p>
+                    <div className="flex items-center gap-2">
+                      {getStepBadge(s.id)}
+                      {getStepStatus(s.id) === 'pending' && s.id === active && (
+                        <Button size="sm" onClick={() => executeStep(s.id)} disabled={isDeploying}>
+                          {t('standalone.execute')}
+                        </Button>
+                      )}
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Button variant={active === s.id ? 'default' : 'outline'} size="sm" onClick={() => setActive(s.id)}>
-                      {active === s.id ? t('converter.active') : t('converter.goToStep')}
-                    </Button>
-                  </div>
-                </div>
+                </CardHeader>
 
                 {s.id === 1 && active === 1 && (
                   <div className="mt-4 space-y-3">
@@ -369,7 +399,7 @@ export const ConverterFlow = ({ open, onOpenChange }: Props) => {
                     )}
                   </div>
                 )}
-              </div>
+              </Card>
             ))}
           </div>
           {/* Actions: mimic StandaloneFlow */}
