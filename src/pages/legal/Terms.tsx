@@ -20,146 +20,136 @@ const Terms = () => {
           <Card className="glass-card border-glass-border">
             <CardContent className="p-8 space-y-8">
               <section>
-                <h2 className="text-2xl font-bold mb-4">1. Introducción</h2>
+                <h2 className="text-2xl font-bold mb-4">1. Introduction</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Bienvenido a Enigma Protocol ("nosotros", "nuestro" o "el Servicio"), 
-                  proporcionado por AvalPay ("Compañía", "nosotros" o "nuestro"). 
-                  Estos Términos de Uso ("Términos") rigen su uso de nuestro servicio 
-                  de protocolo de privacidad para transacciones eERC20 en la red Avalanche.
+                  Welcome to Enigma Protocol ("we", "us" or the "Service"), provided by AvalPay (the "Company").
+                  These Terms of Use (the "Terms") govern your use of our privacy protocol for eERC20
+                  transactions on the Avalanche network.
                 </p>
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">2. Aceptación de Términos</h2>
+                <h2 className="text-2xl font-bold mb-4">2. Acceptance of Terms</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Al acceder y utilizar Enigma Protocol, usted acepta estar sujeto a estos 
-                  Términos y todas las leyes y regulaciones aplicables. Si no está de acuerdo 
-                  con alguno de estos términos, está prohibido utilizar o acceder a este servicio.
+                  By accessing or using Enigma Protocol, you agree to be bound by these Terms and all
+                  applicable laws and regulations. If you do not agree with any part of the Terms, you
+                  are prohibited from using or accessing the Service.
                 </p>
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">3. Descripción del Servicio</h2>
+                <h2 className="text-2xl font-bold mb-4">3. Service Description</h2>
                 <div className="space-y-4">
                   <p className="text-muted-foreground leading-relaxed">
-                    Enigma Protocol es una plataforma que permite:
+                    Enigma Protocol provides tools to:
                   </p>
                   <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-6">
-                    <li>Crear tokens eERC20 con capacidades de privacidad avanzadas</li>
-                    <li>Realizar transacciones privadas mediante tecnología ZK-SNARK</li>
-                    <li>Gestionar sistemas de auditoría temporal y granular</li>
-                    <li>Convertir tokens ERC20 existentes a formato privado</li>
+                    <li>Create eERC20 tokens with advanced privacy features</li>
+                    <li>Perform private transactions using ZK‑SNARK technology</li>
+                    <li>Manage temporary and granular audit permissions</li>
+                    <li>Convert existing ERC20 tokens to a private format</li>
                   </ul>
                 </div>
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">4. Elegibilidad</h2>
+                <h2 className="text-2xl font-bold mb-4">4. Eligibility</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Debe tener al menos 18 años para usar este servicio. Al usar Enigma Protocol, 
-                  declara y garantiza que tiene al menos 18 años de edad y tiene la autoridad 
-                  legal para celebrar estos Términos.
+                  You must be at least 18 years old to use the Service. By using Enigma Protocol, you
+                  represent and warrant that you are at least 18 and have the legal authority to
+                  enter into these Terms.
                 </p>
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">5. Cuentas de Usuario</h2>
+                <h2 className="text-2xl font-bold mb-4">5. User Accounts</h2>
                 <div className="space-y-4">
                   <p className="text-muted-foreground leading-relaxed">
-                    Para acceder a ciertas funciones de nuestro servicio, debe crear una cuenta. 
-                    Usted es responsable de:
+                    To access certain features, you may need to create an account. You are responsible for:
                   </p>
                   <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-6">
-                    <li>Mantener la seguridad de su cuenta y contraseña</li>
-                    <li>Todas las actividades que ocurran bajo su cuenta</li>
-                    <li>Notificarnos inmediatamente sobre cualquier uso no autorizado</li>
+                    <li>Maintaining the security of your account and password</li>
+                    <li>All activities that occur under your account</li>
+                    <li>Promptly notifying us of any unauthorized use</li>
                   </ul>
                 </div>
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">6. Uso Aceptable</h2>
+                <h2 className="text-2xl font-bold mb-4">6. Acceptable Use</h2>
                 <div className="space-y-4">
-                  <p className="text-muted-foreground leading-relaxed">
-                    Usted se compromete a NO utilizar el servicio para:
-                  </p>
+                  <p className="text-muted-foreground leading-relaxed">You agree NOT to use the Service to:</p>
                   <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-6">
-                    <li>Actividades ilegales o fraudulentas</li>
-                    <li>Lavado de dinero o financiamiento del terrorismo</li>
-                    <li>Violar derechos de propiedad intelectual</li>
-                    <li>Interferir con el funcionamiento del servicio</li>
-                    <li>Intentar acceder a sistemas no autorizados</li>
+                    <li>Engage in illegal or fraudulent activities</li>
+                    <li>Launder money or finance terrorism</li>
+                    <li>Violate intellectual property rights</li>
+                    <li>Interfere with the operation of the Service</li>
+                    <li>Attempt to access unauthorized systems</li>
                   </ul>
                 </div>
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">7. Privacidad y Datos</h2>
+                <h2 className="text-2xl font-bold mb-4">7. Privacy & Data</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Su privacidad es importante para nosotros. Nuestro servicio está diseñado para 
-                  ser completamente sin custodia, lo que significa que nunca tenemos acceso a sus 
-                  fondos o claves privadas. Para más detalles sobre cómo manejamos sus datos, 
-                  consulte nuestra Política de Privacidad.
+                  Your privacy matters to us. The Service is fully non‑custodial — we never have access
+                  to your funds or private keys. For details on how we handle your data, see our Privacy Policy.
                 </p>
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">8. Riesgos de Blockchain</h2>
+                <h2 className="text-2xl font-bold mb-4">8. Blockchain Risks</h2>
                 <div className="space-y-4">
-                  <p className="text-muted-foreground leading-relaxed">
-                    Usted reconoce y acepta los riesgos inherentes de la tecnología blockchain:
-                  </p>
+                  <p className="text-muted-foreground leading-relaxed">You acknowledge and accept the inherent risks of blockchain:</p>
                   <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-6">
-                    <li>Las transacciones son irreversibles</li>
-                    <li>Los smart contracts pueden contener vulnerabilidades</li>
-                    <li>Las claves privadas perdidas no pueden recuperarse</li>
-                    <li>Los precios de los tokens pueden ser volátiles</li>
+                    <li>Transactions are irreversible</li>
+                    <li>Smart contracts may contain vulnerabilities</li>
+                    <li>Lost private keys cannot be recovered</li>
+                    <li>Token prices can be volatile</li>
                   </ul>
                 </div>
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">9. Limitación de Responsabilidad</h2>
+                <h2 className="text-2xl font-bold mb-4">9. Limitation of Liability</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  En ningún caso AvalPay será responsable por daños indirectos, incidentales, 
-                  especiales, consecuentes o punitivos, incluyendo sin limitación, pérdida de 
-                  beneficios, datos, uso, buena voluntad u otras pérdidas intangibles.
+                  In no event shall AvalPay be liable for any indirect, incidental, special, consequential
+                  or punitive damages, including without limitation loss of profits, data, use, goodwill,
+                  or other intangible losses.
                 </p>
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">10. Modificaciones</h2>
+                <h2 className="text-2xl font-bold mb-4">10. Changes to the Terms</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Nos reservamos el derecho de modificar estos términos en cualquier momento. 
-                  Las modificaciones entrarán en vigor inmediatamente después de su publicación. 
-                  Su uso continuado del servicio constituye la aceptación de los términos modificados.
+                  We reserve the right to modify these Terms at any time. Changes take effect upon posting.
+                  Your continued use of the Service constitutes acceptance of the updated Terms.
                 </p>
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">11. Terminación</h2>
+                <h2 className="text-2xl font-bold mb-4">11. Termination</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Podemos terminar o suspender su acceso inmediatamente, sin previo aviso, 
-                  por cualquier motivo, incluyendo sin limitación si usted viola los Términos de Uso.
+                  We may terminate or suspend your access immediately, without prior notice, for any reason,
+                  including without limitation if you breach these Terms of Use.
                 </p>
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">12. Ley Aplicable</h2>
+                <h2 className="text-2xl font-bold mb-4">12. Governing Law</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Estos Términos se regirán e interpretarán de acuerdo con las leyes de España, 
-                  sin tener en cuenta sus disposiciones sobre conflictos de leyes.
+                  These Terms are governed by the laws of Spain, without regard to its conflict of law provisions.
                 </p>
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">13. Contacto</h2>
+                <h2 className="text-2xl font-bold mb-4">13. Contact</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Si tiene preguntas sobre estos Términos de Uso, puede contactarnos en:
+                  If you have questions about these Terms of Use, contact us at:
                   <br />
                   Email: legal@enigmaprotocol.com
                   <br />
-                  Dirección: Barcelona, España
+                  Address: Barcelona, Spain
                 </p>
               </section>
             </CardContent>
