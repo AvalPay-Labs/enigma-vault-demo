@@ -11,7 +11,7 @@ import { StandaloneOperationsPanel } from "@/components/standalone/StandaloneOpe
 import { getLastDeployment, getLastSystemDeployment, getLastDeposit } from "@/store/deployments";
 import { StandaloneDeploySystemResponse } from "@/types/standalone";
 import type { DeployBasicsResponse, DeploySystemResponse, DepositResponse } from "@/types/deploy";
-import { seedDemoAppData, clearDemoAppData, DEMO_KEYS } from "@/mocks/seed";
+import { seedDemoAppData, DEMO_KEYS } from "@/mocks/seed";
 
 const Dashboard = () => {
   const [user, setUser] = useState<any>(null);
@@ -29,24 +29,38 @@ const Dashboard = () => {
   const [lastDeposit, setLastDeposit] = useState<DepositResponse | null>(null);
 
   useEffect(() => {
-    const rawUser = localStorage.getItem(DEMO_KEYS.user) || localStorage.getItem('enigma_user')
-    if (rawUser) setUser(JSON.parse(rawUser))
-    try {
-      const rawTokens = localStorage.getItem(DEMO_KEYS.tokens)
-      const rawReqs = localStorage.getItem(DEMO_KEYS.requests)
-      if (rawTokens) setTokens(JSON.parse(rawTokens))
-      if (rawReqs) setAuditRequests(JSON.parse(rawReqs))
-      if (!rawTokens && !rawReqs) {
-        // fallback minimal demo
-        setTokens([
-          { id: '1', name: 'PrivateToken', symbol: 'PRVT', balance: '1,000,000', auditor: 'Ana García', auditorExpiry: '2025-02-15' },
-          { id: '2', name: 'CompanyToken', symbol: 'CMPY', balance: '500,000', auditor: null, auditorExpiry: null },
-        ])
-        setAuditRequests([
-          { id: '1', auditor: 'David Chen', tokenName: 'PrivateToken', reason: 'Compliance review', date: '2025-01-08', status: 'pending' },
-        ])
+    // Seed demo by default, then hydrate dashboard state
+    (async () => {
+      try {
+        setLoading(true)
+        await seedDemoAppData()
+      } catch {}
+      finally {
+        setLoading(false)
       }
-    } catch {}
+      const rawUser = localStorage.getItem(DEMO_KEYS.user) || localStorage.getItem('enigma_user')
+      if (rawUser) setUser(JSON.parse(rawUser))
+      try {
+        const rawTokens = localStorage.getItem(DEMO_KEYS.tokens)
+        const rawReqs = localStorage.getItem(DEMO_KEYS.requests)
+        if (rawTokens) setTokens(JSON.parse(rawTokens))
+        if (rawReqs) setAuditRequests(JSON.parse(rawReqs))
+        if (!rawTokens && !rawReqs) {
+          // fallback minimal demo
+          setTokens([
+            { id: '1', name: 'PrivateToken', symbol: 'PRVT', balance: '1,000,000', auditor: 'Ana García', auditorExpiry: '2025-02-15' },
+            { id: '2', name: 'CompanyToken', symbol: 'CMPY', balance: '500,000', auditor: null, auditorExpiry: null },
+          ])
+          setAuditRequests([
+            { id: '1', auditor: 'David Chen', tokenName: 'PrivateToken', reason: 'Compliance review', date: '2025-01-08', status: 'pending' },
+          ])
+        }
+      } catch {}
+      // hydrate converter cards
+      setLastDeployment(getLastDeployment());
+      setLastSystem(getLastSystemDeployment());
+      setLastDeposit(getLastDeposit());
+    })()
   }, []);
 
   // Load last deployment on mount and whenever the dialog closes
@@ -97,37 +111,7 @@ const Dashboard = () => {
     toast({ title: `Exportado como ${format.toUpperCase()}`, description: "Descarga iniciada" });
   };
 
-  const loadDemo = async () => {
-    setLoading(true)
-    try {
-      await seedDemoAppData()
-      // Refresh from localStorage
-      const rawUser = localStorage.getItem(DEMO_KEYS.user)
-      if (rawUser) setUser(JSON.parse(rawUser))
-      const rawTokens = localStorage.getItem(DEMO_KEYS.tokens)
-      const rawReqs = localStorage.getItem(DEMO_KEYS.requests)
-      if (rawTokens) setTokens(JSON.parse(rawTokens))
-      if (rawReqs) setAuditRequests(JSON.parse(rawReqs))
-      setLastDeployment(getLastDeployment());
-      setLastSystem(getLastSystemDeployment());
-      setLastDeposit(getLastDeposit());
-      toast({ title: 'Demo cargada', description: 'Se generaron datos mock en toda la app.' })
-    } catch (e) {
-      toast({ title: 'Error', description: e instanceof Error ? e.message : 'No se pudo cargar demo', variant: 'destructive' })
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const clearDemo = () => {
-    clearDemoAppData()
-    setTokens([])
-    setAuditRequests([])
-    setLastDeployment(null)
-    setLastSystem(null)
-    setLastDeposit(null)
-    toast({ title: 'Demo limpiada', description: 'Se limpiaron los datos mock.' })
-  }
+  // Demo controls removed (auto-seeded on mount)
 
   return (
     <div className="min-h-screen py-8">
@@ -195,14 +179,7 @@ const Dashboard = () => {
             <Plus className="w-4 h-4 mr-2" />
             {t("dashboard.actions.convertToken")}
           </Button>
-          <Button variant="outline" onClick={loadDemo} disabled={loading} className="glass-button">
-            <Download className="w-4 h-4 mr-2" />
-            Cargar Demo
-          </Button>
-          <Button variant="outline" onClick={clearDemo} disabled={loading} className="glass-button">
-            <Download className="w-4 h-4 mr-2" />
-            Limpiar Demo
-          </Button>
+          {/* Demo auto-loaded on mount */}
           <Button variant="outline" onClick={() => exportData('csv')} className="glass-button">
             <Download className="w-4 h-4 mr-2" />
             {t("dashboard.actions.exportCsv")}
