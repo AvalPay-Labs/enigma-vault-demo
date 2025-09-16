@@ -20,171 +20,154 @@ const Privacy = () => {
           <Card className="glass-card border-glass-border">
             <CardContent className="p-8 space-y-8">
               <section>
-                <h2 className="text-2xl font-bold mb-4">1. Introducción</h2>
+                <h2 className="text-2xl font-bold mb-4">1. Introduction</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  En AvalPay, desarrolladores de Enigma Protocol, nos comprometemos a proteger 
-                  su privacidad. Esta Política de Privacidad explica cómo recopilamos, usamos, 
-                  divulgamos y salvaguardamos su información cuando utiliza nuestro servicio.
+                  At AvalPay, developers of Enigma Protocol, we are committed to protecting your privacy.
+                  This Privacy Policy explains how we collect, use, disclose, and safeguard your information
+                  when you use our Service.
                 </p>
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">2. Información que Recopilamos</h2>
+                <h2 className="text-2xl font-bold mb-4">2. Information We Collect</h2>
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold">2.1 Información Personal</h3>
+                  <h3 className="text-lg font-semibold">2.1 Personal Information</h3>
                   <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-6">
-                    <li>Dirección de correo electrónico</li>
-                    <li>Nombre (opcional)</li>
-                    <li>Información de facturación para planes pagos</li>
+                    <li>Email address</li>
+                    <li>Name (optional)</li>
+                    <li>Billing information for paid plans</li>
                   </ul>
 
-                  <h3 className="text-lg font-semibold">2.2 Información Técnica</h3>
+                  <h3 className="text-lg font-semibold">2.2 Technical Information</h3>
                   <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-6">
-                    <li>Direcciones de wallet conectadas</li>
-                    <li>Datos de uso de la plataforma</li>
-                    <li>Información de dispositivo y navegador</li>
-                    <li>Cookies y tecnologías similares</li>
+                    <li>Connected wallet addresses</li>
+                    <li>Platform usage data</li>
+                    <li>Device and browser information</li>
+                    <li>Cookies and similar technologies</li>
                   </ul>
 
-                  <h3 className="text-lg font-semibold">2.3 Información Blockchain</h3>
+                  <h3 className="text-lg font-semibold">2.3 Blockchain Information</h3>
                   <p className="text-muted-foreground leading-relaxed">
-                    IMPORTANTE: Enigma Protocol está diseñado para ser completamente sin custodia. 
-                    Nunca tenemos acceso a sus claves privadas, fondos o detalles de transacciones 
-                    privadas. Únicamente procesamos datos públicos necesarios para el funcionamiento 
-                    del protocolo.
+                    IMPORTANT: Enigma Protocol is designed to be fully non‑custodial. We never have access to your
+                    private keys, funds, or private transaction details. We only process public data necessary for
+                    the operation of the protocol.
                   </p>
                 </div>
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">3. Cómo Usamos su Información</h2>
+                <h2 className="text-2xl font-bold mb-4">3. How We Use Your Information</h2>
                 <div className="space-y-4">
-                  <p className="text-muted-foreground leading-relaxed">
-                    Utilizamos la información recopilada para:
-                  </p>
+                  <p className="text-muted-foreground leading-relaxed">We use collected information to:</p>
                   <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-6">
-                    <li>Proporcionar y mantener nuestro servicio</li>
-                    <li>Procesar transacciones y gestionar su cuenta</li>
-                    <li>Comunicarnos con usted sobre actualizaciones del servicio</li>
-                    <li>Mejorar la seguridad y funcionalidad de la plataforma</li>
-                    <li>Cumplir con obligaciones legales y regulatorias</li>
-                    <li>Prevenir fraudes y actividades maliciosas</li>
+                    <li>Provide and maintain our Service</li>
+                    <li>Process transactions and manage your account</li>
+                    <li>Communicate about Service updates</li>
+                    <li>Improve platform security and functionality</li>
+                    <li>Comply with legal and regulatory obligations</li>
+                    <li>Prevent fraud and malicious activity</li>
                   </ul>
                 </div>
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">4. Compartir Información</h2>
+                <h2 className="text-2xl font-bold mb-4">4. Sharing Information</h2>
                 <div className="space-y-4">
                   <p className="text-muted-foreground leading-relaxed">
-                    No vendemos, alquilamos o comercializamos su información personal. 
-                    Podemos compartir información en las siguientes circunstancias:
+                    We do not sell, rent, or trade your personal information. We may share information in the following cases:
                   </p>
                   <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-6">
-                    <li>Con su consentimiento explícito</li>
-                    <li>Para cumplir con requisitos legales</li>
-                    <li>Con proveedores de servicios que nos ayudan a operar la plataforma</li>
-                    <li>En caso de fusión, adquisición o venta de activos</li>
+                    <li>With your explicit consent</li>
+                    <li>To comply with legal requirements</li>
+                    <li>With service providers who help operate the platform</li>
+                    <li>In case of merger, acquisition, or asset sale</li>
                   </ul>
                 </div>
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">5. Seguridad de Datos</h2>
+                <h2 className="text-2xl font-bold mb-4">5. Data Security</h2>
                 <div className="space-y-4">
-                  <p className="text-muted-foreground leading-relaxed">
-                    Implementamos medidas de seguridad técnicas y organizativas apropiadas:
-                  </p>
+                  <p className="text-muted-foreground leading-relaxed">We implement appropriate technical and organizational security measures:</p>
                   <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-6">
-                    <li>Cifrado de datos en reposo y en tránsito</li>
-                    <li>Autenticación multifactor para cuentas sensibles</li>
-                    <li>Auditorías de seguridad regulares</li>
-                    <li>Acceso limitado a datos personales por parte del personal</li>
-                    <li>Monitoreo continuo de sistemas</li>
+                    <li>Encryption of data at rest and in transit</li>
+                    <li>Multi‑factor authentication for sensitive accounts</li>
+                    <li>Regular security audits</li>
+                    <li>Limited staff access to personal data</li>
+                    <li>Continuous system monitoring</li>
                   </ul>
                 </div>
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">6. Sus Derechos</h2>
+                <h2 className="text-2xl font-bold mb-4">6. Your Rights</h2>
                 <div className="space-y-4">
-                  <p className="text-muted-foreground leading-relaxed">
-                    Según las leyes de protección de datos aplicables, usted tiene derecho a:
-                  </p>
+                  <p className="text-muted-foreground leading-relaxed">Subject to applicable data protection laws, you may:</p>
                   <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-6">
-                    <li>Acceder a su información personal</li>
-                    <li>Rectificar datos inexactos</li>
-                    <li>Solicitar la eliminación de sus datos</li>
-                    <li>Limitar el procesamiento de sus datos</li>
-                    <li>Portabilidad de datos</li>
-                    <li>Oponerse al procesamiento</li>
+                    <li>Access your personal information</li>
+                    <li>Rectify inaccurate data</li>
+                    <li>Request deletion of your data</li>
+                    <li>Restrict processing</li>
+                    <li>Data portability</li>
+                    <li>Object to processing</li>
                   </ul>
                 </div>
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">7. Cookies y Tecnologías de Seguimiento</h2>
+                <h2 className="text-2xl font-bold mb-4">7. Cookies & Tracking Technologies</h2>
                 <div className="space-y-4">
-                  <p className="text-muted-foreground leading-relaxed">
-                    Utilizamos cookies y tecnologías similares para:
-                  </p>
+                  <p className="text-muted-foreground leading-relaxed">We use cookies and similar technologies to:</p>
                   <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-6">
-                    <li>Mantener su sesión iniciada</li>
-                    <li>Recordar sus preferencias</li>
-                    <li>Analizar el uso de la plataforma</li>
-                    <li>Mejorar la experiencia del usuario</li>
+                    <li>Keep your session signed in</li>
+                    <li>Remember preferences</li>
+                    <li>Analyze platform usage</li>
+                    <li>Improve user experience</li>
                   </ul>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Puede gestionar sus preferencias de cookies a través de la configuración 
-                    de su navegador o nuestro centro de preferencias.
-                  </p>
+                  <p className="text-muted-foreground leading-relaxed">You can manage cookie preferences via your browser settings or our preferences center.</p>
                 </div>
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">8. Transferencias Internacionales</h2>
+                <h2 className="text-2xl font-bold mb-4">8. International Transfers</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Sus datos pueden ser transferidos y procesados en países fuera de su jurisdicción. 
-                  Nos aseguramos de que todas las transferencias cumplan con las leyes de protección 
-                  de datos aplicables y proporcionamos las salvaguardas apropiadas.
+                  Your data may be transferred and processed in countries outside your jurisdiction. We ensure
+                  that all transfers comply with applicable data protection laws and appropriate safeguards.
                 </p>
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">9. Retención de Datos</h2>
+                <h2 className="text-2xl font-bold mb-4">9. Data Retention</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Retenemos su información personal solo durante el tiempo necesario para cumplir 
-                  con los propósitos descritos en esta política, a menos que la ley requiera o 
-                  permita un período de retención más largo.
+                  We retain personal information only as long as necessary for the purposes described in this policy,
+                  unless a longer retention period is required or permitted by law.
                 </p>
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">10. Menores de Edad</h2>
+                <h2 className="text-2xl font-bold mb-4">10. Children</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Nuestro servicio no está dirigido a menores de 18 años. No recopilamos 
-                  conscientemente información personal de menores de 18 años.
+                  Our Service is not directed to individuals under 18. We do not knowingly collect personal
+                  information from children under 18.
                 </p>
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">11. Cambios a esta Política</h2>
+                <h2 className="text-2xl font-bold mb-4">11. Changes to this Policy</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Podemos actualizar esta Política de Privacidad ocasionalmente. Le notificaremos 
-                  sobre cambios significativos publicando la nueva política en esta página y 
-                  actualizando la fecha de "última actualización".
+                  We may update this Privacy Policy from time to time. We will notify you of significant changes by
+                  posting the new policy on this page and updating the "last updated" date.
                 </p>
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">12. Contacto</h2>
+                <h2 className="text-2xl font-bold mb-4">12. Contact</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Si tiene preguntas sobre esta Política de Privacidad o desea ejercer sus derechos, 
-                  puede contactarnos en:
+                  If you have questions about this Privacy Policy or wish to exercise your rights, contact us at:
                   <br />
                   Email: privacy@enigmaprotocol.com
                   <br />
-                  Dirección: Barcelona, España
+                  Address: Barcelona, Spain
                 </p>
               </section>
             </CardContent>
