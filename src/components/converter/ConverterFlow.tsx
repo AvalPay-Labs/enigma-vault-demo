@@ -192,7 +192,7 @@ export const ConverterFlow = ({ open, onOpenChange }: Props) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl rounded-[var(--radius-lg)] bg-white border border-glass-border shadow-lg">
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto rounded-[var(--radius-lg)] bg-white border border-glass-border shadow-lg">
         <DialogHeader>
           <DialogTitle>{t('converter.title')}</DialogTitle>
           <DialogDescription>
@@ -402,8 +402,8 @@ export const ConverterFlow = ({ open, onOpenChange }: Props) => {
               </Card>
             ))}
           </div>
-          {/* Actions: mimic StandaloneFlow */}
-          <div className="flex justify-between pt-2">
+          {/* Actions: mimic StandaloneFlow, keep visible */}
+          <div className="sticky bottom-0 bg-white pt-2 border-t border-glass-border flex justify-between">
             <Button variant="outline" onClick={resetFlow} disabled={isDeploying}>
               {t('standalone.reset')}
             </Button>
