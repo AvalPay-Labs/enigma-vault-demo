@@ -42,14 +42,14 @@ const About = () => {
       linkedin: "https://linkedin.com/in/diego-ramirez",
       github: "https://github.com/diego-rm-dev"
     },
-    {
-      name: "David Correa",
-      role: "Security Auditor & Co-founder",
-      expertise: "Blockchain Dev | Full Stack Dev | Web 3 Dev | Smart Contracts | Etherium | Solidity | React",
-      image: "https://i.postimg.cc/BvyqykKN/87782050.jpg",
-      linkedin: "https://linkedin.com/in/david-correa",
-      github: "https://github.com/david-correa"
-    }
+    // {
+    //   name: "David Correa",
+    //   role: "Security Auditor & Co-founder",
+    //   expertise: "Blockchain Dev | Full Stack Dev | Web 3 Dev | Smart Contracts | Etherium | Solidity | React",
+    //   image: "https://i.postimg.cc/BvyqykKN/87782050.jpg",
+    //   linkedin: "https://linkedin.com/in/david-correa",
+    //   github: "https://github.com/david-correa"
+    // }
   ];
 
   const roadmap = [
