@@ -83,6 +83,9 @@ export const StandaloneFlow = ({ open, onOpenChange, onDeploymentComplete }: Pro
   const { toast } = useToast()
   const { t } = useTranslation()
 
+  const delay = (ms: number) => new Promise((r) => setTimeout(r, ms))
+  const randomStepDelay = () => 2000 + Math.floor(Math.random() * 1000)
+
   const updateStepStatus = (step: number, status: StepStatus) => {
     setStepStatuses(prev => ({ ...prev, [step]: status }))
   }
@@ -148,6 +151,9 @@ export const StandaloneFlow = ({ open, onOpenChange, onDeploymentComplete }: Pro
           break
         }
       }
+
+      // Simulated step run-time loader (2–3s)
+      await delay(randomStepDelay())
 
       updateStepStatus(step, 'completed')
       

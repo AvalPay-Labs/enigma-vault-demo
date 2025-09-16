@@ -46,6 +46,7 @@ const steps = (t: (k: string) => string): Step[] => ([
 export const ConverterFlow = ({ open, onOpenChange }: Props) => {
   const [active, setActive] = useState<number>(1)
   const [isDeploying, setIsDeploying] = useState(false)
+  const [forcingLoadingStep, setForcingLoadingStep] = useState<number | null>(null)
   const { mutate: runDeployBasics, mutateAsync: runDeployBasicsAsync, reset: resetBasics, isPending, isSuccess, data, error } = useDeployBasics()
   const { mutate: runDeploySystem, mutateAsync: runDeploySystemAsync, reset: resetSystem, isPending: isPendingSys, isSuccess: isSuccessSys, data: dataSys, error: errorSys } = useDeploySystem()
   const { mutate: runRegisterUser, mutateAsync: runRegisterUserAsync, reset: resetRegister, isPending: isPendingReg, isSuccess: isSuccessReg, data: dataReg, error: errorReg } = useRegisterUser()
@@ -77,6 +78,7 @@ export const ConverterFlow = ({ open, onOpenChange }: Props) => {
 
   type StepStatus = 'pending' | 'loading' | 'completed' | 'error'
   const getStepStatus = (id: number): StepStatus => {
+    if (forcingLoadingStep === id) return 'loading'
     switch (id) {
       case 1:
         if (isPending) return 'loading'
@@ -138,6 +140,7 @@ export const ConverterFlow = ({ open, onOpenChange }: Props) => {
 
   const resetFlow = () => {
     setActive(1)
+    setForcingLoadingStep(null)
     setPersisted(null)
     setPersistedSys(null)
     try {
@@ -155,19 +158,18 @@ export const ConverterFlow = ({ open, onOpenChange }: Props) => {
     resetWithdraw()
   }
 
+  const delay = (ms: number) => new Promise((r) => setTimeout(r, ms))
+  const randomStepDelay = () => 2000 + Math.floor(Math.random() * 1000)
+
   const executeAllSteps = async () => {
     if (isDeploying) return
     setIsDeploying(true)
     try {
-      await runDeployBasicsAsync()
-      await new Promise(r => setTimeout(r, 500))
-      await runDeploySystemAsync()
-      await new Promise(r => setTimeout(r, 500))
-      await runRegisterUserAsync()
-      await new Promise(r => setTimeout(r, 500))
-      await runDepositAsync()
-      await new Promise(r => setTimeout(r, 500))
-      await runWithdrawAsync()
+      setForcingLoadingStep(1); await runDeployBasicsAsync(); await delay(randomStepDelay()); setForcingLoadingStep(null)
+      setForcingLoadingStep(2); await runDeploySystemAsync(); await delay(randomStepDelay()); setForcingLoadingStep(null)
+      setForcingLoadingStep(3); await runRegisterUserAsync(); await delay(randomStepDelay()); setForcingLoadingStep(null)
+      setForcingLoadingStep(4); await runDepositAsync(); await delay(randomStepDelay()); setForcingLoadingStep(null)
+      setForcingLoadingStep(5); await runWithdrawAsync(); await delay(randomStepDelay()); setForcingLoadingStep(null)
     } finally {
       setIsDeploying(false)
     }
@@ -175,6 +177,7 @@ export const ConverterFlow = ({ open, onOpenChange }: Props) => {
 
   const executeStep = async (id: number) => {
     try {
+      setForcingLoadingStep(id)
       switch (id) {
         case 1:
           await runDeployBasicsAsync()
@@ -192,8 +195,11 @@ export const ConverterFlow = ({ open, onOpenChange }: Props) => {
           await runWithdrawAsync()
           break
       }
+      await delay(randomStepDelay())
+      setForcingLoadingStep(null)
       if (id < 5) setActive(id + 1)
     } catch {
+      setForcingLoadingStep(null)
       // errors ya se muestran en la UI por step
     }
   }
