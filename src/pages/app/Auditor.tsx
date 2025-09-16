@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "@/i18n/LanguageContext";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const Auditor = () => {
   const [loading, setLoading] = useState(false);
@@ -18,10 +19,34 @@ const Auditor = () => {
   const { toast } = useToast();
   const { t } = useTranslation();
 
+  const CONTRACTS = [
+    '0x9318120Fa2bc597DCd05ed1e0e867AD1d1116576',
+    '0x41a3D92F5502fCd97e171810e81bCeD64E0EE873',
+  ] as const
+  const [form, setForm] = useState({
+    token: CONTRACTS[0],
+    reason: '',
+    start: '',
+    end: '',
+  })
+
   const submitRequest = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    // Push to My Requests (mock)
+    const today = new Date().toISOString().slice(0, 10)
+    setRequests(prev => [
+      {
+        id: String(Date.now()),
+        token: form.token,
+        owner: 'Demo Owner',
+        status: 'pending',
+        date: today,
+        expiry: form.end ? form.end.slice(0, 10) : undefined,
+      },
+      ...prev,
+    ])
     toast({
       title: t("auditor.toast.sent.title"),
       description: t("auditor.toast.sent.desc")
@@ -73,12 +98,16 @@ const Auditor = () => {
               <form onSubmit={submitRequest} className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="token">{t("auditor.form.token")}</Label>
-                  <Input
-                    id="token"
-                    placeholder="0x742d35Cc6..."
-                    className="glass-card"
-                    required
-                  />
+                  <Select value={form.token} onValueChange={(v) => setForm(prev => ({ ...prev, token: v }))}>
+                    <SelectTrigger id="token" className="glass-card">
+                      <SelectValue placeholder="Select contract" />
+                    </SelectTrigger>
+                    <SelectContent className="glass-card">
+                      {CONTRACTS.map((addr) => (
+                        <SelectItem key={addr} value={addr}>{addr}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="reason">{t("auditor.form.reason")}</Label>
@@ -87,6 +116,8 @@ const Auditor = () => {
                     placeholder={t("auditor.form.reasonPlaceholder")}
                     className="glass-card resize-none"
                     rows={3}
+                    value={form.reason}
+                    onChange={(e) => setForm(prev => ({ ...prev, reason: e.target.value }))}
                     required
                   />
                 </div>
@@ -97,6 +128,8 @@ const Auditor = () => {
                       id="startDate"
                       type="datetime-local"
                       className="glass-card"
+                      value={form.start}
+                      onChange={(e) => setForm(prev => ({ ...prev, start: e.target.value }))}
                       required
                     />
                   </div>
@@ -106,6 +139,8 @@ const Auditor = () => {
                       id="endDate"
                       type="datetime-local"
                       className="glass-card"
+                      value={form.end}
+                      onChange={(e) => setForm(prev => ({ ...prev, end: e.target.value }))}
                       required
                     />
                   </div>
