@@ -161,7 +161,7 @@ const Dashboard = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-muted-foreground">{t("dashboard.kpi.pending")}</p>
-                  <p className="text-2xl font-bold">{auditRequests.length}</p>
+                  <p className="text-2xl font-bold">{auditRequests.filter(r => r.status === 'pending').length}</p>
                 </div>
                 <Clock className="w-8 h-8 text-warning" />
               </div>
@@ -312,9 +312,40 @@ const Dashboard = () => {
                     <h3 className="font-semibold">{request.auditor}</h3>
                     <p className="text-sm text-muted-foreground">{request.tokenName} - {request.reason}</p>
                   </div>
-                  <div className="flex gap-2">
-                    <Button size="sm" className="glass-button cta-start-button">{t("dashboard.requests.accept")}</Button>
-                    <Button size="sm" variant="outline" className="glass-button">{t("dashboard.requests.reject")}</Button>
+                  <div className="flex items-center gap-2">
+                    {request.status === 'pending' ? (
+                      <>
+                        <Button
+                          size="sm"
+                          className="glass-button cta-start-button"
+                          onClick={() => {
+                            const updated = auditRequests.map(r => r.id === request.id ? { ...r, status: 'accepted' } : r)
+                            setAuditRequests(updated)
+                            try { localStorage.setItem(DEMO_KEYS.requests, JSON.stringify(updated)) } catch {}
+                            toast({ title: t('auditor.status.accepted'), description: `${request.auditor} · ${request.tokenName}` })
+                          }}
+                        >
+                          {t("dashboard.requests.accept")}
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="glass-button"
+                          onClick={() => {
+                            const updated = auditRequests.map(r => r.id === request.id ? { ...r, status: 'rejected' } : r)
+                            setAuditRequests(updated)
+                            try { localStorage.setItem(DEMO_KEYS.requests, JSON.stringify(updated)) } catch {}
+                            toast({ title: t('auditor.status.rejected'), description: `${request.auditor} · ${request.tokenName}` })
+                          }}
+                        >
+                          {t("dashboard.requests.reject")}
+                        </Button>
+                      </>
+                    ) : (
+                      <Badge className={request.status === 'accepted' ? 'bg-accent-success text-success-foreground' : ''} variant={request.status === 'accepted' ? 'default' : 'destructive'}>
+                        {request.status === 'accepted' ? t('auditor.status.accepted') : t('auditor.status.rejected')}
+                      </Badge>
+                    )}
                   </div>
                 </div>
               ))}
