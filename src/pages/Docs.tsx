@@ -32,12 +32,11 @@ const Docs = () => {
                 <Card className="glass-card border-glass-border">
                   <CardHeader className="text-center">
                     <Shield className="w-12 h-12 mx-auto text-primary mb-4" />
-                    <CardTitle>Privacidad ZK</CardTitle>
+                    <CardTitle>Zero‑Knowledge Privacy</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <CardDescription>
-                      Implementa pruebas de conocimiento cero para ocultar detalles de transacciones 
-                      manteniendo la verificabilidad en blockchain.
+                      Uses zero‑knowledge proofs to hide transaction details while preserving on‑chain verifiability.
                     </CardDescription>
                   </CardContent>
                 </Card>
@@ -45,12 +44,11 @@ const Docs = () => {
                 <Card className="glass-card border-glass-border">
                   <CardHeader className="text-center">
                     <Key className="w-12 h-12 mx-auto text-accent-avalanche mb-4" />
-                    <CardTitle>Sin Custodia</CardTitle>
+                    <CardTitle>Non‑custodial</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <CardDescription>
-                      Todas las operaciones requieren tu firma. Tus fondos permanecen 
-                      siempre bajo tu control total.
+                      All operations require your signature. Funds remain fully under your control.
                     </CardDescription>
                   </CardContent>
                 </Card>
@@ -58,12 +56,11 @@ const Docs = () => {
                 <Card className="glass-card border-glass-border">
                   <CardHeader className="text-center">
                     <FileText className="w-12 h-12 mx-auto text-accent-success mb-4" />
-                    <CardTitle>Auditoría Granular</CardTitle>
+                    <CardTitle>Granular Auditing</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <CardDescription>
-                      Sistema de permisos temporales que permite transparencia 
-                      selectiva para cumplimiento regulatorio.
+                      Temporary, scoped permissions enabling selective transparency for compliance.
                     </CardDescription>
                   </CardContent>
                 </Card>
@@ -73,26 +70,26 @@ const Docs = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center">
                     <Zap className="w-6 h-6 mr-2 text-warning" />
-                    Inicio Rápido
+                    Quick Start
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="bg-muted/20 p-4 rounded-lg">
-                    <h4 className="font-semibold mb-2">1. Autenticación</h4>
+                    <h4 className="font-semibold mb-2">1. Authentication</h4>
                     <p className="text-sm text-muted-foreground">
-                      Obtén tu API key desde el dashboard y configura los headers de autenticación.
+                      Get your API key from the dashboard and set auth headers.
                     </p>
                   </div>
                   <div className="bg-muted/20 p-4 rounded-lg">
-                    <h4 className="font-semibold mb-2">2. Crear Token</h4>
+                    <h4 className="font-semibold mb-2">2. Create Token</h4>
                     <p className="text-sm text-muted-foreground">
-                      Usa POST /api/tokens para crear tu primer token eERC20 privado.
+                      Use POST /api/tokens to create your first private eERC20 token.
                     </p>
                   </div>
                   <div className="bg-muted/20 p-4 rounded-lg">
-                    <h4 className="font-semibold mb-2">3. Configurar Privacidad</h4>
+                    <h4 className="font-semibold mb-2">3. Configure Privacy</h4>
                     <p className="text-sm text-muted-foreground">
-                      Define qué información mantener privada y qué permitir en auditorías.
+                      Choose what to keep private and what to disclose for audits.
                     </p>
                   </div>
                 </CardContent>
