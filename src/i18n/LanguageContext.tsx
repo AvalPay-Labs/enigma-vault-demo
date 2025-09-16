@@ -38,6 +38,7 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
       // Prefer Spanish as default content fallback
       if (key in translations["es"]) return translations["es"][key];
       if (key in translations["en"]) return translations["en"][key];
+      if (key in translations["pt"]) return translations["pt"][key];
       return key;
     };
   }, [lang]);
