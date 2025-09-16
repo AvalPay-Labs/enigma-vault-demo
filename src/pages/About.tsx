@@ -246,24 +246,6 @@ const About = () => {
               <Button className="w-full glass-button cta-start-button mt-4">{t("about.contact.cta")}</Button>
             </CardContent>
           </Card>
-
-          <Card id="become-auditor" className="glass-card border-glass-border">
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <Github className="w-6 h-6 mr-2 text-accent-success" />
-                {t("about.auditor.title")}
-              </CardTitle>
-              <CardDescription>{t("about.auditor.subtitle")}</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <p className="text-sm text-muted-foreground">• {t("about.auditor.req1")}</p>
-                <p className="text-sm text-muted-foreground">• {t("about.auditor.req2")}</p>
-                <p className="text-sm text-muted-foreground">• {t("about.auditor.req3")}</p>
-              </div>
-              <Button className="w-full glass-button cta-start-button mt-4">{t("about.auditor.apply")}</Button>
-            </CardContent>
-          </Card>
         </div>
       </div>
     </div>
