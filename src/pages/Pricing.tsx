@@ -143,8 +143,8 @@ const Pricing = () => {
     await new Promise(resolve => setTimeout(resolve, 1500));
 
     toast({
-      title: "Solicitud enviada",
-      description: "Nuestro equipo se pondrá en contacto contigo en las próximas 24 horas.",
+      title: 'Request sent',
+      description: 'Our team will contact you within 24 hours.',
     });
 
     setShowContact(false);
@@ -157,13 +157,8 @@ const Pricing = () => {
         <div className="container mx-auto px-4">
           {/* Header */}
           <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 gradient-text">
-              Precinct - Planes y Precios
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Elige el plan que mejor se adapte a tus necesidades de privacidad. 
-              Comienza gratis y escala según crezcas.
-            </p>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 gradient-text">{t('pricing.title')}</h1>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">{t('pricing.subtitle')}</p>
           </div>
 
           {/* Pricing Cards */}
@@ -320,7 +315,7 @@ const Pricing = () => {
                   <Input
                     id="email"
                     type="email"
-                    placeholder="juan@ejemplo.com"
+                    placeholder="john@company.com"
                     value={checkoutData.email}
                     onChange={(e) => setCheckoutData(prev => ({ ...prev, email: e.target.value }))}
                     className="glass-card"
@@ -331,7 +326,7 @@ const Pricing = () => {
                   <Label htmlFor="address">{t("pricing.checkout.address")}</Label>
                   <Input
                     id="address"
-                    placeholder="Calle Principal 123"
+                    placeholder="Main Street 123"
                     value={checkoutData.address}
                     onChange={(e) => setCheckoutData(prev => ({ ...prev, address: e.target.value }))}
                     className="glass-card"
@@ -416,7 +411,7 @@ const Pricing = () => {
               <Input
                 id="contact-email"
                 type="email"
-                placeholder="juan@empresa.com"
+                placeholder="john@company.com"
                 className="glass-card"
                 required
               />
