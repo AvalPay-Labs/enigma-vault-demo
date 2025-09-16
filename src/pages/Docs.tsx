@@ -92,6 +92,30 @@ const Docs = () => {
                   </div>
                 </CardContent>
               </Card>
+
+              {/* External Demo Embed */}
+              <Card className="glass-card border-glass-border">
+                {/* <CardHeader>
+                  <CardTitle>Wolf Cloak Demo</CardTitle>
+                  <CardDescription>Embedded preview (opens externally if blocked)</CardDescription>
+                </CardHeader> */}
+                <CardContent>
+                  <div className="rounded-lg overflow-hidden border border-glass-border bg-background">
+                    <iframe
+                      src="https://wolf-cloak.vercel.app"
+                      title="Wolf Cloak Demo"
+                      loading="lazy"
+                      referrerPolicy="no-referrer"
+                      sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                      className="w-full h-[720px]"
+                    />
+                  </div>
+                  {/* <p className="text-xs text-muted-foreground mt-2">
+                    If the embedded preview fails due to browser security, open it directly:
+                    {' '}<a href="https://wolf-cloak.vercel.app" target="_blank" rel="noreferrer noopener" className="underline text-primary">wolf-cloak.vercel.app</a>
+                  </p> */}
+                </CardContent>
+              </Card>
             </TabsContent>
 
             <TabsContent value="endpoints" className="space-y-6">
