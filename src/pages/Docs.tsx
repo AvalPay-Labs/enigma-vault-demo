@@ -103,25 +103,97 @@ const Docs = () => {
                     <Code className="w-5 h-5 mr-2" />
                     API Reference
                   </CardTitle>
-                  {/* Sin leyenda adicional; dejamos solo enlace e imagen */}
+                  <CardDescription>Endpoints used by this demo app</CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <a
-                    href={docsUrl}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="inline-flex items-center gap-2 text-primary underline mb-3"
-                  >
-                    Abrir documentación completa
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-                  <div className="rounded-lg overflow-hidden border border-glass-border bg-background">
-                    <img
-                      src="https://i.postimg.cc/yYBSv3Bx/Google-Chrome-2025-09-07-23-14-57.png"
-                      alt="API Docs Preview"
-                      className="w-full object-cover"
-                      loading="lazy"
-                    />
+                <CardContent className="space-y-6">
+                  {/* Health & Auth */}
+                  <div className="bg-muted/20 p-4 rounded-lg space-y-3">
+                    <h4 className="font-semibold mb-2">Health & Auth</h4>
+                    <ul className="text-sm space-y-1 font-mono">
+                      <li><span className="mr-2 font-semibold">GET</span>/api/health — API liveness</li>
+                      <li><span className="mr-2 font-semibold">POST</span>/api/auth/login — User login</li>
+                      <li><span className="mr-2 font-semibold">GET</span>/api/auth/profile — Current profile</li>
+                    </ul>
+                    <div className="grid md:grid-cols-2 gap-3">
+                      <div className="bg-white/60 border border-glass-border rounded-md p-3">
+                        <div className="text-xs font-semibold mb-1">cURL — Health</div>
+                        <pre className="text-xs overflow-x-auto">
+{`curl -s https://api.enigmaprotocol.com/api/health`}
+                        </pre>
+                      </div>
+                      <div className="bg-white/60 border border-glass-border rounded-md p-3">
+                        <div className="text-xs font-semibold mb-1">cURL — Login</div>
+                        <pre className="text-xs overflow-x-auto">
+{`curl -X POST https://api.enigmaprotocol.com/api/auth/login \\
+  -H 'Content-Type: application/json' \\
+  -d '{"email":"user@example.com","password":"secret"}'`}
+                        </pre>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Standalone module */}
+                  <div className="bg-muted/20 p-4 rounded-lg space-y-3">
+                    <h4 className="font-semibold mb-2">Standalone</h4>
+                    <ul className="text-sm space-y-1 font-mono">
+                      <li><span className="mr-2 font-semibold">POST</span>/api/standalone/deploy-basics — Deploy ZK verifiers</li>
+                      <li><span className="mr-2 font-semibold">POST</span>/api/standalone/deploy-system — Deploy Registrar + EncryptedERC</li>
+                      <li><span className="mr-2 font-semibold">POST</span>/api/standalone/register-auditor — Register auditor user</li>
+                      <li><span className="mr-2 font-semibold">POST</span>/api/standalone/set-auditor — Set/activate auditor</li>
+                      <li><span className="mr-2 font-semibold">POST</span>/api/standalone/mint — Mint encrypted tokens</li>
+                      <li><span className="mr-2 font-semibold">GET</span>/api/standalone/balance/:walletNumber — Encrypted balance</li>
+                      <li><span className="mr-2 font-semibold">POST</span>/api/standalone/transfer — Transfer encrypted tokens</li>
+                      <li><span className="mr-2 font-semibold">POST</span>/api/standalone/burn — Burn encrypted tokens</li>
+                    </ul>
+                    <div className="grid md:grid-cols-2 gap-3">
+                      <div className="bg-white/60 border border-glass-border rounded-md p-3">
+                        <div className="text-xs font-semibold mb-1">cURL — Deploy Basics</div>
+                        <pre className="text-xs overflow-x-auto">
+{`curl -X POST https://api.enigmaprotocol.com/api/standalone/deploy-basics \\
+  -H 'Content-Type: application/json' -d '{}'`}
+                        </pre>
+                      </div>
+                      <div className="bg-white/60 border border-glass-border rounded-md p-3">
+                        <div className="text-xs font-semibold mb-1">cURL — Balance</div>
+                        <pre className="text-xs overflow-x-auto">
+{`curl -s https://api.enigmaprotocol.com/api/standalone/balance/1`}
+                        </pre>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Converter module */}
+                  <div className="bg-muted/20 p-4 rounded-lg space-y-3">
+                    <h4 className="font-semibold mb-2">Converter</h4>
+                    <ul className="text-sm space-y-1 font-mono">
+                      <li><span className="mr-2 font-semibold">POST</span>/api/converter/deploy-basics — Deploy core components</li>
+                      <li><span className="mr-2 font-semibold">POST</span>/api/converter/deploy-system — Deploy full converter</li>
+                      <li><span className="mr-2 font-semibold">POST</span>/api/converter/register-user — Register user</li>
+                      <li><span className="mr-2 font-semibold">POST</span>/api/converter/set-auditor — Set converter auditor</li>
+                      <li><span className="mr-2 font-semibold">POST</span>/api/converter/get-faucet — Get faucet tokens</li>
+                      <li><span className="mr-2 font-semibold">POST</span>/api/converter/deposit — ERC20 → encrypted</li>
+                      <li><span className="mr-2 font-semibold">POST</span>/api/converter/transfer — Transfer encrypted</li>
+                      <li><span className="mr-2 font-semibold">GET</span>/api/converter/balance/:walletNumber — Encrypted balance</li>
+                      <li><span className="mr-2 font-semibold">POST</span>/api/converter/withdraw — Encrypted → ERC20</li>
+                    </ul>
+                    <div className="grid md:grid-cols-2 gap-3">
+                      <div className="bg-white/60 border border-glass-border rounded-md p-3">
+                        <div className="text-xs font-semibold mb-1">cURL — Deposit</div>
+                        <pre className="text-xs overflow-x-auto">
+{`curl -X POST https://api.enigmaprotocol.com/api/converter/deposit \\
+  -H 'Content-Type: application/json' \\
+  -d '{"walletNumber":1,"walletAddress":"0xabc..."}'`}
+                        </pre>
+                      </div>
+                      <div className="bg-white/60 border border-glass-border rounded-md p-3">
+                        <div className="text-xs font-semibold mb-1">cURL — Withdraw</div>
+                        <pre className="text-xs overflow-x-auto">
+{`curl -X POST https://api.enigmaprotocol.com/api/converter/withdraw \\
+  -H 'Content-Type: application/json' \\
+  -d '{"walletNumber":1,"walletAddress":"0xabc..."}'`}
+                        </pre>
+                      </div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
