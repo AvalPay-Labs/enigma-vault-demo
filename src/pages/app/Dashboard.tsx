@@ -64,7 +64,6 @@ const Dashboard = () => {
     console.log('Deployment completed, systemData:', systemData);
     setStandaloneSystemData(systemData);
     setShowStandaloneOperations(true);
-    setOpenStandalone(false);
     console.log('Standalone operations panel should be visible now');
     toast({
       title: t("standalone.deploymentComplete"),

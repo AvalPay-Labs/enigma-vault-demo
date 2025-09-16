@@ -408,20 +408,22 @@ export const StandaloneFlow = ({ open, onOpenChange, onDeploymentComplete }: Pro
               >
                 {t('standalone.close')}
               </Button>
-              <Button
-                onClick={executeAllSteps}
-                disabled={isDeploying || progress === 100}
-                className="glass-button cta-start-button"
-              >
-                {isDeploying ? (
-                  <>
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    {t('standalone.deploying')}
-                  </>
-                ) : (
-                  t('standalone.deployAll')
-                )}
-              </Button>
+              {progress < 100 && (
+                <Button
+                  onClick={executeAllSteps}
+                  disabled={isDeploying}
+                  className="glass-button cta-start-button"
+                >
+                  {isDeploying ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      {t('standalone.deploying')}
+                    </>
+                  ) : (
+                    t('standalone.deployAll')
+                  )}
+                </Button>
+              )}
             </div>
           </div>
         </div>
