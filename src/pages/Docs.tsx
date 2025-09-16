@@ -202,27 +202,34 @@ const Docs = () => {
             <TabsContent value="authentication" className="space-y-6">
               <Card className="glass-card border-glass-border">
                 <CardHeader>
-                  <CardTitle>API Key Authentication</CardTitle>
+                  <CardTitle>Token Authentication</CardTitle>
                   <CardDescription>
-                    Todas las requests deben incluir tu API key en los headers
+                    Obtain a token via login and send it as a Bearer token in subsequent requests.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div>
-                    <h4 className="font-semibold mb-2">Headers requeridos:</h4>
-                    <pre className="bg-muted/20 p-3 rounded-lg text-sm">
-{`Authorization: Bearer your_api_key_here
-Content-Type: application/json
-X-Enigma-Version: v1`}
+                  <div className="bg-muted/20 p-4 rounded-lg">
+                    <h4 className="font-semibold mb-2">1) Login</h4>
+                    <p className="text-sm text-muted-foreground mb-2">POST /api/auth/login</p>
+                    <pre className="bg-white/60 border border-glass-border p-3 rounded-md text-sm overflow-x-auto">
+{`curl -X POST https://api.enigmaprotocol.com/api/auth/login \\
+  -H 'Content-Type: application/json' \\
+  -d '{"email":"user@example.com","password":"secret"}'`}
+                    </pre>
+                  </div>
+                  <div className="bg-muted/20 p-4 rounded-lg">
+                    <h4 className="font-semibold mb-2">2) Use the token</h4>
+                    <p className="text-sm text-muted-foreground mb-2">GET /api/auth/profile</p>
+                    <pre className="bg-white/60 border border-glass-border p-3 rounded-md text-sm overflow-x-auto">
+{`curl -s https://api.enigmaprotocol.com/api/auth/profile \\
+  -H 'Authorization: Bearer <your_token_here>'`}
                     </pre>
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-2">Ejemplo con cURL:</h4>
-                    <pre className="bg-muted/20 p-3 rounded-lg text-sm overflow-x-auto">
-{`curl -X POST https://api.enigmaprotocol.com/api/tokens \\
-  -H "Authorization: Bearer your_api_key" \\
-  -H "Content-Type: application/json" \\
-  -d '{"name": "MyToken", "symbol": "MTK"}'`}
+                    <h4 className="font-semibold mb-2">Required headers</h4>
+                    <pre className="bg-muted/20 p-3 rounded-lg text-sm">
+{`Authorization: Bearer <token>
+Content-Type: application/json`}
                     </pre>
                   </div>
                 </CardContent>
@@ -231,21 +238,21 @@ X-Enigma-Version: v1`}
               <Card className="glass-card border-glass-border">
                 <CardHeader>
                   <CardTitle>Rate Limits</CardTitle>
-                  <CardDescription>Límites de uso según tu plan</CardDescription>
+                  <CardDescription>Usage limits by plan</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
                     <div className="flex justify-between">
-                      <span className="font-semibold">Plan Free:</span>
-                      <span className="text-muted-foreground">100 requests/hora</span>
+                      <span className="font-semibold">Free:</span>
+                      <span className="text-muted-foreground">100 requests/hour</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="font-semibold">Plan Pro:</span>
-                      <span className="text-muted-foreground">1,000 requests/hora</span>
+                      <span className="font-semibold">Pro:</span>
+                      <span className="text-muted-foreground">1,000 requests/hour</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="font-semibold">Plan Enterprise:</span>
-                      <span className="text-muted-foreground">Ilimitado</span>
+                      <span className="font-semibold">Enterprise:</span>
+                      <span className="text-muted-foreground">Unlimited</span>
                     </div>
                   </div>
                 </CardContent>
