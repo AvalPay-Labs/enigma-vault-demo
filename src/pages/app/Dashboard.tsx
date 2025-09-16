@@ -12,6 +12,7 @@ import { getLastDeployment, getLastSystemDeployment, getLastDeposit } from "@/st
 import { StandaloneDeploySystemResponse } from "@/types/standalone";
 import type { DeployBasicsResponse, DeploySystemResponse, DepositResponse } from "@/types/deploy";
 import { seedDemoAppData, DEMO_KEYS } from "@/mocks/seed";
+import { MOCK_TRANSACTIONS } from "@/mocks/transactions";
 
 const Dashboard = () => {
   const [user, setUser] = useState<any>(null);
@@ -295,6 +296,41 @@ const Dashboard = () => {
                   </div>
                 </div>
               ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Transaction history (mock) */}
+        <Card className="glass-card border-glass-border mb-8">
+          <CardHeader>
+            <CardTitle>Transaction history</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <div className="grid grid-cols-12 text-xs sm:text-sm font-medium text-muted-foreground px-2 pb-2">
+                <div className="col-span-3 sm:col-span-2">Crypto trade</div>
+                <div className="col-span-5 sm:col-span-6">ID</div>
+                <div className="col-span-2">Type</div>
+                <div className="col-span-2">Date</div>
+              </div>
+              <div className="divide-y divide-glass-border">
+                {MOCK_TRANSACTIONS.map((tx) => (
+                  <div key={tx.hash} className="grid grid-cols-12 items-center px-2 py-3">
+                    <div className="col-span-3 sm:col-span-2">
+                      <div className="flex items-center gap-2">
+                        <div className="w-6 h-6 rounded-full bg-muted flex items-center justify-center text-xs">?
+                        </div>
+                        <span className="font-medium">{tx.type}</span>
+                      </div>
+                    </div>
+                    <div className="col-span-5 sm:col-span-6 font-mono text-xs truncate">
+                      {tx.hash}
+                    </div>
+                    <div className="col-span-2 text-sm">{tx.type}</div>
+                    <div className="col-span-2 text-sm">{tx.date}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </CardContent>
         </Card>
