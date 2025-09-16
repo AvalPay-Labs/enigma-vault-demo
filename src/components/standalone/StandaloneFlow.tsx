@@ -78,6 +78,7 @@ export const StandaloneFlow = ({ open, onOpenChange, onDeploymentComplete }: Pro
   }>({})
   const [error, setError] = useState<string | null>(null)
   const [isDeploying, setIsDeploying] = useState(false)
+  const [hasNotifiedComplete, setHasNotifiedComplete] = useState(false)
   
   const { toast } = useToast()
   const { t } = useTranslation()
@@ -93,11 +94,24 @@ export const StandaloneFlow = ({ open, onOpenChange, onDeploymentComplete }: Pro
                              stepStatuses[3] === 'completed' && 
                              stepStatuses[4] === 'completed'
     
-    if (allStepsCompleted && deploymentData.system && onDeploymentComplete) {
+    if (!hasNotifiedComplete && allStepsCompleted && deploymentData.system && onDeploymentComplete) {
       console.log('All steps completed, calling onDeploymentComplete with:', deploymentData.system);
+      setHasNotifiedComplete(true)
       onDeploymentComplete(deploymentData.system)
     }
-  }, [stepStatuses, deploymentData.system, onDeploymentComplete])
+  }, [stepStatuses, deploymentData.system, onDeploymentComplete, hasNotifiedComplete])
+
+  // Reset the internal wizard state each time the dialog is opened
+  useEffect(() => {
+    if (open) {
+      setCurrentStep(1)
+      setStepStatuses({ 1: 'pending', 2: 'pending', 3: 'pending', 4: 'pending' })
+      setDeploymentData({})
+      setError(null)
+      setIsDeploying(false)
+      setHasNotifiedComplete(false)
+    }
+  }, [open])
 
   const copyToClipboard = (text: string, label: string) => {
     navigator.clipboard.writeText(text)
