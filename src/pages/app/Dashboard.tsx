@@ -211,10 +211,7 @@ const Dashboard = () => {
             <Download className="w-4 h-4 mr-2" />
             {t("dashboard.actions.exportJson")}
           </Button>
-          <Button variant="outline" className="glass-button">
-            <Wallet className="w-4 h-4 mr-2" />
-            {t("dashboard.actions.connectWallet")}
-          </Button>
+          {/* Connect Wallet removed for demo */}
         </div>
 
         {/* Converter Deployment Summary */}

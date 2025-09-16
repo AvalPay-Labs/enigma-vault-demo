@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Shield, ChevronDown, User, Menu, X } from "lucide-react";
+import { ChevronDown, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -9,13 +9,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { LoginModal } from "@/components/auth/LoginModal";
 import { useTranslation } from "@/i18n/LanguageContext";
 import LanguageSwitcher from "@/components/common/LanguageSwitcher";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const Header = () => {
-  const [showLoginModal, setShowLoginModal] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { t } = useTranslation();
   const location = useLocation();
@@ -97,16 +95,7 @@ const Header = () => {
             {/* Language Switch */}
             <LanguageSwitcher />
 
-            {/* Login Button */}
-            <Button
-              onClick={() => setShowLoginModal(true)}
-              id="tour-login"
-              className="glass-button cta-start-button h-8 px-3"
-              size="sm"
-            >
-              <User className="w-3 h-3 mr-1.5" />
-              <span className="text-xs sm:text-sm">{t("header.login")}</span>
-            </Button>
+            {/* Sign in removed for demo */}
           </div>
 
           {/* Mobile Controls */}
@@ -152,19 +141,7 @@ const Header = () => {
                       <LanguageSwitcher />
                     </div>
 
-                    {/* Mobile Login Button */}
-                    <Button
-                      onClick={() => {
-                        setShowLoginModal(true);
-                        setMobileMenuOpen(false);
-                      }}
-                      id="tour-login"
-                      className="glass-button cta-start-button w-full"
-                      size="lg"
-                    >
-                      <User className="w-5 h-5 mr-2" />
-                      {t("header.login")}
-                    </Button>
+                    {/* Sign in removed for demo (mobile) */}
                   </div>
                 </div>
               </SheetContent>
@@ -172,8 +149,6 @@ const Header = () => {
           </div>
         </div>
       </header>
-
-      <LoginModal open={showLoginModal} onOpenChange={setShowLoginModal} />
     </>
   );
 };

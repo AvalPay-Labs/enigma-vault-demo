@@ -1,23 +1,50 @@
 import { useParams } from "react-router-dom";
+import { useEffect, useState, useMemo } from "react";
 import { ArrowUpRight, ArrowDownLeft, Eye, EyeOff, Shield } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "@/i18n/LanguageContext";
+import { DEMO_KEYS } from "@/mocks/seed";
 
 const TokenDetail = () => {
   const { id } = useParams();
   const { t } = useTranslation();
-  
-  // Mock data
-  const token = {
-    id,
-    name: "PrivateToken",
-    symbol: "PRVT",
-    address: "0x742d35Cc6Bf660A1154CEaB12d7D7b6d7A6c9d8b",
-    auditor: "Ana García",
-    auditorExpiry: "2025-02-15"
-  };
+  const [token, setToken] = useState<any | null>(null);
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(DEMO_KEYS.tokens)
+      const list = raw ? (JSON.parse(raw) as any[]) : []
+      const found = list.find((t) => String(t.id) === String(id))
+      if (found) {
+        // Enrich demo token with a mock address if missing
+        setToken({
+          address: "0x742d35Cc6Bf660A1154CEaB12d7D7b6d7A6c9d8b",
+          ...found,
+        })
+      } else {
+        // Fallback token if not present in demo data
+        setToken({
+          id,
+          name: "PrivateToken",
+          symbol: "PRVT",
+          address: "0x742d35Cc6Bf660A1154CEaB12d7D7b6d7A6c9d8b",
+          auditor: "Ana García",
+          auditorExpiry: "2025-02-15",
+        })
+      }
+    } catch {
+      setToken({
+        id,
+        name: "PrivateToken",
+        symbol: "PRVT",
+        address: "0x742d35Cc6Bf660A1154CEaB12d7D7b6d7A6c9d8b",
+        auditor: "Ana García",
+        auditorExpiry: "2025-02-15",
+      })
+    }
+  }, [id])
 
   const transactions = [
     {
@@ -51,6 +78,8 @@ const TokenDetail = () => {
       hash: "0x7g8h9i0j..."
     }
   ];
+
+  if (!token) return null;
 
   return (
     <div className="min-h-screen py-8">
