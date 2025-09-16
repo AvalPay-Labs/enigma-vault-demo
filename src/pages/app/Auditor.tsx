@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "@/i18n/LanguageContext";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { MOCK_TRANSACTIONS } from "@/mocks/transactions";
 
 const Auditor = () => {
@@ -19,6 +20,7 @@ const Auditor = () => {
   ]);
   const { toast } = useToast();
   const { t } = useTranslation();
+  const [showTxModal, setShowTxModal] = useState(false);
 
   const CONTRACTS = [
     '0x9318120Fa2bc597DCd05ed1e0e867AD1d1116576',
@@ -196,7 +198,7 @@ const Auditor = () => {
                     <h3 className="font-semibold">CompanyToken (CMPY)</h3>
                     <p className="text-sm text-muted-foreground">{t('tokenDetail.validUntil')}: 2025-02-06</p>
                   </div>
-                  <Button size="sm" className="glass-button cta-start-button">{t("auditor.activeAudits.viewTx")}</Button>
+                  <Button size="sm" className="glass-button cta-start-button" onClick={() => setShowTxModal(true)}>{t("auditor.activeAudits.viewTx")}</Button>
                 </div>
               </div>
             </div>
@@ -237,6 +239,52 @@ const Auditor = () => {
             </div>
           </CardContent>
         </Card>
+
+        <Dialog open={showTxModal} onOpenChange={setShowTxModal}>
+          <DialogContent className="max-w-5xl glass-card">
+            <DialogHeader>
+              <DialogTitle>Transaction history</DialogTitle>
+            </DialogHeader>
+            <div className="overflow-x-auto">
+              <div className="grid grid-cols-12 text-xs sm:text-sm font-medium text-muted-foreground px-2 pb-2">
+                <div className="col-span-2">Crypto trade</div>
+                <div className="col-span-5">ID</div>
+                <div className="col-span-1">Type</div>
+                <div className="col-span-2">From/To</div>
+                <div className="col-span-2 text-right">Amount</div>
+              </div>
+              <div className="divide-y divide-glass-border">
+                {MOCK_TRANSACTIONS.map((tx) => (
+                  <div key={tx.hash} className="grid grid-cols-12 items-center px-2 py-3">
+                    <div className="col-span-2">
+                      <div className="flex items-center gap-2">
+                        <div className="w-6 h-6 rounded-full bg-muted flex items-center justify-center text-xs">
+                          {tx.type === 'Mint' ? 'M' : 'T'}
+                        </div>
+                        <span className="font-medium">{tx.type}</span>
+                      </div>
+                    </div>
+                    <div className="col-span-5 font-mono text-xs truncate">{tx.hash}</div>
+                    <div className="col-span-1 text-sm">{tx.type}</div>
+                    <div className="col-span-2 text-xs">
+                      {tx.type === 'Mint' ? (
+                        <div>From: {tx.from}</div>
+                      ) : (
+                        <div>
+                          <div>From: {tx.from}</div>
+                          <div>To: {tx.to}</div>
+                        </div>
+                      )}
+                    </div>
+                    <div className={`col-span-2 text-right font-semibold ${tx.amount < 0 ? 'text-destructive' : 'text-accent-success'}`}>
+                      {tx.amount < 0 ? tx.amount : `+${tx.amount}`}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
