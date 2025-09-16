@@ -10,6 +10,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
+import { CheckCircle, Loader2, AlertCircle, Circle } from 'lucide-react'
 import { useDeployBasics } from '@/hooks/useDeployBasics'
 import { getLastDeploymentData, getLastSystemData, getLastRegisteredUser, getLastDeposit, getLastWithdraw } from '@/store/deployments'
 import type { DeploymentBasics } from '@/types/deploy'
@@ -30,23 +31,25 @@ type Step = {
   id: number
   title: string
   description: string
+  endpoint: string
 }
 
 const steps = (t: (k: string) => string): Step[] => ([
-  { id: 1, title: t('converter.step1.title'), description: t('converter.step1.desc') },
-  { id: 2, title: t('converter.step2.title'), description: t('converter.step2.desc') },
-  { id: 3, title: t('converter.step3.title'), description: t('converter.step3.desc') },
-  { id: 4, title: t('converter.step4.title'), description: t('converter.step4.desc') },
-  { id: 5, title: t('converter.step5.title'), description: t('converter.step5.desc') },
+  { id: 1, title: t('converter.step1.title'), description: t('converter.step1.desc'), endpoint: '/api/converter/deploy-basics' },
+  { id: 2, title: t('converter.step2.title'), description: t('converter.step2.desc'), endpoint: '/api/converter/deploy-system' },
+  { id: 3, title: t('converter.step3.title'), description: t('converter.step3.desc'), endpoint: '/api/converter/register-user' },
+  { id: 4, title: t('converter.step4.title'), description: t('converter.step4.desc'), endpoint: '/api/converter/deposit' },
+  { id: 5, title: t('converter.step5.title'), description: t('converter.step5.desc'), endpoint: '/api/converter/withdraw' },
 ])
 
 export const ConverterFlow = ({ open, onOpenChange }: Props) => {
   const [active, setActive] = useState<number>(1)
-  const { mutate: runDeployBasics, isPending, isSuccess, data, error } = useDeployBasics()
-  const { mutate: runDeploySystem, isPending: isPendingSys, isSuccess: isSuccessSys, data: dataSys, error: errorSys } = useDeploySystem()
-  const { mutate: runRegisterUser, isPending: isPendingReg, isSuccess: isSuccessReg, data: dataReg, error: errorReg } = useRegisterUser()
-  const { mutate: runDeposit, isPending: isPendingDep, isSuccess: isSuccessDep, data: dataDep, error: errorDep } = useDeposit()
-  const { mutate: runWithdraw, isPending: isPendingWit, isSuccess: isSuccessWit, data: dataWit, error: errorWit } = useWithdraw()
+  const [isDeploying, setIsDeploying] = useState(false)
+  const { mutate: runDeployBasics, mutateAsync: runDeployBasicsAsync, isPending, isSuccess, data, error } = useDeployBasics()
+  const { mutate: runDeploySystem, mutateAsync: runDeploySystemAsync, isPending: isPendingSys, isSuccess: isSuccessSys, data: dataSys, error: errorSys } = useDeploySystem()
+  const { mutate: runRegisterUser, mutateAsync: runRegisterUserAsync, isPending: isPendingReg, isSuccess: isSuccessReg, data: dataReg, error: errorReg } = useRegisterUser()
+  const { mutate: runDeposit, mutateAsync: runDepositAsync, isPending: isPendingDep, isSuccess: isSuccessDep, data: dataDep, error: errorDep } = useDeposit()
+  const { mutate: runWithdraw, mutateAsync: runWithdrawAsync, isPending: isPendingWit, isSuccess: isSuccessWit, data: dataWit, error: errorWit } = useWithdraw()
   const { t } = useTranslation()
 
   const [persisted, setPersisted] = useState<DeploymentBasics | null>(null)
@@ -70,6 +73,96 @@ export const ConverterFlow = ({ open, onOpenChange }: Props) => {
 
   const _steps = steps(t)
   const progress = Math.round((completed.size / _steps.length) * 100)
+
+  type StepStatus = 'pending' | 'loading' | 'completed' | 'error'
+  const getStepStatus = (id: number): StepStatus => {
+    switch (id) {
+      case 1:
+        if (isPending) return 'loading'
+        if (error) return 'error'
+        return (isSuccess || !!persisted) ? 'completed' : 'pending'
+      case 2:
+        if (isPendingSys) return 'loading'
+        if (errorSys) return 'error'
+        return (isSuccessSys || !!persistedSys) ? 'completed' : 'pending'
+      case 3:
+        if (isPendingReg) return 'loading'
+        if (errorReg) return 'error'
+        return (isSuccessReg || !!getLastRegisteredUser()) ? 'completed' : 'pending'
+      case 4:
+        if (isPendingDep) return 'loading'
+        if (errorDep) return 'error'
+        return (isSuccessDep || !!getLastDeposit()) ? 'completed' : 'pending'
+      case 5:
+        if (isPendingWit) return 'loading'
+        if (errorWit) return 'error'
+        return (isSuccessWit || !!getLastWithdraw()) ? 'completed' : 'pending'
+      default:
+        return 'pending'
+    }
+  }
+
+  const getStepIcon = (id: number) => {
+    const status = getStepStatus(id)
+    switch (status) {
+      case 'completed':
+        return <CheckCircle className="w-5 h-5 text-green-500" />
+      case 'loading':
+        return <Loader2 className="w-5 h-5 text-blue-500 animate-spin" />
+      case 'error':
+        return <AlertCircle className="w-5 h-5 text-red-500" />
+      default:
+        return <Circle className="w-5 h-5 text-gray-400" />
+    }
+  }
+
+  const getStepBadge = (id: number) => {
+    const status = getStepStatus(id)
+    switch (status) {
+      case 'completed':
+        return <Badge variant="default" className="bg-green-500">{t('standalone.completed')}</Badge>
+      case 'loading':
+        return <Badge variant="secondary">{t('standalone.loading')}</Badge>
+      case 'error':
+        return <Badge variant="destructive">{t('standalone.error')}</Badge>
+      default:
+        return <Badge variant="outline">{t('standalone.pending')}</Badge>
+    }
+  }
+
+  // Reset minimal UI state when dialog opens
+  useEffect(() => {
+    if (open) setActive(1)
+  }, [open])
+
+  const resetFlow = () => {
+    setActive(1)
+    try {
+      localStorage.removeItem('deployments:last')
+      localStorage.removeItem('deployments:system:last')
+      localStorage.removeItem('converter:register:last')
+      localStorage.removeItem('converter:deposit:last')
+      localStorage.removeItem('converter:withdraw:last')
+    } catch {}
+  }
+
+  const executeAllSteps = async () => {
+    if (isDeploying) return
+    setIsDeploying(true)
+    try {
+      await runDeployBasicsAsync()
+      await new Promise(r => setTimeout(r, 500))
+      await runDeploySystemAsync()
+      await new Promise(r => setTimeout(r, 500))
+      await runRegisterUserAsync()
+      await new Promise(r => setTimeout(r, 500))
+      await runDepositAsync()
+      await new Promise(r => setTimeout(r, 500))
+      await runWithdrawAsync()
+    } finally {
+      setIsDeploying(false)
+    }
+  }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -95,10 +188,12 @@ export const ConverterFlow = ({ open, onOpenChange }: Props) => {
                 <div className="flex items-center justify-between">
                   <div>
                     <div className="flex items-center gap-2">
+                      {getStepIcon(s.id)}
                       <h3 className="font-semibold">{s.id}. {s.title}</h3>
-                      {completed.has(s.id) && <Badge className="bg-accent-success text-success-foreground">{t('converter.done')}</Badge>}
+                      {getStepBadge(s.id)}
                     </div>
                     <p className="text-sm text-muted-foreground">{s.description}</p>
+                    <p className="text-xs text-muted-foreground font-mono mt-1">{s.endpoint}</p>
                   </div>
                   <div className="flex items-center gap-2">
                     <Button variant={active === s.id ? 'default' : 'outline'} size="sm" onClick={() => setActive(s.id)}>
@@ -276,6 +371,22 @@ export const ConverterFlow = ({ open, onOpenChange }: Props) => {
                 )}
               </div>
             ))}
+          </div>
+          {/* Actions: mimic StandaloneFlow */}
+          <div className="flex justify-between pt-2">
+            <Button variant="outline" onClick={resetFlow} disabled={isDeploying}>
+              {t('standalone.reset')}
+            </Button>
+            <div className="flex gap-2">
+              <Button variant="outline" onClick={() => onOpenChange(false)} disabled={isDeploying}>
+                {t('standalone.close')}
+              </Button>
+              {progress < 100 && (
+                <Button onClick={executeAllSteps} disabled={isDeploying} className="glass-button cta-start-button">
+                  {isDeploying ? t('standalone.deploying') : t('standalone.deployAll')}
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       </DialogContent>
