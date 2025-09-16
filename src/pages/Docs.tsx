@@ -1,13 +1,11 @@
-import { Code, Key, Shield, Zap, FileText, ExternalLink } from "lucide-react";
+import { Code, Key, Shield, Zap, FileText } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTranslation } from "@/i18n/LanguageContext";
 
 const Docs = () => {
   const { t } = useTranslation();
-  // Endpoints estáticos removidos: dejamos solo el embed de Swagger UI
-
-  const docsUrl = (import.meta as any).env?.VITE_DOCS_URL || 'https://enigma-backend.aiforworld.xyz/docs';
+  // Developer docs page rendered inline for the demo
 
   return (
     <div className="min-h-screen py-20">
@@ -262,75 +260,90 @@ Content-Type: application/json`}
             <TabsContent value="examples" className="space-y-6">
               <Card className="glass-card border-glass-border">
                 <CardHeader>
-                  <CardTitle>Ejemplo: Flujo Completo</CardTitle>
-                  <CardDescription>
-                    Desde la creación del token hasta la configuración de auditoría
-                  </CardDescription>
+                  <CardTitle>Converter: end‑to‑end cURL</CardTitle>
+                  <CardDescription>Deploy, register, deposit and withdraw</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <pre className="bg-muted/20 p-4 rounded-lg text-sm overflow-x-auto">
-{`// 1. Crear token privado
-const token = await enigma.createToken({
-  name: "CompanyToken",
-  symbol: "CMPY",
-  initialSupply: "1000000",
-  privacyLevel: "high"
-});
+{`# 1) Deploy basics
+curl -X POST https://api.enigmaprotocol.com/api/converter/deploy-basics \
+  -H 'Content-Type: application/json' -d '{}'
 
-// 2. Transferir con privacidad
-const transfer = await enigma.transfer({
-  tokenId: token.id,
-  to: "0x742d35Cc6...",
-  amount: "100.5",
-  hideAmount: true,
-  hideRecipient: true
-});
+# 2) Deploy full system
+curl -X POST https://api.enigmaprotocol.com/api/converter/deploy-system \
+  -H 'Content-Type: application/json' -d '{}'
 
-// 3. Configurar auditoría temporal
-const audit = await enigma.requestAudit({
-  tokenId: token.id,
-  auditorAddress: "0x1a2b3c4d...",
-  validFrom: "2025-01-15T00:00:00Z",
-  validUntil: "2025-02-15T23:59:59Z",
-  reason: "Quarterly compliance review"
-});
+# 3) Register a user
+curl -X POST https://api.enigmaprotocol.com/api/converter/register-user \
+  -H 'Content-Type: application/json' \
+  -d '{"walletNumber":1,"walletAddress":"0xabc..."}'
 
-console.log("Token creado:", token.contractAddress);
-console.log("Transferencia privada:", transfer.hash);
-console.log("Solicitud de auditoría:", audit.requestId);`}
+# 4) Deposit (ERC20 → encrypted)
+curl -X POST https://api.enigmaprotocol.com/api/converter/deposit \
+  -H 'Content-Type: application/json' \
+  -d '{"walletNumber":1,"walletAddress":"0xabc..."}'
+
+# 5) Withdraw (encrypted → ERC20)
+curl -X POST https://api.enigmaprotocol.com/api/converter/withdraw \
+  -H 'Content-Type: application/json' \
+  -d '{"walletNumber":1,"walletAddress":"0xabc..."}'`}
                   </pre>
                 </CardContent>
               </Card>
 
               <Card className="glass-card border-glass-border">
                 <CardHeader>
-                  <CardTitle>Notas de Seguridad</CardTitle>
+                  <CardTitle>Standalone: quick cURL</CardTitle>
+                  <CardDescription>Deploy and basic operations</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <pre className="bg-muted/20 p-4 rounded-lg text-sm overflow-x-auto">
+{`# Deploy
+curl -X POST https://api.enigmaprotocol.com/api/standalone/deploy-basics -H 'Content-Type: application/json' -d '{}'
+curl -X POST https://api.enigmaprotocol.com/api/standalone/deploy-system -H 'Content-Type: application/json' -d '{}'
+
+# Register + set auditor
+curl -X POST https://api.enigmaprotocol.com/api/standalone/register-auditor -H 'Content-Type: application/json' -d '{"walletNumber":2}'
+curl -X POST https://api.enigmaprotocol.com/api/standalone/set-auditor -H 'Content-Type: application/json' -d '{"walletNumber":1}'
+
+# Mint, balance, transfer, burn
+curl -X POST https://api.enigmaprotocol.com/api/standalone/mint -H 'Content-Type: application/json' -d '{"amount":50}'
+curl -s https://api.enigmaprotocol.com/api/standalone/balance/1
+curl -X POST https://api.enigmaprotocol.com/api/standalone/transfer -H 'Content-Type: application/json' -d '{"amount":30}'
+curl -X POST https://api.enigmaprotocol.com/api/standalone/burn -H 'Content-Type: application/json' -d '{"amount":20}'`}
+                  </pre>
+                </CardContent>
+              </Card>
+
+              <Card className="glass-card border-glass-border">
+                <CardHeader>
+                  <CardTitle>Security Notes</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <div className="flex items-start space-x-3">
                     <Shield className="w-5 h-5 text-warning mt-0.5" />
                     <div>
-                      <h4 className="font-semibold">API Keys</h4>
+                      <h4 className="font-semibold">Tokens</h4>
                       <p className="text-sm text-muted-foreground">
-                        Nunca expongas tu API key en el frontend. Úsala solo en el backend.
+                        Do not expose secrets in the frontend. Use server‑side storage for sensitive keys.
                       </p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
                     <Shield className="w-5 h-5 text-warning mt-0.5" />
                     <div>
-                      <h4 className="font-semibold">Wallet Signatures</h4>
+                      <h4 className="font-semibold">Wallet signatures</h4>
                       <p className="text-sm text-muted-foreground">
-                        Todas las transacciones requieren firma de wallet para validación.
+                        All state‑changing operations should be signed by the user’s wallet.
                       </p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
                     <Shield className="w-5 h-5 text-warning mt-0.5" />
                     <div>
-                      <h4 className="font-semibold">Limitaciones Actuales</h4>
+                      <h4 className="font-semibold">Environment</h4>
                       <p className="text-sm text-muted-foreground">
-                        Demo disponible solo en Avalanche Fuji Testnet. C-Chain próximamente.
+                        This demo targets Avalanche Fuji Testnet.
                       </p>
                     </div>
                   </div>
