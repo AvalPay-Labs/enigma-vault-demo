@@ -26,106 +26,99 @@ const Cookies = () => {
           <Card className="glass-card border-glass-border">
             <CardContent className="p-8 space-y-8">
               <section>
-                <h2 className="text-2xl font-bold mb-4">1. ¿Qué son las Cookies?</h2>
+                <h2 className="text-2xl font-bold mb-4">1. What Are Cookies?</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Las cookies son pequeños archivos de texto que se almacenan en su dispositivo 
-                  cuando visita un sitio web. Se utilizan ampliamente para hacer que los sitios 
-                  web funcionen de manera más eficiente, así como para proporcionar información 
-                  a los propietarios del sitio.
+                  Cookies are small text files stored on your device when you visit a website. They are widely used to
+                  make websites work more efficiently and to provide information to site owners.
                 </p>
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">2. Cómo Usamos las Cookies</h2>
+                <h2 className="text-2xl font-bold mb-4">2. How We Use Cookies</h2>
                 <p className="text-muted-foreground leading-relaxed mb-4">
-                  En Enigma Protocol utilizamos cookies para mejorar su experiencia y el 
-                  funcionamiento de nuestra plataforma de la siguiente manera:
+                  We use cookies to improve your experience and the operation of our platform as follows:
                 </p>
                 
                 <div className="space-y-6">
                   <div className="bg-muted/20 p-4 rounded-lg">
-                    <h3 className="text-lg font-semibold mb-2">Cookies Esenciales</h3>
+                    <h3 className="text-lg font-semibold mb-2">Essential Cookies</h3>
                     <p className="text-muted-foreground text-sm mb-2">
-                      Estas cookies son necesarias para el funcionamiento básico del sitio web.
+                      These cookies are necessary for the basic operation of the website.
                     </p>
                     <ul className="list-disc list-inside space-y-1 text-muted-foreground text-sm ml-4">
-                      <li>Mantener su sesión iniciada</li>
-                      <li>Recordar sus preferencias de idioma</li>
-                      <li>Gestionar el carrito de compras</li>
-                      <li>Proporcionar servicios de seguridad</li>
+                      <li>Keep your session signed in</li>
+                      <li>Remember language preferences</li>
+                      <li>Manage cart/session state</li>
+                      <li>Provide security services</li>
                     </ul>
                   </div>
 
                   <div className="bg-muted/20 p-4 rounded-lg">
-                    <h3 className="text-lg font-semibold mb-2">Cookies de Funcionalidad</h3>
+                    <h3 className="text-lg font-semibold mb-2">Functionality Cookies</h3>
                     <p className="text-muted-foreground text-sm mb-2">
-                      Estas cookies mejoran la funcionalidad y personalización del sitio web.
+                      These cookies improve website functionality and personalization.
                     </p>
                     <ul className="list-disc list-inside space-y-1 text-muted-foreground text-sm ml-4">
-                      <li>Recordar configuraciones del dashboard</li>
-                      <li>Personalizar la interfaz de usuario</li>
-                      <li>Guardar preferencias de visualización</li>
-                      <li>Recordar formularios completados</li>
+                      <li>Remember dashboard settings</li>
+                      <li>Customize the user interface</li>
+                      <li>Save display preferences</li>
+                      <li>Remember completed forms</li>
                     </ul>
                   </div>
 
                   <div className="bg-muted/20 p-4 rounded-lg">
-                    <h3 className="text-lg font-semibold mb-2">Cookies Analíticas</h3>
-                    <p className="text-muted-foreground text-sm mb-2">
-                      Estas cookies nos ayudan a entender cómo los usuarios interactúan con nuestro sitio.
-                    </p>
+                    <h3 className="text-lg font-semibold mb-2">Analytics Cookies</h3>
+                    <p className="text-muted-foreground text-sm mb-2">These cookies help us understand how users interact with our site.</p>
                     <ul className="list-disc list-inside space-y-1 text-muted-foreground text-sm ml-4">
-                      <li>Analizar patrones de navegación</li>
-                      <li>Medir el rendimiento del sitio</li>
-                      <li>Identificar errores y problemas técnicos</li>
-                      <li>Mejorar la experiencia del usuario</li>
+                      <li>Analyze browsing patterns</li>
+                      <li>Measure site performance</li>
+                      <li>Identify errors and technical issues</li>
+                      <li>Improve user experience</li>
                     </ul>
                   </div>
 
                   <div className="bg-muted/20 p-4 rounded-lg">
-                    <h3 className="text-lg font-semibold mb-2">Cookies de Marketing</h3>
-                    <p className="text-muted-foreground text-sm mb-2">
-                      Estas cookies se utilizan para mostrar contenido relevante y personalizado.
-                    </p>
+                    <h3 className="text-lg font-semibold mb-2">Marketing Cookies</h3>
+                    <p className="text-muted-foreground text-sm mb-2">These cookies are used to show relevant and personalized content.</p>
                     <ul className="list-disc list-inside space-y-1 text-muted-foreground text-sm ml-4">
-                      <li>Personalizar contenido promocional</li>
-                      <li>Medir la efectividad de campañas</li>
-                      <li>Prevenir la visualización repetitiva de anuncios</li>
-                      <li>Proporcionar contenido relevante</li>
+                      <li>Personalize promotional content</li>
+                      <li>Measure campaign effectiveness</li>
+                      <li>Prevent repetitive ad display</li>
+                      <li>Provide relevant content</li>
                     </ul>
                   </div>
                 </div>
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">3. Cookies de Terceros</h2>
+                <h2 className="text-2xl font-bold mb-4">3. Third‑party Cookies</h2>
                 <div className="space-y-4">
                   <p className="text-muted-foreground leading-relaxed">
-                    También utilizamos servicios de terceros que pueden establecer cookies en su dispositivo:
+                    We also use third‑party services that may set cookies on your device:
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="bg-muted/20 p-4 rounded-lg">
                       <h4 className="font-semibold mb-2">Google Analytics</h4>
                       <p className="text-sm text-muted-foreground">
-                        Para análisis de tráfico y comportamiento del usuario
+                        For traffic and user behavior analytics
                       </p>
                     </div>
                     <div className="bg-muted/20 p-4 rounded-lg">
                       <h4 className="font-semibold mb-2">Stripe</h4>
                       <p className="text-sm text-muted-foreground">
-                        Para procesamiento seguro de pagos
+                        For secure payment processing
                       </p>
                     </div>
                     <div className="bg-muted/20 p-4 rounded-lg">
                       <h4 className="font-semibold mb-2">Intercom</h4>
                       <p className="text-sm text-muted-foreground">
-                        Para chat de soporte al cliente
+                        For customer support chat
                       </p>
                     </div>
                     <div className="bg-muted/20 p-4 rounded-lg">
                       <h4 className="font-semibold mb-2">WalletConnect</h4>
                       <p className="text-sm text-muted-foreground">
-                        Para conexión con wallets de criptomonedas
+                        For crypto wallet connectivity
                       </p>
                     </div>
                   </div>
@@ -133,75 +126,72 @@ const Cookies = () => {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">4. Gestión de Cookies</h2>
+                <h2 className="text-2xl font-bold mb-4">4. Managing Cookies</h2>
                 <div className="space-y-4">
                   <p className="text-muted-foreground leading-relaxed">
-                    Usted tiene control total sobre las cookies. Puede gestionarlas de las siguientes maneras:
+                    You have full control over cookies. You can manage them as follows:
                   </p>
                   
                   <div className="bg-primary/5 border border-primary/20 p-6 rounded-lg">
-                    <h3 className="text-lg font-semibold mb-3">Centro de Preferencias</h3>
+                    <h3 className="text-lg font-semibold mb-3">Preferences Center</h3>
                     <p className="text-muted-foreground text-sm mb-4">
-                      Use nuestro centro de preferencias para controlar qué tipos de cookies acepta.
+                      Use our preferences center to control which cookie types you accept.
                     </p>
                     <Button onClick={manageCookies} className="glass-button cta-start-button">{t("legal.cookies.managePrefs")}</Button>
                   </div>
 
                   <div className="space-y-3">
-                    <h3 className="text-lg font-semibold">Configuración del Navegador</h3>
+                    <h3 className="text-lg font-semibold">Browser Settings</h3>
                     <p className="text-muted-foreground text-sm leading-relaxed">
-                      También puede controlar las cookies a través de la configuración de su navegador:
+                      You can also control cookies through your browser settings:
                     </p>
                     <ul className="list-disc list-inside space-y-1 text-muted-foreground text-sm ml-4">
-                      <li><strong>Chrome:</strong> Configuración → Privacidad y seguridad → Cookies</li>
-                      <li><strong>Firefox:</strong> Preferencias → Privacidad y seguridad → Cookies</li>
-                      <li><strong>Safari:</strong> Preferencias → Privacidad → Cookies</li>
-                      <li><strong>Edge:</strong> Configuración → Cookies y permisos del sitio</li>
+                      <li><strong>Chrome:</strong> Settings → Privacy and security → Cookies</li>
+                      <li><strong>Firefox:</strong> Preferences → Privacy & Security → Cookies</li>
+                      <li><strong>Safari:</strong> Preferences → Privacy → Cookies</li>
+                      <li><strong>Edge:</strong> Settings → Cookies and site permissions</li>
                     </ul>
                   </div>
                 </div>
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">5. Impacto de Desactivar Cookies</h2>
+                <h2 className="text-2xl font-bold mb-4">5. Impact of Disabling Cookies</h2>
                 <div className="space-y-4">
-                  <p className="text-muted-foreground leading-relaxed">
-                    Si elige desactivar las cookies, algunas funciones de nuestro sitio pueden verse afectadas:
-                  </p>
+                  <p className="text-muted-foreground leading-relaxed">If you choose to disable cookies, some features may be affected:</p>
                   <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-6">
-                    <li>Necesitará iniciar sesión repetidamente</li>
-                    <li>Sus preferencias no se guardarán</li>
-                    <li>Algunas funciones del dashboard pueden no funcionar correctamente</li>
-                    <li>La experiencia de usuario puede ser menos personalizada</li>
+                    <li>You may need to sign in repeatedly</li>
+                    <li>Your preferences may not be saved</li>
+                    <li>Some dashboard features may not work properly</li>
+                    <li>User experience may be less personalized</li>
                   </ul>
                 </div>
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">6. Actualizaciones de la Política</h2>
+                <h2 className="text-2xl font-bold mb-4">6. Policy Updates</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Podemos actualizar esta Política de Cookies ocasionalmente para reflejar cambios 
-                  en nuestras prácticas o por razones operativas, legales o regulatorias. 
-                  Le recomendamos que revise esta página periódicamente.
+                  We may update this Cookie Policy from time to time to reflect changes in our practices or for operational,
+                  legal, or regulatory reasons. We recommend reviewing this page periodically.
                 </p>
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">7. Contacto</h2>
+                <h2 className="text-2xl font-bold mb-4">7. Contact</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Si tiene preguntas sobre nuestra Política de Cookies, puede contactarnos en:
+                  If you have questions about our Cookie Policy, contact us at:
                   <br />
                   Email: privacy@enigmaprotocol.com
                   <br />
-                  Dirección: Barcelona, España
+                  Address: Barcelona, Spain
                 </p>
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4">8. Consentimiento</h2>
+                <h2 className="text-2xl font-bold mb-4">8. Consent</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Al continuar utilizando nuestro sitio web después de que se le notifique sobre 
-                  el uso de cookies, usted acepta nuestro uso de cookies como se describe en esta política.
+                  By continuing to use our website after being notified about the use of cookies, you consent to our use of
+                  cookies as described in this policy.
                 </p>
               </section>
             </CardContent>
