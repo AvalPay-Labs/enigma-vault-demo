@@ -88,7 +88,7 @@ const Footer = () => {
           <p className="text-sm text-muted-foreground">{t("footer.copyright")}</p>
           <div className="flex items-center space-x-4 mt-4 md:mt-0">
             <a
-              href="https://github.com/avalpay"
+              href="https://github.com/AvalPay-Labs/enigma-vault-demo"
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-primary transition-colors"
