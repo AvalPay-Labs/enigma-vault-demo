@@ -46,11 +46,11 @@ const steps = (t: (k: string) => string): Step[] => ([
 export const ConverterFlow = ({ open, onOpenChange }: Props) => {
   const [active, setActive] = useState<number>(1)
   const [isDeploying, setIsDeploying] = useState(false)
-  const { mutate: runDeployBasics, mutateAsync: runDeployBasicsAsync, isPending, isSuccess, data, error } = useDeployBasics()
-  const { mutate: runDeploySystem, mutateAsync: runDeploySystemAsync, isPending: isPendingSys, isSuccess: isSuccessSys, data: dataSys, error: errorSys } = useDeploySystem()
-  const { mutate: runRegisterUser, mutateAsync: runRegisterUserAsync, isPending: isPendingReg, isSuccess: isSuccessReg, data: dataReg, error: errorReg } = useRegisterUser()
-  const { mutate: runDeposit, mutateAsync: runDepositAsync, isPending: isPendingDep, isSuccess: isSuccessDep, data: dataDep, error: errorDep } = useDeposit()
-  const { mutate: runWithdraw, mutateAsync: runWithdrawAsync, isPending: isPendingWit, isSuccess: isSuccessWit, data: dataWit, error: errorWit } = useWithdraw()
+  const { mutate: runDeployBasics, mutateAsync: runDeployBasicsAsync, reset: resetBasics, isPending, isSuccess, data, error } = useDeployBasics()
+  const { mutate: runDeploySystem, mutateAsync: runDeploySystemAsync, reset: resetSystem, isPending: isPendingSys, isSuccess: isSuccessSys, data: dataSys, error: errorSys } = useDeploySystem()
+  const { mutate: runRegisterUser, mutateAsync: runRegisterUserAsync, reset: resetRegister, isPending: isPendingReg, isSuccess: isSuccessReg, data: dataReg, error: errorReg } = useRegisterUser()
+  const { mutate: runDeposit, mutateAsync: runDepositAsync, reset: resetDeposit, isPending: isPendingDep, isSuccess: isSuccessDep, data: dataDep, error: errorDep } = useDeposit()
+  const { mutate: runWithdraw, mutateAsync: runWithdrawAsync, reset: resetWithdraw, isPending: isPendingWit, isSuccess: isSuccessWit, data: dataWit, error: errorWit } = useWithdraw()
   const { t } = useTranslation()
 
   const [persisted, setPersisted] = useState<DeploymentBasics | null>(null)
@@ -138,6 +138,8 @@ export const ConverterFlow = ({ open, onOpenChange }: Props) => {
 
   const resetFlow = () => {
     setActive(1)
+    setPersisted(null)
+    setPersistedSys(null)
     try {
       localStorage.removeItem('deployments:last')
       localStorage.removeItem('deployments:system:last')
@@ -145,6 +147,12 @@ export const ConverterFlow = ({ open, onOpenChange }: Props) => {
       localStorage.removeItem('converter:deposit:last')
       localStorage.removeItem('converter:withdraw:last')
     } catch {}
+    // Reset mutation states
+    resetBasics()
+    resetSystem()
+    resetRegister()
+    resetDeposit()
+    resetWithdraw()
   }
 
   const executeAllSteps = async () => {
