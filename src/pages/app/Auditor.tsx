@@ -137,7 +137,7 @@ const Auditor = () => {
                     </div>
                     <p className="text-sm text-muted-foreground mb-1">{t("auditor.myRequests.owner")}: {request.owner}</p>
                     <p className="text-sm text-muted-foreground">
-                      Solicitado: {request.date}
+                      {t('auditor.myRequests.requested')}: {request.date}
                       {request.expiry && ` • ${t("auditor.myRequests.expires")}: ${request.expiry}`}
                     </p>
                   </div>
@@ -158,7 +158,7 @@ const Auditor = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="font-semibold">CompanyToken (CMPY)</h3>
-                    <p className="text-sm text-muted-foreground">Acceso válido hasta: 2025-02-06</p>
+                    <p className="text-sm text-muted-foreground">{t('tokenDetail.validUntil')}: 2025-02-06</p>
                   </div>
                   <Button size="sm" className="glass-button cta-start-button">{t("auditor.activeAudits.viewTx")}</Button>
                 </div>
