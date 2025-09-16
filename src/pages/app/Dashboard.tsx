@@ -208,19 +208,10 @@ const Dashboard = () => {
                     </div>
                   ))}
                 </div>
-                <div>
-                  <Button variant="outline" className="glass-button" onClick={() => setOpenConverter(true)}>
-                    {t("converter.card.viewFlow")}
-                  </Button>
-                </div>
+                {/* Removed: Open converter flow button */}
               </div>
             ) : (
-              <div className="flex items-center justify-between">
-                <p className="text-sm text-muted-foreground">{t("converter.card.none")}</p>
-                <Button variant="outline" className="glass-button" onClick={() => setOpenConverter(true)}>
-                  {t("converter.card.viewFlow")}
-                </Button>
-              </div>
+              <div className="text-sm text-muted-foreground">{t("converter.card.none")}</div>
             )}
           </CardContent>
         </Card>
@@ -244,19 +235,10 @@ const Dashboard = () => {
                     <span className="font-mono text-muted-foreground">{lastDeposit.data.walletNumber}</span>
                   </div>
                 </div>
-                <div>
-                  <Button variant="outline" className="glass-button" onClick={() => setOpenConverter(true)}>
-                    {t("converter.card.viewFlow")}
-                  </Button>
-                </div>
+                {/* Removed: Open converter flow button */}
               </div>
             ) : (
-              <div className="flex items-center justify-between">
-                <p className="text-sm text-muted-foreground">{t("converter.card.deposit.none")}</p>
-                <Button variant="outline" className="glass-button" onClick={() => setOpenConverter(true)}>
-                  {t("converter.card.viewFlow")}
-                </Button>
-              </div>
+              <div className="text-sm text-muted-foreground">{t("converter.card.deposit.none")}</div>
             )}
           </CardContent>
         </Card>
@@ -278,19 +260,10 @@ const Dashboard = () => {
                     </div>
                   ))}
                 </div>
-                <div>
-                  <Button variant="outline" className="glass-button" onClick={() => setOpenConverter(true)}>
-                    {t("converter.card.viewFlow")}
-                  </Button>
-                </div>
+                {/* Removed: Open converter flow button */}
               </div>
             ) : (
-              <div className="flex items-center justify-between">
-                <p className="text-sm text-muted-foreground">{t("converter.card.system.none")}</p>
-                <Button variant="outline" className="glass-button" onClick={() => setOpenConverter(true)}>
-                  {t("converter.card.viewFlow")}
-                </Button>
-              </div>
+              <div className="text-sm text-muted-foreground">{t("converter.card.system.none")}</div>
             )}
           </CardContent>
         </Card>
