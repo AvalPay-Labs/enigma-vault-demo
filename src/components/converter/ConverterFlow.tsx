@@ -249,12 +249,7 @@ export const ConverterFlow = ({ open, onOpenChange }: Props) => {
                           {t('converter.step1.longRunning')}
                         </AlertDescription>
                       </Alert>
-                      <div className="flex items-center gap-2">
-                        <Button onClick={() => runDeployBasics()} disabled={isPending} className="glass-button cta-start-button">
-                          {isPending ? '...' : t('converter.step1.cta')}
-                        </Button>
-                        {error && <span className="text-sm text-red-600">{error.message}</span>}
-                      </div>
+                      {error && <span className="text-sm text-red-600">{error.message}</span>}
                     </div>
                     {(isSuccess || persisted) && (
                       <div className="text-xs grid grid-cols-1 md:grid-cols-2 gap-2 bg-white border border-glass-border rounded-md p-3">
@@ -281,12 +276,7 @@ export const ConverterFlow = ({ open, onOpenChange }: Props) => {
                             {t('converter.step2.longRunning')}
                           </AlertDescription>
                         </Alert>
-                        <div className="flex items-center gap-2">
-                          <Button onClick={() => runDeploySystem()} disabled={isPendingSys} className="glass-button cta-start-button">
-                            {isPendingSys ? '...' : t('converter.step2.cta')}
-                          </Button>
-                          {errorSys && <span className="text-sm text-red-600">{errorSys.message}</span>}
-                        </div>
+                        {errorSys && <span className="text-sm text-red-600">{errorSys.message}</span>}
                       </div>
                     )}
 
@@ -309,12 +299,7 @@ export const ConverterFlow = ({ open, onOpenChange }: Props) => {
                       <div className="text-sm text-muted-foreground">{t('converter.needStep2')}</div>
                     ) : (
                       <div className="space-y-3">
-                        <div className="flex items-center gap-2">
-                          <Button onClick={() => runRegisterUser()} disabled={isPendingReg} className="glass-button cta-start-button">
-                            {isPendingReg ? '...' : t('converter.step3.cta')}
-                          </Button>
-                          {errorReg && <span className="text-sm text-red-600">{errorReg.message}</span>}
-                        </div>
+                        {errorReg && <span className="text-sm text-red-600">{errorReg.message}</span>}
                         {(isSuccessReg || getLastRegisteredUser()) && (
                           <div className="text-xs grid grid-cols-1 md:grid-cols-2 gap-2 bg-white border border-glass-border rounded-md p-3">
                             {Object.entries((dataReg?.data || getLastRegisteredUser()?.data || {}) as any).map(([k, v]) => (
@@ -347,12 +332,7 @@ export const ConverterFlow = ({ open, onOpenChange }: Props) => {
                             {t('converter.step4.longRunning')}
                           </AlertDescription>
                         </Alert>
-                        <div className="flex items-center gap-2">
-                          <Button onClick={() => runDeposit()} disabled={isPendingDep} className="glass-button cta-start-button">
-                            {isPendingDep ? '...' : t('converter.step4.cta')}
-                          </Button>
-                          {errorDep && <span className="text-sm text-red-600">{errorDep.message}</span>}
-                        </div>
+                        {errorDep && <span className="text-sm text-red-600">{errorDep.message}</span>}
                       </div>
                     )}
 
@@ -386,12 +366,7 @@ export const ConverterFlow = ({ open, onOpenChange }: Props) => {
                             {t('converter.step5.longRunning')}
                           </AlertDescription>
                         </Alert>
-                        <div className="flex items-center gap-2">
-                          <Button onClick={() => runWithdraw()} disabled={isPendingWit} className="glass-button cta-start-button">
-                            {isPendingWit ? '...' : t('converter.step5.cta')}
-                          </Button>
-                          {errorWit && <span className="text-sm text-red-600">{errorWit.message}</span>}
-                        </div>
+                        {errorWit && <span className="text-sm text-red-600">{errorWit.message}</span>}
                       </div>
                     )}
 
