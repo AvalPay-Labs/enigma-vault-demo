@@ -1,7 +1,11 @@
 // Backend configuration
+const USE_MOCKS = String(import.meta.env.VITE_USE_MOCKS || '').toLowerCase() === 'true'
+const RAW_BASE_URL = (import.meta.env.VITE_DEPLOY_SERVICE_URL as string | undefined) || ''
+
 export const BACKEND_CONFIG = {
-  // Base URL for the backend API
-  baseURL: import.meta.env.VITE_DEPLOY_SERVICE_URL || 'https://enigma-backend.aiforworld.xyz',
+  // Base URL for the backend API. When USE_MOCKS=true we purposefully leave it empty
+  // so frontend services short-circuit and return mocked payloads.
+  baseURL: USE_MOCKS ? '' : (RAW_BASE_URL || 'https://enigma-backend.aiforworld.xyz'),
   // API versioning
   apiVersion: (import.meta.env.VITE_API_VERSION as string) || 'v1',
   versionMode: (import.meta.env.VITE_API_VERSION_MODE as 'legacy' | 'versioned') || 'legacy',
